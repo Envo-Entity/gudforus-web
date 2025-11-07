@@ -21,6 +21,7 @@ type FlipBookProps = {
 export default function FlipBook({ pages }: FlipBookProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const bookRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Keep --c in sync with currentPage
   useEffect(() => {
@@ -36,95 +37,90 @@ export default function FlipBook({ pages }: FlipBookProps) {
     const bookContainer = document.getElementById("book-container");
 
     if (!section || !scrollSpacer || !bookContainer) {
-      console.warn(
-        "FlipBook: missing #flipbook-section, #scroll-spacer or #book-container in DOM"
-      );
+      console.warn("FlipBook: missing required DOM elements");
       return;
     }
 
-    // expose total pages to CSS for spacer height calculation
+    // Set total pages for spacer height calculation
     scrollSpacer.style.setProperty("--total-pages", String(pages.length));
+    containerRef.current = bookContainer as HTMLDivElement;
 
-    // Helper to set book container into "fixed centered" state or "in-section absolute" state
-    const setBookFixed = (fixed: boolean, sectionRect?: DOMRect) => {
-      if (!bookContainer || !sectionRect) return;
-      if (fixed) {
-        // Make it fixed and full-viewport so .book can center itself with margin:auto
-        bookContainer.style.position = "fixed";
-        bookContainer.style.top = "0";
-        bookContainer.style.left = "0";
-        bookContainer.style.width = "100%";
-        bookContainer.style.height = `${window.innerHeight}px`;
-        bookContainer.style.zIndex = "60";
-        bookContainer.style.pointerEvents = "none";
+    const onScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const sectionTop = window.scrollY + rect.top;
+      const sectionBottom = window.scrollY + rect.bottom;
+      const sectionHeight = Math.max(rect.height, 1);
+
+      // Viewport center position
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+
+      // Check if section is in view
+      const isInView =
+        viewportCenter >= sectionTop && viewportCenter <= sectionBottom;
+
+      if (!isInView) {
+        // Hide book when outside section
+        bookContainer.style.opacity = "0";
+        return;
+      }
+
+      // Show book
+      bookContainer.style.opacity = "1";
+
+      // Calculate normalized progress through entire section (0 to 1)
+      const rawProgress = (viewportCenter - sectionTop) / sectionHeight;
+      const progress = Math.max(0, Math.min(1, rawProgress));
+
+      // Phase boundaries
+      // Total phases: pages.length + 2 (one for scroll-in, pages.length for flipping, one for scroll-out)
+      const totalPhases = pages.length + 2;
+      const phaseSize = 1 / totalPhases;
+
+      let bookYOffset = 0; // Vertical offset in vh units
+      let pageIndex = 0;
+
+      if (progress < phaseSize) {
+        // PHASE 1: SCROLL-IN (book moves from bottom to center)
+        const phaseProgress = progress / phaseSize;
+        bookYOffset = 100 * (1 - phaseProgress); // 100vh to 0vh
+        pageIndex = 0;
+      } else if (progress < 1 - phaseSize) {
+        // PHASE 2: PAGE FLIPPING (book stays centered)
+        const phaseStart = phaseSize;
+        const phaseEnd = 1 - phaseSize;
+        const phaseProgress = (progress - phaseStart) / (phaseEnd - phaseStart);
+        bookYOffset = 0; // stays at center
+        pageIndex = Math.round(phaseProgress * (pages.length - 1));
       } else {
-        // Return it to be absolutely positioned inside the section so it scrolls with the section
-        // Ensure section is positioned (section should be relative)
-        bookContainer.style.position = "absolute";
-        bookContainer.style.top = "0";
-        bookContainer.style.left = "0";
-        bookContainer.style.width = "100%";
-        // make container height match the section so it occupies normal flow
-        bookContainer.style.height = `${sectionRect.height}px`;
-        // lower z so it doesn't overlap global UI
-        bookContainer.style.zIndex = "10";
-        bookContainer.style.pointerEvents = "none";
+        // PHASE 3: SCROLL-OUT (book moves from center to top)
+        const phaseProgress = (progress - (1 - phaseSize)) / phaseSize;
+        bookYOffset = -100 * phaseProgress; // 0vh to -100vh
+        pageIndex = pages.length - 1;
+      }
+
+      // Apply vertical transform to book container
+      bookContainer.style.transform = `translate(-50%, calc(-50% + ${bookYOffset}vh))`;
+
+      // Update current page
+      setCurrentPage(Math.max(0, Math.min(pageIndex, pages.length - 1)));
+
+      // Hide indicator after initial scroll
+      if (indicator && progress > 0.05) {
+        indicator.style.opacity = "0";
       }
     };
 
-    // Compute progress and toggle fixed/absolute
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = window.scrollY + rect.top;
-        const sectionBottom = window.scrollY + rect.bottom;
-        const sectionHeight = Math.max(rect.height, 1);
-
-        // center of viewport (vertical)
-        const centerY = window.scrollY + window.innerHeight / 2;
-
-        // ACTIVE when viewport center is inside the section bounds
-        const active = centerY >= sectionTop && centerY <= sectionBottom;
-
-        // Toggle fixed vs absolute
-        setBookFixed(active, rect);
-
-        // Progress of the center moving through the section:
-        // normalized 0..1 where 0 -> center at sectionTop, 1 -> center at sectionBottom
-        const rawProgress = (centerY - sectionTop) / sectionHeight;
-        const progress = Math.min(Math.max(rawProgress, 0), 1);
-
-        // Map progress to page index (0..pages.length-1)
-        const idx =
-          pages.length > 1 ? Math.round(progress * (pages.length - 1)) : 0;
-        setCurrentPage(idx);
-
-        // hide indicator after first scroll
-        if (indicator) {
-          indicator.style.opacity = "0";
-          indicator.style.transition = "opacity 0.35s";
-        }
-
-        ticking = false;
-      });
-    };
-
-    // initial layout: ensure book container uses absolute so it doesn't overlap before entering
-    // set size based on section
-    setBookFixed(false, section.getBoundingClientRect());
-    // do an initial compute to set page
+    // Initial setup
     onScroll();
 
+    // Attach scroll listener
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
+    // Auto-hide indicator after 3 seconds
     const hideTimer = setTimeout(() => {
       if (indicator) {
         indicator.style.opacity = "0";
-        indicator.style.transition = "opacity 0.35s";
       }
     }, 3000);
 
@@ -132,18 +128,10 @@ export default function FlipBook({ pages }: FlipBookProps) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       clearTimeout(hideTimer);
-      // optional: cleanup inline styles we set
-      bookContainer.style.position = "";
-      bookContainer.style.top = "";
-      bookContainer.style.left = "";
-      bookContainer.style.width = "";
-      bookContainer.style.height = "";
-      bookContainer.style.zIndex = "";
-      bookContainer.style.pointerEvents = "";
     };
   }, [pages.length]);
 
-  // Click-to-scroll helper: scrolls the window so the viewport center aligns with the page index position
+  // Click to scroll to specific page
   const scrollToPageIndex = (pageIndex: number) => {
     const section = document.getElementById("flipbook-section");
     if (!section) return;
@@ -152,11 +140,21 @@ export default function FlipBook({ pages }: FlipBookProps) {
     const sectionTop = window.scrollY + rect.top;
     const sectionHeight = Math.max(rect.height, 1);
 
-    const progress = pages.length > 1 ? pageIndex / (pages.length - 1) : 0;
-    // target center position is sectionTop + progress*sectionHeight
-    const targetCenter = sectionTop + progress * sectionHeight;
-    // we want the viewport center (window.innerHeight/2) to be at targetCenter, so scroll to targetCenter - halfViewport
-    const targetScrollTop = Math.round(targetCenter - window.innerHeight / 2);
+    // Calculate target progress for the page
+    const totalPhases = pages.length + 2;
+    const phaseSize = 1 / totalPhases;
+
+    // Page flipping phase starts after scroll-in phase
+    const flipPhaseStart = phaseSize;
+    const flipPhaseEnd = 1 - phaseSize;
+
+    // Progress within flip phase
+    const pageProgress = pages.length > 1 ? pageIndex / (pages.length - 1) : 0;
+    const targetProgress =
+      flipPhaseStart + pageProgress * (flipPhaseEnd - flipPhaseStart);
+
+    const targetCenter = sectionTop + targetProgress * sectionHeight;
+    const targetScrollTop = targetCenter - window.innerHeight / 2;
 
     window.scrollTo({ top: targetScrollTop, behavior: "smooth" });
   };
@@ -167,10 +165,10 @@ export default function FlipBook({ pages }: FlipBookProps) {
     isFront: boolean
   ) => {
     if ((evt.target as HTMLElement).closest("a")) return;
-    const curr = isFront ? idx + 1 : idx;
-    const clamped = Math.min(Math.max(curr, 0), Math.max(pages.length - 1, 0));
-    setCurrentPage(clamped);
-    scrollToPageIndex(clamped);
+    const nextPage = isFront ? idx + 1 : idx;
+    const clampedPage = Math.max(0, Math.min(nextPage, pages.length - 1));
+    setCurrentPage(clampedPage);
+    scrollToPageIndex(clampedPage);
   };
 
   return (

@@ -180,7 +180,12 @@ export default function Page() {
       <main id="main" className="relative z-10">
         <Hero />
 
-        <section id="flipbook-section" className="relative">
+        <section
+          id="flipbook-section"
+          className="relative"
+          style={{ ["--total-pages" as any]: bookPages.length }}
+        >
+          {" "}
           <div id="scroll-spacer" className="scroll-spacer"></div>
           <div id="book-container" className="book-container">
             <FlipBook pages={bookPages} />
