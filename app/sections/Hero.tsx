@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { JSX } from "react";
 
 export default function Hero(): JSX.Element {
@@ -172,6 +172,16 @@ function BookCard(): JSX.Element {
   const handleMouseEnter = () => setIsOpen(true);
   const handleMouseLeave = () => setIsOpen(false);
   const handleClick = () => setIsOpen((v) => !v);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsOpen(true);
+    }, 1500);
+
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 2500);
+  }, []);
 
   return (
     <div className="relative lg:ml-auto max-lg:mx-auto w-full max-w-sm aspect-[10.2/16]">
