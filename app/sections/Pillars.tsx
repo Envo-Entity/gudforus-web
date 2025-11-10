@@ -11,7 +11,7 @@ export default function Pillars() {
 
 function SectionHeader() {
   return (
-    <div className="mb-2 flex items-end justify-between pt-10">
+    <div className="mb-5 flex items-end justify-between pt-10">
       <h2
         className="text-2xl sm:text-3xl text-foreground tracking-tight font-semibold"
         style={{
@@ -84,7 +84,7 @@ function PillarCard({
       ></div>
       <div className="relative">
         <div className="relative [perspective:1200px]">
-          <div className="relative h-40 rounded-xl overflow-hidden transform-gpu transition duration-500 group-hover:[transform:translateZ(20px)_rotateX(2deg)] ring-1 ring-foreground/20">
+          <div className="relative aspect-[20/16] rounded-xl overflow-hidden transform-gpu transition duration-500 group-hover:[transform:translateZ(20px)_rotateX(2deg)] ring-1 ring-foreground/20">
             <img
               src={image}
               alt="Book cover art placeholder"

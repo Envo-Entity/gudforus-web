@@ -179,7 +179,7 @@ function Header() {
           >
             <Image src={"/favicon.png"} height={50} width={50} alt="Logo" />
           </div>
-          <span className="text-sm text-foreground">GudForUs</span>
+          <span className="text-sm text-foreground">gud for us</span>
         </div>
         <nav className="hidden md:flex items-center gap-6 text-sm text-foreground">
           <a
