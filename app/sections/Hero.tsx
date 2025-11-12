@@ -63,7 +63,7 @@ function Title(): JSX.Element {
 
       {/* Bottom-right doodles - checkmarks, stars, and hearts */}
       <svg
-        className="absolute -bottom-6 -right-5 max-sm:-bottom-6 max-sm:-right-10 w-20 h-20 md:w-24 md:h-24 text-emerald-500/50"
+        className="absolute -bottom-6 -right-5 max-sm:-bottom-6 max-sm:-right-10 w-20 h-20 md:w-24 md:h-24 text-emerald-500/50 max-sm:hidden"
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ function Title(): JSX.Element {
       </svg>
 
       <h1
-        className="leading-none text-foreground"
+        className="leading-none text-foreground max-sm:hidden"
         style={{
           fontFamily: "'League Spartan', ui-sans-serif, Inter, system-ui",
           letterSpacing: "-0.02em",
@@ -116,47 +116,39 @@ function Title(): JSX.Element {
           <span>g</span>ud for u<span>s</span>
         </span>
       </h1>
+      <h1
+        className="leading-none text-foreground sm:hidden"
+        style={{
+          fontFamily: "'League Spartan', ui-sans-serif, Inter, system-ui",
+          letterSpacing: "-0.02em",
+        }}
+      >
+        <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[1.3]">
+          gud
+        </span>
+        <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[0.85]">
+          for
+        </span>
+        <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[0.5]">
+          us
+        </span>
+      </h1>
     </div>
   );
 }
 
 function Strapline(): JSX.Element {
   return (
-    <p className="mt-2 max-sm:mt-5 max-sm:text-center sm:pl-2 text-lg uppercase tracking-widest text-foreground">
-      NON-NEGOTIABLES OF HEALTH AND WELLBEING
-    </p>
+    <>
+      <p className="mt-2 max-sm:mt-5 max-sm:text-center sm:pl-2 text-lg uppercase tracking-widest text-foreground max-sm:hidden">
+        NON-NEGOTIABLES OF HEALTH AND WELLBEING
+      </p>
+      <p className="mt-8 text-lg uppercase tracking-widest text-foreground sm:hidden">
+        NON-NEGOTIABLES OF HEALTH AND WELLBEING
+      </p>
+    </>
   );
 }
-
-// function Title(): JSX.Element {
-//   return (
-//     <h1
-//       className="leading-none text-foreground"
-//       style={{
-//         fontFamily: "'League Spartan', ui-sans-serif, Inter, system-ui",
-//         letterSpacing: "-0.02em",
-//       }}
-//     >
-//       <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[1.3]">
-//         gud
-//       </span>
-//       <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[0.85]">
-//         for
-//       </span>
-//       <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[0.5]">
-//         us
-//       </span>
-//     </h1>
-//   );
-// }
-
-// function Strapline(): JSX.Element {
-//   return (
-//     <p className="mt-10 text-lg uppercase tracking-widest text-foreground">
-//       NON-NEGOTIABLES OF HEALTH AND WELLBEING
-//     </p>
-//   );
-// }
 
 function HeroRight(): JSX.Element {
   return (

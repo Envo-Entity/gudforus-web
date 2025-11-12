@@ -1,6 +1,6 @@
 export default function Contact() {
   return (
-    <section id="community" className="relative border-t border-white/10">
+    <section id="community" className="relative border-t border-foreground/20">
       <div className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <CommunityInfo />

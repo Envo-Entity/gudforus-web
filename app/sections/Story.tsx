@@ -1,3 +1,7 @@
+"use client";
+import dynamic from "next/dynamic";
+const Stories = dynamic(() => import("react-insta-stories"), { ssr: false });
+
 export default function Story() {
   return (
     <section id="story" className="relative border-t border-foreground/20">
@@ -51,34 +55,103 @@ function StoryCopy() {
 }
 
 function StoryVisual() {
+  const stories = [
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story1.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story2.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story3.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story4.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story5.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story6.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story7.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story8.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story9.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story10.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story11.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story12.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story13.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story14.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story15.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story16.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story17.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story18.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story19.webp",
+      duration: 3000,
+    },
+    {
+      url: "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/story20.webp",
+      duration: 3000,
+    },
+  ];
+
   return (
     <div className="relative">
       <div className="absolute -inset-12 bg-[radial-gradient(60%_60%_at_70%_30%,rgba(99,102,241,0.25),transparent_60%)] blur-3xl opacity-30"></div>
-      <div className="relative mx-auto w-full max-w-md aspect-[4/5] rounded-[28px] overflow-hidden ring-1 ring-foreground/20 bg-background/60">
-        <img
-          src="https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/spash-screen.png"
-          alt="Soft photographic lighting placeholder"
-          className="h-full w-full object-cover opacity-90"
+      <div className="relative mx-auto w-full max-w-md aspect-4/5 rounded-[28px] overflow-hidden ring-1 ring-foreground/20 bg-background/60">
+        <Stories
+          key={JSON.stringify(stories)}
+          loop
+          keyboardNavigation
+          defaultInterval={3000}
+          stories={stories}
+          width="100%"
+          height="100%"
         />
       </div>
     </div>
-  );
-}
-
-function LayersIcon() {
-  return (
-    <svg
-      className="w-3.5 h-3.5 text-emerald-300"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-      />
-    </svg>
   );
 }

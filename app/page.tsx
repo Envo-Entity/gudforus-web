@@ -152,11 +152,11 @@ export default function Page() {
           </div>
         </section>
 
+        <Story />
         <Pillars />
         <Info />
         <Review />
         <Contact />
-        <Story />
         <Checkout />
       </main>
 

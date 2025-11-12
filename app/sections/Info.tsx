@@ -1,6 +1,6 @@
 export default function Info() {
   return (
-    <section className="relative border-t-2 border-foreground/20 mt-10">
+    <section className="relative border-t border-foreground/20 mt-10">
       <div className="mx-auto max-w-6xl px-6 py-20">
         <div className="relative rounded-3xl bg-[linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] ring-1 ring-foreground/20 p-10 sm:p-16">
           <BackgroundGlow />
