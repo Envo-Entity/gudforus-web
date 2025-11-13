@@ -38,7 +38,9 @@ function CheckoutActions() {
   return (
     <div className="flex items-center gap-3">
       <Link
-        href={"https://thisisatesttrustme.lemonsqueezy.com/checkout"}
+        href={
+          "https://thisisatesttrustme.lemonsqueezy.com/buy/b6a6c57a-ef37-4d85-b90a-431787a44ca4"
+        }
         className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-neutral-900 text-sm font-semibold transition hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
         target="_blank"
       >
