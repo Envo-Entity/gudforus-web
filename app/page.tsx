@@ -170,7 +170,7 @@ function StickyCTA() {
   return (
     <div className="fixed bottom-5 right-5 z-40">
       <Link
-        href="https://thisisatesttrustme.lemonsqueezy.com/buy/b6a6c57a-ef37-4d85-b90a-431787a44ca4?quantity=100000000000"
+        href={"https://thisisatesttrustme.lemonsqueezy.com/checkout"}
         className="group inline-flex items-center gap-3 rounded-full bg-emerald-500 px-5 py-3 text-neutral-950 shadow-[0_10px_40px_-10px_rgba(16,185,129,0.7)] transition will-change-transform hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400/40"
         aria-label="Buy now"
         target="_blank"
