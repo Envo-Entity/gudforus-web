@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import type { JSX } from "react";
+import { motion } from "motion/react";
 
 export default function Hero(): JSX.Element {
   return (
@@ -25,6 +26,10 @@ function HeroLeft(): JSX.Element {
 }
 
 function Title(): JSX.Element {
+  const variantsTextBlurIn = {
+    hidden: { filter: "blur(10px)", opacity: 0 },
+    visible: { filter: "blur(0px)", opacity: 1 },
+  };
   return (
     <div className="relative">
       {/* Top-left doodles - hearts and sparkles */}
@@ -105,7 +110,11 @@ function Title(): JSX.Element {
         <circle cx="82" cy="80" r="1.5" fill="currentColor" />
       </svg>
 
-      <h1
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        transition={{ duration: 1 }}
+        variants={variantsTextBlurIn}
         className="leading-none text-foreground max-sm:hidden"
         style={{
           fontFamily: "'League Spartan', ui-sans-serif, Inter, system-ui",
@@ -115,8 +124,12 @@ function Title(): JSX.Element {
         <span className="block max-sm:text-center text-7xl sm:text-7xl md:text-8xl xl:text-9xl 2xl:text-9xl font-semibold tracking-tight">
           <span>g</span>ud for u<span>s</span>
         </span>
-      </h1>
-      <h1
+      </motion.h1>
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        transition={{ duration: 1 }}
+        variants={variantsTextBlurIn}
         className="leading-none text-foreground sm:hidden"
         style={{
           fontFamily: "'League Spartan', ui-sans-serif, Inter, system-ui",
@@ -132,7 +145,7 @@ function Title(): JSX.Element {
         <span className="block text-7xl sm:text-7xl md:text-8xl xl:text-8xl 2xl:text-9xl font-semibold tracking-tight leading-[0.5]">
           us
         </span>
-      </h1>
+      </motion.h1>
     </div>
   );
 }
