@@ -4,7 +4,6 @@ import Script from "next/script";
 import { League_Spartan } from "next/font/google";
 import Header from "@/components/header";
 import { Component } from "@/components/ui/cursor-follower";
-import Cursor from "@/components/ui/inverted-cursor";
 
 const leagueSpartan = League_Spartan({
   subsets: ["latin"],
@@ -102,10 +101,9 @@ export default function RootLayout({
         <Script id="ld-json" type="application/ld+json">
           {JSON.stringify(jsonLd)}
         </Script>
-        <Cursor />
         <Header />
         <main className="mt-[84px]">{children}</main>
-        {/* <Component /> */}
+        <Component />
       </body>
     </html>
   );
