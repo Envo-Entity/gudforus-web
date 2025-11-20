@@ -105,7 +105,7 @@ export default function Page() {
   ];
 
   return (
-    <>
+    <div className="overflow-hidden">
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(50%_50%_at_50%_0%,rgba(16,185,129,0.10),transparent_60%),radial-gradient(30%_30%_at_90%_10%,rgba(99,102,241,0.08),transparent_70%)]"></div>
         <div className="absolute inset-0 mix-blend-overlay opacity-[0.08]"></div>
@@ -118,7 +118,7 @@ export default function Page() {
         Skip to content
       </a>
 
-      <main id="main" className="relative z-10">
+      <main id="main" className="relative z-10 w-full overflow-hidden">
         <Hero />
 
         <section
@@ -200,7 +200,7 @@ export default function Page() {
       </motion.div>
 
       <StickyCTA />
-    </>
+    </div>
   );
 }
 
