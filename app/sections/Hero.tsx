@@ -41,12 +41,12 @@ function Title(): JSX.Element {
       <div
         className="leading-none text-foreground"
         style={{
-          fontFamily: "'League Spartan', ui-sans-serif, Inter, system-ui",
-          letterSpacing: "-0.02em",
+          fontFamily: "var(--font-dm-serif-display), Georgia, serif",
+          letterSpacing: "-0.01em",
         }}
       >
-        <div className="flex items-center justify-center lg:justify-start max-[420px]:justify-start flex-wrap text-7xl sm:text-7xl md:text-8xl xl:text-9xl 2xl:text-9xl font-semibold tracking-tight text-center lg:text-left max-[420px]:text-left">
-          <span>gud for us</span>
+        <div className="flex items-center justify-center lg:justify-start max-[420px]:justify-start flex-wrap text-7xl sm:text-7xl md:text-8xl xl:text-9xl 2xl:text-9xl font-normal tracking-tight text-center lg:text-left max-[420px]:text-left">
+          <span>gud for us.</span>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ function Title(): JSX.Element {
 
 function Strapline(): JSX.Element {
   return (
-    <div className="mt-0 text-4xl md:text-5xl lg:text-6xl text-center lg:text-left max-[420px]:text-left">
+    <div className="mt-2 text-4xl md:text-5xl lg:text-6xl text-center lg:text-left max-[420px]:text-left">
       <VerticalCutReveal
         splitBy="characters"
         staggerDuration={0.025}

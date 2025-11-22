@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { League_Spartan } from "next/font/google";
+import { League_Spartan, DM_Serif_Display } from "next/font/google";
 import Header from "@/components/header";
 import { Component } from "@/components/ui/cursor-follower";
 
@@ -9,6 +9,14 @@ const leagueSpartan = League_Spartan({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-league-spartan",
+  display: "swap",
+});
+
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-dm-serif-display",
   display: "swap",
 });
 
@@ -97,7 +105,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${leagueSpartan.variable} antialiased`}>
+      <body className={`${leagueSpartan.variable} ${dmSerifDisplay.variable} antialiased`}>
         <Script id="ld-json" type="application/ld+json">
           {JSON.stringify(jsonLd)}
         </Script>
