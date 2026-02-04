@@ -100,12 +100,12 @@ function DailyDigestCard() {
 function ComparisonToolCard() {
   const swapData = {
     swap_from: {
-      name: "Milk Chocolate",
+      name: "Dairy milk Chocolate",
       negative_aspect: "High Sugar",
       image: "/app-images/chocolate.webp",
     },
     swap_to: {
-      name: "Dark Chocolate",
+      name: "Lindt Dark Chocolate",
       positive_aspect: "Antioxidants",
       image: "/app-images/darkchocolate.webp",
     },
@@ -116,7 +116,7 @@ function ComparisonToolCard() {
       {/* Header */}
       <div className="mb-6 flex flex-row items-center justify-between">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-green-900">
+          <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-green-900">
             This week&apos;s easiest upgrade
           </p>
         </div>
@@ -132,7 +132,7 @@ function ComparisonToolCard() {
               alt={swapData.swap_from.name}
               className="object-contain p-2"
               fill
-              sizes="(max-width: 768px) 100px, 150px"
+              sizes="(max-width: 768px) 80px, 120px"
             />
           </div>
           <p className="mb-1.5 text-center text-[11px] font-bold uppercase tracking-wide text-gray-900 line-clamp-2">
@@ -163,7 +163,7 @@ function ComparisonToolCard() {
               alt={swapData.swap_to.name}
               className="object-contain p-2"
               fill
-              sizes="(max-width: 768px) 100px, 150px"
+              sizes="(max-width: 768px) 80px, 120px"
             />
           </div>
           <p className="mb-1.5 text-center text-[11px] font-bold uppercase tracking-wide text-gray-900 line-clamp-2">
