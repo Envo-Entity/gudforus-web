@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function FeatureCards() {
   return (
@@ -97,48 +98,84 @@ function DailyDigestCard() {
 }
 
 function ComparisonToolCard() {
+  const swapData = {
+    swap_from: {
+      name: "Milk Chocolate",
+      negative_aspect: "High Sugar",
+      image: "/app-images/chocolate.webp",
+    },
+    swap_to: {
+      name: "Dark Chocolate",
+      positive_aspect: "Antioxidants",
+      image: "/app-images/darkchocolate.webp",
+    },
+  };
+
   return (
-    <div className="iso-card bg-[#2E7D32] text-white rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 min-h-[350px] sm:min-h-[400px] flex flex-col justify-between relative overflow-hidden">
-      <div>
-        <div className="flex items-center gap-2 mb-4">
-          <span className="w-2 h-2 rounded-full bg-white"></span>
-          <span className="text-green-100 font-medium text-sm">
-            Comparison Tool
-          </span>
-        </div>
-        <h3 className="text-2xl sm:text-3xl font-display text-white mb-4">
-          This vs. That
-        </h3>
-        <p className="text-green-100/80 text-sm">
-          Can&apos;t decide? Compare two products side-by-side on 50+ metrics
-          instantly.
-        </p>
-      </div>
-
-      {/* Comparison UI */}
-      <div className="flex items-end justify-between mt-6 sm:mt-8 bg-black/10 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
-        <div className="text-left">
-          <p className="text-[10px] sm:text-xs text-green-200 uppercase tracking-widest mb-1">
-            Product A
+    <div className="iso-card bg-white border border-gray-100 rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 min-h-[350px] sm:min-h-[400px] flex flex-col relative overflow-hidden shadow-soft">
+      {/* Header */}
+      <div className="mb-6 flex flex-row items-center justify-between">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-green-900">
+            This week&apos;s easiest upgrade
           </p>
-          <span className="text-3xl sm:text-4xl font-display">92</span>
-          <span className="text-xs sm:text-sm text-green-200">/100</span>
-        </div>
-        <div className="h-10 sm:h-12 w-[1px] bg-white/20"></div>
-        <div className="text-right">
-          <p className="text-[10px] sm:text-xs text-green-200 uppercase tracking-widest mb-1">
-            Product B
-          </p>
-          <span className="text-3xl sm:text-4xl font-display text-green-200">
-            64
-          </span>
-          <span className="text-xs sm:text-sm text-green-200">/100</span>
         </div>
       </div>
 
-      <button className="bg-white text-[#2E7D32] px-6 py-2 rounded-full w-max text-sm font-medium mt-6 sm:mt-8 shadow hover:bg-gray-50 transition-all">
-        Compare Now
-      </button>
+      {/* Content */}
+      <div className="relative flex flex-row items-center justify-between gap-2 flex-1">
+        {/* Left Item (Current Product) */}
+        <div className="flex-1 flex flex-col items-center">
+          <div className="relative mb-3 aspect-square w-full flex items-center justify-center rounded-2xl bg-gray-50 p-3">
+            <Image
+              src={swapData.swap_from.image}
+              alt={swapData.swap_from.name}
+              className="object-contain p-2"
+              fill
+              sizes="(max-width: 768px) 100px, 150px"
+            />
+          </div>
+          <p className="mb-1.5 text-center text-[11px] font-bold uppercase tracking-wide text-gray-900 line-clamp-2">
+            {swapData.swap_from.name}
+          </p>
+          <div className="rounded-full border border-red-100 bg-red-50 px-2 py-0.5">
+            <p className="text-[9px] font-bold uppercase text-red-600">
+              - {swapData.swap_from.negative_aspect}
+            </p>
+          </div>
+        </div>
+
+        {/* Swap Icon */}
+        <div className="relative z-20 -mt-6 flex flex-col items-center justify-center px-1">
+          <div className="h-8 w-8 flex items-center justify-center rounded-full border border-gray-100 bg-white shadow-sm">
+            <ArrowRight size={16} color="#9CA3AF" />
+          </div>
+          <p className="mt-2 text-[8px] font-black uppercase tracking-widest text-gray-300">
+            Swap
+          </p>
+        </div>
+
+        {/* Right Item (Better Alternative) */}
+        <div className="flex-1 flex flex-col items-center">
+          <div className="relative mb-3 aspect-square w-full flex items-center justify-center rounded-2xl border border-green-50 bg-green-50/50 p-3">
+            <Image
+              src={swapData.swap_to.image}
+              alt={swapData.swap_to.name}
+              className="object-contain p-2"
+              fill
+              sizes="(max-width: 768px) 100px, 150px"
+            />
+          </div>
+          <p className="mb-1.5 text-center text-[11px] font-bold uppercase tracking-wide text-gray-900 line-clamp-2">
+            {swapData.swap_to.name}
+          </p>
+          <div className="rounded-full border border-green-100 bg-green-50 px-2 py-0.5">
+            <p className="text-[9px] font-bold uppercase text-green-600">
+              + {swapData.swap_to.positive_aspect}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -83,7 +83,7 @@ export default function Hero() {
           <div className="hidden md:flex items-center justify-center">
             <div className="relative w-full aspect-square max-w-md rounded-lg overflow-hidden">
               <video
-                src="https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/hero-vid.mov"
+                src="https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/hero-vid.mp4"
                 className="w-full h-full object-cover"
                 autoPlay
                 loop
