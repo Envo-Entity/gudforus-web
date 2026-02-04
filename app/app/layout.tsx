@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "sustainability",
     "health app",
   ],
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

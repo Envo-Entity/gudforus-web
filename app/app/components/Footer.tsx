@@ -2,33 +2,21 @@ import Image from "next/image";
 
 export default function Footer() {
   const footerLinks = {
-    product: {
-      title: "Product",
-      links: [
-        { label: "Download App", href: "#" },
-        { label: "Browser Extension", href: "#" },
-        { label: "Pricing", href: "#" },
-        { label: "For Business", href: "#" },
-      ],
-    },
     company: {
       title: "Company",
       links: [
-        { label: "About Us", href: "#" },
-        { label: "Careers", href: "#" },
-        { label: "Manifesto", href: "#" },
-        { label: "Press", href: "#" },
+        { label: "Terms & Conditions", href: "#" },
+        { label: "Privacy Policy", href: "#" },
       ],
     },
-    resources: {
-      title: "Resources",
+    download: {
+      title: "Download",
       links: [
-        { label: "Blog", href: "#" },
-        { label: "Database", href: "#" },
-        { label: "Help Center", href: "#" },
-        { label: "Privacy", href: "#" },
+        { label: "iOS App Store", href: "#" },
+        { label: "Google Play Store", href: "#" },
       ],
     },
+    /*
     social: {
       title: "Social",
       links: [
@@ -37,6 +25,7 @@ export default function Footer() {
         { label: "LinkedIn", href: "#" },
       ],
     },
+     */
   };
 
   return (
@@ -61,16 +50,15 @@ export default function Footer() {
           </div>
 
           {/* Footer Links */}
-          <FooterLinkSection {...footerLinks.product} />
           <FooterLinkSection {...footerLinks.company} />
-          <FooterLinkSection {...footerLinks.resources} />
-          <FooterLinkSection {...footerLinks.social} />
+          <FooterLinkSection {...footerLinks.download} />
+          {/* <FooterLinkSection {...footerLinks.social} /> */}
         </div>
 
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-200">
           <p className="text-xs text-[#6B7280]">
-            © 2023 GudForUs Inc. All rights reserved.
+            © 2026 GudForUs Inc. All rights reserved.
           </p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <span className="px-3 py-1 bg-white rounded-full text-xs text-gray-500 border border-gray-200">

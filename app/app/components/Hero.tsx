@@ -1,6 +1,7 @@
 "use client";
 
 import { RotatingText } from "@/components/ui/rotating-text";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -54,9 +55,12 @@ export default function Hero() {
                   className="inline-flex items-center justify-center gap-3 bg-white text-gray-900 border border-gray-200 px-8 py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-lg min-w-[180px]"
                   href="#"
                 >
-                  <span className="material-icons-round text-xl text-[#2E7D32]">
-                    android
-                  </span>
+                  <Image
+                    src="/app-images/google-play-store-icon.webp"
+                    alt="Google Play"
+                    width={20}
+                    height={20}
+                  />
                   <span>Google Play</span>
                 </a>
               </div>

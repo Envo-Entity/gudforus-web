@@ -71,8 +71,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico",
   },
 };
 
@@ -105,7 +104,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${leagueSpartan.variable} ${dmSerifDisplay.variable} antialiased`}>
+      <body
+        className={`${leagueSpartan.variable} ${dmSerifDisplay.variable} antialiased`}
+      >
         <Script id="ld-json" type="application/ld+json">
           {JSON.stringify(jsonLd)}
         </Script>

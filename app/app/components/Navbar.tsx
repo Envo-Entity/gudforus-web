@@ -58,30 +58,11 @@ export default function Navbar() {
                   ? "text-green-50 hover:text-white"
                   : "text-gray-600 hover:text-[#2E7D32]"
               }`}
-              href="#how-it-works"
+              href="#scores"
             >
               How it works
             </a>
-            <a
-              className={`text-sm font-medium transition-colors duration-500 ${
-                isInHero
-                  ? "text-green-50 hover:text-white"
-                  : "text-gray-600 hover:text-[#2E7D32]"
-              }`}
-              href="#for-brands"
-            >
-              For Brands
-            </a>
-            <a
-              className={`text-sm font-medium transition-colors duration-500 ${
-                isInHero
-                  ? "text-green-50 hover:text-white"
-                  : "text-gray-600 hover:text-[#2E7D32]"
-              }`}
-              href="#science"
-            >
-              Science
-            </a>
+
             <a
               className="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-[#2E7D32] hover:bg-[#1B5E20] transition-all shadow-lg hover:shadow-[0_0_20px_rgba(46,125,50,0.3)]"
               href="#get-app"
@@ -121,33 +102,12 @@ export default function Navbar() {
                     ? "text-green-50 hover:text-white"
                     : "text-gray-600 hover:text-[#2E7D32]"
                 }`}
-                href="#how-it-works"
+                href="#scores"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 How it works
               </a>
-              <a
-                className={`text-sm font-medium transition-colors duration-500 ${
-                  isInHero
-                    ? "text-green-50 hover:text-white"
-                    : "text-gray-600 hover:text-[#2E7D32]"
-                }`}
-                href="#for-brands"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                For Brands
-              </a>
-              <a
-                className={`text-sm font-medium transition-colors duration-500 ${
-                  isInHero
-                    ? "text-green-50 hover:text-white"
-                    : "text-gray-600 hover:text-[#2E7D32]"
-                }`}
-                href="#science"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Science
-              </a>
+
               <a
                 className="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-[#2E7D32] hover:bg-[#1B5E20] transition-all shadow-lg w-fit"
                 href="#get-app"
