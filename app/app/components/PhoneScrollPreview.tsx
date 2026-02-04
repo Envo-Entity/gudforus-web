@@ -33,10 +33,10 @@ export default function PhoneScrollPreview() {
   const scale = useTransform(scrollYProgress, [0, 0.5], scaleDimensions());
 
   // Opacity for info blocks - fades in during the first 40% of scroll
-  const infoOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
+  const infoOpacity = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
   // Slide in effect - subtle movement
-  const infoXLeft = useTransform(scrollYProgress, [0.4, 0.7], [-20, 0]);
-  const infoXRight = useTransform(scrollYProgress, [0.4, 0.7], [20, 0]);
+  const infoXLeft = useTransform(scrollYProgress, [0.2, 0.6], [-20, 0]);
+  const infoXRight = useTransform(scrollYProgress, [0.2, 0.6], [20, 0]);
 
   return (
     <section className="relative -mt-32 md:-mt-48 z-20" ref={containerRef}>

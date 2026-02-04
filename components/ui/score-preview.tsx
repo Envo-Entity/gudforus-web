@@ -79,7 +79,7 @@ const ScorePreview: React.FC<ScorePreviewProps> = ({
           <img
             src="/app-images/heart.png"
             alt="Health"
-            className="sm:w-25 sm:h-25 w-20 h-20 object-contain drop-shadow-sm"
+            className="sm:w-22 sm:h-22 w-20 h-20 object-contain drop-shadow-sm"
           />
         );
       case "compatibility":
