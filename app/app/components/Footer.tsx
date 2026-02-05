@@ -5,15 +5,21 @@ export default function Footer() {
     company: {
       title: "Company",
       links: [
-        { label: "Terms & Conditions", href: "#" },
-        { label: "Privacy Policy", href: "#" },
+        { label: "Terms & Conditions", href: "/app/terms" },
+        { label: "Privacy Policy", href: "/app/privacy" },
       ],
     },
     download: {
       title: "Download",
       links: [
-        { label: "iOS App Store", href: "#" },
-        { label: "Google Play Store", href: "#" },
+        {
+          label: "iOS App Store",
+          href: "https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992",
+        },
+        {
+          label: "Google Play Store",
+          href: "https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN",
+        },
       ],
     },
     /*
