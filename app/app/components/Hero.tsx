@@ -45,15 +45,17 @@ export default function Hero() {
             <div className="mt-10">
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center md:items-start">
                 <a
+                  target="_blank"
                   className="inline-flex items-center justify-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-xl min-w-[180px]"
-                  href="#"
+                  href="https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992"
                 >
                   <span className="material-icons-round text-xl">apple</span>
                   <span>App Store</span>
                 </a>
                 <a
+                  target="_blank"
                   className="inline-flex items-center justify-center gap-3 bg-white text-gray-900 border border-gray-200 px-8 py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-lg min-w-[180px]"
-                  href="#"
+                  href="https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN"
                 >
                   <Image
                     src="/app-images/google-play-store-icon.webp"
