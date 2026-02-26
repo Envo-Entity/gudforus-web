@@ -41,14 +41,6 @@ export const metadata: Metadata = {
       "A short, practical eBook about health, nature, sustainability, and microplastics — small choices that matter.",
     url: PAGE_URL,
     siteName: "Gud For Us",
-    images: [
-      {
-        url: OG_IMAGE,
-        width: 1200,
-        height: 630,
-        alt: OG_IMAGE_ALT,
-      },
-    ],
     type: "book",
   },
   twitter: {
@@ -56,8 +48,7 @@ export const metadata: Metadata = {
     title: "Gud For Us — Non-negotiables of health and wellbeing",
     description:
       "A short, practical eBook about health, nature, sustainability, and microplastics — small choices that matter.",
-    images: [OG_IMAGE],
-    creator: "@your_twitter_handle",
+    creator: "@GudForUs",
   },
   robots: {
     index: true,
