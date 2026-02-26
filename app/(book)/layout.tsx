@@ -20,10 +20,10 @@ const dmSerifDisplay = DM_Serif_Display({
   display: "swap",
 });
 
-const SITE_URL = "https://gud-for-us.vercel.app";
+const SITE_URL = "https://gudforus.com";
 const PAGE_PATH = "/";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const OG_IMAGE = `${SITE_URL}/favicon.png`;
+const OG_IMAGE = `${SITE_URL}/og.jpg`;
 const OG_IMAGE_ALT =
   "Cover of 'Gud For Us' — Non-negotiables of health and wellbeing";
 
@@ -72,6 +72,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 

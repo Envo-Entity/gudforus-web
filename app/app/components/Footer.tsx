@@ -66,11 +66,6 @@ export default function Footer() {
           <p className="text-xs text-[#6B7280]">
             © 2026 GudForUs Inc. All rights reserved.
           </p>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <span className="px-3 py-1 bg-white rounded-full text-xs text-gray-500 border border-gray-200">
-              English (US)
-            </span>
-          </div>
         </div>
       </div>
     </footer>

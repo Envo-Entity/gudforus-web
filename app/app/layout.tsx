@@ -14,10 +14,19 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+const SITE_URL = "https://gudforus.com";
+const PAGE_PATH = "/app";
+const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const OG_IMAGE = `${SITE_URL}/og.jpg`;
+
 export const metadata: Metadata = {
   title: "GudForUs - Understand What You Consume",
   description:
     "Decode labels instantly. From ingredient quality to environmental impact, GudForUs gives you the clarity to make better choices for your body and the planet.",
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: PAGE_URL,
+  },
   keywords: [
     "food scanner",
     "ingredient analysis",
@@ -27,6 +36,31 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+  openGraph: {
+    title: "GudForUs - Understand What You Consume",
+    description:
+      "Decode labels instantly. From ingredient quality to environmental impact, GudForUs gives you the clarity to make better choices for your body and the planet.",
+    url: PAGE_URL,
+    siteName: "Gud For Us",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "GudForUs - Understand What You Consume",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GudForUs - Understand What You Consume",
+    description:
+      "Decode labels instantly. From ingredient quality to environmental impact, GudForUs gives you the clarity to make better choices for your body and the planet.",
+    images: [OG_IMAGE],
   },
 };
 

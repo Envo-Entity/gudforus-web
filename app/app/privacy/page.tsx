@@ -301,15 +301,6 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="mt-4 rounded-lg bg-white p-6">
               <p className="font-semibold">GudForUs</p>
-              {/* <p className="mt-2">
-                Email:{" "}
-                <a
-                  href="mailto:privacy@gudforus.com"
-                  className="text-[#4A6C48] underline"
-                >
-                  privacy@gudforus.com
-                </a>
-              </p> */}
               <p className="mt-1">
                 Support:{" "}
                 <a
