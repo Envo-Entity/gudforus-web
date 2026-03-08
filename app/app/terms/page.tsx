@@ -61,13 +61,13 @@ export default function TermsOfServicePage() {
             </p>
             <ul className="ml-6 list-disc space-y-2">
               <li>Barcode and ingredient label scanning</li>
-              <li>Health and environmental impact analysis</li>
+              <li>Health and personal compatibility analysis</li>
               <li>
                 Personalized health scores based on ingredient quality and
                 nutritional information
               </li>
               <li>
-                Environmental impact scores based on sustainability factors
+                personal compatibility scores based on sustainability factors
               </li>
               <li>AI-generated daily insights about consumption patterns</li>
               <li>
@@ -376,13 +376,13 @@ export default function TermsOfServicePage() {
             </div>
 
             <h3 className="mb-2 mt-6 text-xl font-semibold">
-              8.2 Environmental Impact Disclaimer
+              8.2 personal compatibility Disclaimer
             </h3>
             <p>
-              Environmental impact scores are estimates based on available data
-              and methodologies. These scores are intended to provide general
-              guidance and should not be considered definitive assessments of a
-              product&apos;s environmental footprint.
+              personal compatibility scores are estimates based on available
+              data and methodologies. These scores are intended to provide
+              general guidance and should not be considered definitive
+              assessments of a product&apos;s environmental footprint.
             </p>
 
             <h3 className="mb-2 mt-4 text-xl font-semibold">

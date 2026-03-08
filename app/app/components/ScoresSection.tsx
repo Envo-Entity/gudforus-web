@@ -21,7 +21,7 @@ const scoreData = [
   // {
   //   title: "Environment Score",
   //   description:
-  //     "Measures environmental impact across carbon footprint, water usage, sourcing, and packaging sustainability.",
+  //     "Measures personal compatibility across carbon footprint, water usage, sourcing, and packaging sustainability.",
   //   icon: "environment" as const,
   //   score: 62,
   // },
@@ -41,7 +41,7 @@ export default function ScoresSection() {
           </h2>
           <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
             Every product is evaluated across health, personal compatibility,
-            and environmental impact — so you know exactly what you&apos;re
+            and personal compatibility — so you know exactly what you&apos;re
             choosing.
           </p>
         </div>

@@ -21,7 +21,7 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 export const metadata: Metadata = {
   title: "GudForUs - Understand What You Consume",
   description:
-    "Decode labels instantly. From ingredient quality to environmental impact, GudForUs gives you the clarity to make better choices for your body and the planet.",
+    "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: PAGE_URL,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "GudForUs - Understand What You Consume",
     description:
-      "Decode labels instantly. From ingredient quality to environmental impact, GudForUs gives you the clarity to make better choices for your body and the planet.",
+      "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
     url: PAGE_URL,
     siteName: "Gud For Us",
     type: "website",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GudForUs - Understand What You Consume",
     description:
-      "Decode labels instantly. From ingredient quality to environmental impact, GudForUs gives you the clarity to make better choices for your body and the planet.",
+      "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
     creator: "@GudForUs",
   },
 };

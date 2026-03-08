@@ -109,8 +109,8 @@ export default function PrivacyPolicyPage() {
             <ul className="ml-6 list-disc space-y-2">
               <li>Provide and maintain the App&apos;s functionality</li>
               <li>
-                Analyze product ingredients and generate health and
-                environmental impact scores
+                Analyze product ingredients and generate health and personal
+                compatibility scores
               </li>
               <li>
                 Personalize your experience based on your preferences and scan
