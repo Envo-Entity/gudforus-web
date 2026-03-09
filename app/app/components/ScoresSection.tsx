@@ -40,9 +40,8 @@ export default function ScoresSection() {
             Two Scores. One Clear Decision.
           </h2>
           <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Every product is evaluated across health, personal compatibility,
-            and personal compatibility — so you know exactly what you&apos;re
-            choosing.
+            Every product is evaluated across health and personal compatibility
+            — so you know exactly what you&apos;re choosing.
           </p>
         </div>
 

@@ -36,9 +36,9 @@ export default function Hero() {
 
             {/* Subtitle */}
             <p className="mt-4 max-w-2xl mx-auto md:mx-0 text-md sm:text-xl text-gray-600 font-light leading-relaxed">
-              Decode labels instantly. From ingredient quality to environmental
-              impact, GudForUs gives you the clarity to make better choices for
-              your body and the planet.
+              Decode labels instantly. From ingredient quality to personal
+              compatibility, gud for us gives you the clarity to make better
+              choices for your body and the planet.
             </p>
 
             {/* App Store Buttons */}
