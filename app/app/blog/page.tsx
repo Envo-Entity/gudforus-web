@@ -1,0 +1,159 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+const posts = [
+  {
+    href: "/app/blog/best-yuka-alternative",
+    title: "Best Yuka Alternative in 2026",
+    category: "Comparison",
+    description:
+      "A comparison of Gud For Us, Yuka, Open Food Facts, and Think Dirty for ingredient analysis and personal compatibility.",
+    date: "February 27, 2026",
+  },
+  {
+    href: "/app/blog/allergy-ingredient-checker",
+    title: "How to Check if a Product Is Safe for Your Allergy",
+    category: "Allergy Safety",
+    description:
+      "A practical guide to hidden allergens, ingredient labels, and safer shopping with personalized ingredient analysis.",
+    date: "March 17, 2026",
+  },
+  {
+    href: "/app/blog/why-ingredient-lists-are-hard-to-understand",
+    title: "Why Ingredient Lists Are Hard to Understand",
+    category: "Education",
+    description:
+      "An explanation of why labels feel unreadable, what vague ingredient terms really mean, and how modern tools help.",
+    date: "March 17, 2026",
+  },
+];
+
+export const metadata: Metadata = {
+  title: "Gud For Us Blog | Ingredient Labels, Allergies, and Smarter Scanning",
+  description:
+    "Read Gud For Us articles about ingredient labels, food and cosmetic scanning, hidden allergens, and better product decisions.",
+  alternates: {
+    canonical: "https://gudforus.com/app/blog",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Gud For Us Blog",
+    description:
+      "Articles about ingredient labels, allergens, food scanning, cosmetic scanning, and better product decisions.",
+    url: "https://gudforus.com/app/blog",
+    type: "website",
+    images: [
+      {
+        url: "https://gudforus.com/app/opengraph-image.jpg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gud For Us Blog",
+    description:
+      "Articles about ingredient labels, allergens, food scanning, cosmetic scanning, and better product decisions.",
+    images: ["https://gudforus.com/app/twitter-image.jpg"],
+  },
+};
+
+export default function BlogIndexPage() {
+  return (
+    <main className="min-h-screen bg-[#fafaf7] text-[#1a1a17] font-sans overflow-x-hidden selection:bg-[#d8f3dc] selection:text-[#1a1a17]">
+      <section className="relative px-6 pt-[140px] pb-20 text-center overflow-hidden">
+        {/* Background Gradients from Yuka Alternative */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(45, 106, 79, 0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 20%, rgba(82, 183, 136, 0.04) 0%, transparent 60%)"
+        }} />
+
+        <div className="relative mx-auto max-w-4xl z-10">
+          {/* Eyebrow */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d8f3dc] text-[#2d6a4f] font-semibold text-[0.78rem] uppercase tracking-[0.04em] mb-7 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#52b788] animate-pulse"></span>
+            Gud For Us Blog
+          </div>
+
+          <h1 className="font-display text-[clamp(2.4rem,5.5vw,3.8rem)] leading-[1.12] tracking-[-0.025em] max-w-[780px] mx-auto mb-6 text-[#1a1a17]">
+            Better health decisions start with <em className="text-[#2d6a4f] italic">labels you can understand.</em>
+          </h1>
+
+          <p className="text-[1.12rem] text-[#5c5c52] max-w-[560px] mx-auto mb-10 leading-[1.7]">
+            Straightforward guides on ingredients, hidden allergens, and product scanning so you can move from confusion to clarity.
+          </p>
+
+          <div className="flex flex-wrap gap-3.5 justify-center items-center">
+            <Link
+              href={posts[0].href}
+              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full bg-[#2d6a4f] text-white font-semibold text-[0.95rem] hover:bg-[#40916c] hover:-translate-y-[2px] shadow-[0_4px_20px_rgba(45,106,79,0.25)] hover:shadow-[0_8px_30px_rgba(45,106,79,0.3)] transition-all duration-300"
+            >
+              Start reading
+            </Link>
+            <Link
+              href="/app"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-transparent text-[#1a1a17] font-semibold text-[0.95rem] border-[1.5px] border-[#e5e3dd] hover:border-[#2d6a4f] hover:text-[#2d6a4f] hover:bg-[#edf7ee] transition-all duration-300"
+            >
+              Explore the app
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Articles Section */}
+      <section className="mx-auto max-w-[1120px] px-6 pb-24 relative z-10">
+        <div className="mb-12 border-b border-[#edecea] pb-6 flex items-end justify-between gap-6">
+          <div>
+            <h2 className="font-display text-3xl text-[#1a1a17] tracking-tight mb-2">
+              Latest Articles
+            </h2>
+            <p className="text-[0.95rem] text-[#5c5c52]">
+              Practical reading for real shopping decisions
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <Link
+              key={post.href}
+              href={post.href}
+              className="group flex flex-col bg-white border border-[#edecea] rounded-[20px] p-7 shadow-[0_1px_3px_rgba(26,26,23,0.04),0_1px_2px_rgba(26,26,23,0.06)] hover:shadow-[0_12px_40px_rgba(26,26,23,0.08),0_4px_12px_rgba(26,26,23,0.04)] hover:-translate-y-[2px] transition-all duration-300 relative overflow-hidden"
+            >
+              {/* Top Accent line on hover */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-[#2d6a4f] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
+
+              <div className="flex items-center gap-3 mb-5">
+                <span className="text-[#2d6a4f] font-bold text-[0.72rem] uppercase tracking-[0.08em]">
+                  {post.category}
+                </span>
+              </div>
+
+              <h3 className="font-display text-[1.4rem] leading-[1.2] text-[#1a1a17] mb-3 group-hover:text-[#2d6a4f] transition-colors duration-200">
+                {post.title}
+              </h3>
+
+              <p className="text-[0.92rem] text-[#5c5c52] leading-[1.65] mb-8 flex-grow">
+                {post.description}
+              </p>
+
+              <div className="flex items-center justify-between border-t border-[#edecea] pt-5 mt-auto">
+                <span className="text-[0.8rem] text-[#8a8a7e] font-medium tracking-wide">
+                  {post.date}
+                </span>
+                <span className="flex items-center gap-1.5 text-[0.85rem] font-semibold text-[#1a1a17] group-hover:text-[#2d6a4f] transition-colors">
+                  Read article
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}

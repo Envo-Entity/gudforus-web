@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -27,7 +28,7 @@ export default function Navbar() {
       className={`fixed w-full z-50 backdrop-blur-md border-b transition-colors duration-500 ${
         isInHero
           ? "bg-[#4a6c48]/90 border-white/20"
-          : "bg-[#F2F0E9]/90 border-gray-200"
+          : "bg-[#fafaf7]/90 border-[#e5e3dd]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,15 +60,26 @@ export default function Navbar() {
               className={`text-sm font-medium transition-colors duration-500 ${
                 isInHero
                   ? "text-green-50 hover:text-white"
-                  : "text-gray-600 hover:text-[#2E7D32]"
+                  : "text-[#5c5c52] hover:text-[#2d6a4f]"
               }`}
               href="#scores"
             >
               How it works
             </a>
 
+            <Link
+              href="/app/blog"
+              className={`text-sm font-medium transition-colors duration-500 ${
+                isInHero
+                  ? "text-green-50 hover:text-white"
+                  : "text-[#5c5c52] hover:text-[#2d6a4f]"
+              }`}
+            >
+              Blog
+            </Link>
+
             <a
-              className="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-[#2E7D32] hover:bg-[#1B5E20] transition-all shadow-lg hover:shadow-[0_0_20px_rgba(46,125,50,0.3)]"
+              className="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-[#2d6a4f] hover:bg-[#1f513b] transition-all shadow-lg hover:shadow-[0_4px_20px_rgba(45,106,79,0.25)] hover:-translate-y-[1px]"
               href="#get-app"
             >
               Get the App
@@ -98,12 +110,12 @@ export default function Navbar() {
               isInHero ? "border-white/20" : "border-gray-200"
             }`}
           >
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4 px-4 pb-4">
               <a
                 className={`text-sm font-medium transition-colors duration-500 ${
                   isInHero
                     ? "text-green-50 hover:text-white"
-                    : "text-gray-600 hover:text-[#2E7D32]"
+                    : "text-[#5c5c52] hover:text-[#2d6a4f]"
                 }`}
                 href="#scores"
                 onClick={() => setMobileMenuOpen(false)}
@@ -111,8 +123,20 @@ export default function Navbar() {
                 How it works
               </a>
 
+              <Link
+                className={`text-sm font-medium transition-colors duration-500 ${
+                  isInHero
+                    ? "text-green-50 hover:text-white"
+                    : "text-[#5c5c52] hover:text-[#2d6a4f]"
+                }`}
+                href="/app/blog"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
+              </Link>
+
               <a
-                className="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-[#2E7D32] hover:bg-[#1B5E20] transition-all shadow-lg w-fit"
+                className="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-[#2d6a4f] hover:bg-[#1f513b] transition-all shadow-lg w-fit"
                 href="#get-app"
                 onClick={() => setMobileMenuOpen(false)}
               >

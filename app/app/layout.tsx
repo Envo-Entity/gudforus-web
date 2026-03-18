@@ -53,6 +53,17 @@ export const metadata: Metadata = {
       "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
     creator: "@GudForUs",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
