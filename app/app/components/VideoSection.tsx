@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Play, Pause, VolumeX, Volume2, Maximize, Minimize } from "lucide-react";
 
 export default function VideoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -170,9 +171,11 @@ export default function VideoSection() {
             onClick={handlePlayPause}
           >
             <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-full w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center hover:scale-110 hover:bg-white/30 transition-all duration-300 shadow-2xl">
-              <span className="material-icons-round text-white text-3xl sm:text-4xl md:text-5xl ml-1">
-                {isPlaying ? "pause" : "play_arrow"}
-              </span>
+              {isPlaying ? (
+                <Pause className="text-white w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+              ) : (
+                <Play className="text-white w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ml-1" fill="white" />
+              )}
             </div>
           </div>
 
@@ -233,9 +236,11 @@ export default function VideoSection() {
                   className="text-white hover:text-white/80 transition-colors p-1"
                   aria-label={isPlaying ? "Pause" : "Play"}
                 >
-                  <span className="material-icons-round text-2xl">
-                    {isPlaying ? "pause" : "play_arrow"}
-                  </span>
+                  {isPlaying ? (
+                    <Pause className="w-6 h-6" />
+                  ) : (
+                    <Play className="w-6 h-6" fill="white" />
+                  )}
                 </button>
 
                 {/* Mute/Unmute */}
@@ -244,9 +249,11 @@ export default function VideoSection() {
                   className="text-white hover:text-white/80 transition-colors p-1"
                   aria-label={isMuted ? "Unmute" : "Mute"}
                 >
-                  <span className="material-icons-round text-2xl">
-                    {isMuted ? "volume_off" : "volume_up"}
-                  </span>
+                  {isMuted ? (
+                    <VolumeX className="w-6 h-6" />
+                  ) : (
+                    <Volume2 className="w-6 h-6" />
+                  )}
                 </button>
 
                 {/* Time Display */}
@@ -261,9 +268,11 @@ export default function VideoSection() {
                 className="text-white hover:text-white/80 transition-colors p-1"
                 aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
               >
-                <span className="material-icons-round text-2xl">
-                  {isFullscreen ? "fullscreen_exit" : "fullscreen"}
-                </span>
+                {isFullscreen ? (
+                  <Minimize className="w-6 h-6" />
+                ) : (
+                  <Maximize className="w-6 h-6" />
+                )}
               </button>
             </div>
           </div>

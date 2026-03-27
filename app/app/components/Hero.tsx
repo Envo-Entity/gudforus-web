@@ -2,6 +2,7 @@
 
 import { RotatingText } from "@/components/ui/rotating-text";
 import Image from "next/image";
+import { Apple } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -49,7 +50,7 @@ export default function Hero() {
                   className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 sm:gap-3 bg-gray-900 text-white px-5 sm:px-8 py-3.5 sm:py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-xl min-w-0 sm:min-w-[180px] text-sm sm:text-base"
                   href="https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992"
                 >
-                  <span className="material-icons-round text-xl">apple</span>
+                  <Apple className="w-5 h-5" />
                   <span className="whitespace-nowrap">App Store</span>
                 </a>
                 <a

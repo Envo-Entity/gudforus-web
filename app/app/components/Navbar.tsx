@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { X, Menu } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -96,9 +97,11 @@ export default function Navbar() {
                   : "text-gray-600 hover:text-gray-900"
               }`}
             >
-              <span className="material-icons-round text-3xl">
-                {mobileMenuOpen ? "close" : "menu"}
-              </span>
+              {mobileMenuOpen ? (
+                <X className="w-8 h-8" />
+              ) : (
+                <Menu className="w-8 h-8" />
+              )}
             </button>
           </div>
         </div>

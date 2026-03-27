@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Signal, Wifi, BatteryFull, ChevronLeft, Bookmark, Share, BadgeCheck, Heart, Leaf, Settings, Home, QrCode, User } from "lucide-react";
 
 export default function PhonePreview() {
   return (
@@ -24,15 +25,9 @@ export default function PhonePreview() {
                 <div className="absolute top-0 w-full h-10 sm:h-12 bg-black/80 z-20 flex justify-between px-4 sm:px-6 items-center text-[10px] sm:text-[12px] font-medium text-white backdrop-blur-sm">
                   <span>9:41</span>
                   <div className="flex gap-1.5 items-center">
-                    <span className="material-icons-round text-[12px] sm:text-[14px]">
-                      signal_cellular_alt
-                    </span>
-                    <span className="material-icons-round text-[12px] sm:text-[14px]">
-                      wifi
-                    </span>
-                    <span className="material-icons-round text-[14px] sm:text-[16px]">
-                      battery_full
-                    </span>
+                    <Signal className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                    <Wifi className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                    <BatteryFull className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </div>
                 </div>
 
@@ -44,20 +39,14 @@ export default function PhonePreview() {
                   {/* Navigation Buttons */}
                   <div className="px-4 sm:px-6 pb-2 flex justify-between items-center">
                     <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-700">
-                      <span className="material-icons-round text-sm sm:text-base">
-                        chevron_left
-                      </span>
+                      <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </button>
                     <div className="flex gap-2">
                       <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-700">
-                        <span className="material-icons-round text-xs sm:text-sm">
-                          bookmark_border
-                        </span>
+                        <Bookmark className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       </button>
                       <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-700">
-                        <span className="material-icons-round text-xs sm:text-sm">
-                          ios_share
-                        </span>
+                        <Share className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       </button>
                     </div>
                   </div>
@@ -106,9 +95,7 @@ export default function PhonePreview() {
                           </div>
                           <div className="text-right">
                             <div className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-md px-2 sm:px-3 py-0.5 sm:py-1 rounded-full mb-2">
-                              <span className="material-icons-round text-xs sm:text-sm">
-                                verified
-                              </span>
+                              <BadgeCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                               <span className="text-[10px] sm:text-xs font-bold">
                                 EXCELLENT
                               </span>
@@ -125,7 +112,7 @@ export default function PhonePreview() {
                     <div className="px-4 sm:px-6 mt-4 sm:mt-6 space-y-3 sm:space-y-4">
                       {/* Health Card */}
                       <MetricCard
-                        icon="favorite"
+                        icon={<Heart className="w-4 h-4 sm:w-5 sm:h-5" />}
                         iconBgColor="bg-red-50"
                         iconColor="text-red-500"
                         title="Health"
@@ -138,7 +125,7 @@ export default function PhonePreview() {
 
                       {/* Environment Card */}
                       <MetricCard
-                        icon="eco"
+                        icon={<Leaf className="w-4 h-4 sm:w-5 sm:h-5" />}
                         iconBgColor="bg-blue-50"
                         iconColor="text-blue-500"
                         title="Environment"
@@ -152,9 +139,7 @@ export default function PhonePreview() {
                       {/* Processing Card */}
                       <div className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 sm:gap-4">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
-                          <span className="material-icons-round text-base sm:text-xl">
-                            precision_manufacturing
-                          </span>
+                          <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                         <div className="flex-1">
                           <div className="flex justify-between items-center mb-1">
@@ -176,15 +161,9 @@ export default function PhonePreview() {
 
                   {/* Bottom Navigation */}
                   <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 bg-black/90 text-white backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 rounded-full flex gap-6 sm:gap-8 shadow-2xl z-40">
-                    <span className="material-icons-round text-xl sm:text-2xl opacity-50">
-                      home
-                    </span>
-                    <span className="material-icons-round text-xl sm:text-2xl text-[#2E7D32]">
-                      qr_code_scanner
-                    </span>
-                    <span className="material-icons-round text-xl sm:text-2xl opacity-50">
-                      person
-                    </span>
+                    <Home className="w-5 h-5 sm:w-6 sm:h-6 opacity-50" />
+                    <QrCode className="w-5 h-5 sm:w-6 sm:h-6 text-[#2E7D32]" />
+                    <User className="w-5 h-5 sm:w-6 sm:h-6 opacity-50" />
                   </div>
 
                   {/* Home Indicator */}
@@ -200,7 +179,7 @@ export default function PhonePreview() {
 }
 
 interface MetricCardProps {
-  icon: string;
+  icon: React.ReactNode;
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -227,9 +206,7 @@ function MetricCard({
       <div
         className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${iconBgColor} flex items-center justify-center ${iconColor} shrink-0`}
       >
-        <span className="material-icons-round text-base sm:text-xl">
-          {icon}
-        </span>
+        {icon}
       </div>
       <div className="flex-1">
         <div className="flex justify-between items-center mb-1">
