@@ -1,32 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-
-const posts = [
-  {
-    href: "/app/blog/best-yuka-alternative",
-    title: "Best Yuka Alternative in 2026",
-    category: "Comparison",
-    description:
-      "A comparison of Gud For Us, Yuka, Open Food Facts, and Think Dirty for ingredient analysis and personal compatibility.",
-    date: "February 27, 2026",
-  },
-  {
-    href: "/app/blog/allergy-ingredient-checker",
-    title: "How to Check if a Product Is Safe for Your Allergy",
-    category: "Allergy Safety",
-    description:
-      "A practical guide to hidden allergens, ingredient labels, and safer shopping with personalized ingredient analysis.",
-    date: "March 17, 2026",
-  },
-  {
-    href: "/app/blog/why-ingredient-lists-are-hard-to-understand",
-    title: "Why Ingredient Lists Are Hard to Understand",
-    category: "Education",
-    description:
-      "An explanation of why labels feel unreadable, what vague ingredient terms really mean, and how modern tools help.",
-    date: "March 17, 2026",
-  },
-];
+import { blogPosts } from "./blog-posts";
 
 export const metadata: Metadata = {
   title: "Gud For Us Blog | Ingredient Labels, Allergies, and Smarter Scanning",
@@ -86,7 +60,7 @@ export default function BlogIndexPage() {
 
           <div className="flex flex-wrap gap-3.5 justify-center items-center">
             <Link
-              href={posts[0].href}
+              href={blogPosts[0].href}
               className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full bg-[#2d6a4f] text-white font-semibold text-[0.95rem] hover:bg-[#40916c] hover:-translate-y-[2px] shadow-[0_4px_20px_rgba(45,106,79,0.25)] hover:shadow-[0_8px_30px_rgba(45,106,79,0.3)] transition-all duration-300"
             >
               Start reading
@@ -103,6 +77,70 @@ export default function BlogIndexPage() {
 
       {/* Articles Section */}
       <section className="mx-auto max-w-[1120px] px-6 pb-24 relative z-10">
+        <div className="mb-10 rounded-[28px] border border-[#edecea] bg-white/80 p-6 shadow-[0_4px_20px_rgba(26,26,23,0.04)] backdrop-blur">
+          <div className="mb-5">
+            <p className="text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-[#2d6a4f]">
+              Explore By Use Case
+            </p>
+            <h2 className="mt-2 font-display text-2xl text-[#1a1a17] tracking-tight">
+              Product pages for the questions people ask before they download
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                href: "/app/ingredient-scanner-app",
+                title: "Ingredient Scanner App",
+                description:
+                  "For broad product-intent searches around ingredient scanning, food labels, and AI ingredient checking.",
+              },
+              {
+                href: "/app/allergy-ingredient-scanner",
+                title: "Allergy Ingredient Scanner",
+                description:
+                  "For users who need personal compatibility context and allergy-aware product decisions.",
+              },
+              {
+                href: "/app/cosmetic-ingredient-scanner",
+                title: "Cosmetic Ingredient Scanner",
+                description:
+                  "For beauty and skincare ingredient-checking queries that need their own destination.",
+              },
+              {
+                href: "/app/yuka-alternative",
+                title: "Yuka Alternative",
+                description:
+                  "For comparison shoppers looking for an app with a more personal scanning flow.",
+              },
+              {
+                href: "/app/how-to-scan-food-ingredients",
+                title: "How To Scan Food Ingredients",
+                description:
+                  "For educational searches around reading food labels and understanding ingredient panels.",
+              },
+              {
+                href: "/app/check-ingredients-for-allergies",
+                title: "Check Ingredients For Allergies",
+                description:
+                  "For safety-oriented users asking whether ingredients are actually a fit for them.",
+              },
+            ].map((page) => (
+              <Link
+                key={page.href}
+                href={page.href}
+                className="group rounded-[20px] border border-[#edecea] bg-[#fcfbf7] p-5 transition hover:border-[#d8f3dc] hover:bg-[#edf7ee]"
+              >
+                <h3 className="text-lg font-semibold text-[#1a1a17] group-hover:text-[#2d6a4f]">
+                  {page.title}
+                </h3>
+                <p className="mt-2 text-sm leading-7 text-[#5c5c52]">
+                  {page.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="mb-12 border-b border-[#edecea] pb-6 flex items-end justify-between gap-6">
           <div>
             <h2 className="font-display text-3xl text-[#1a1a17] tracking-tight mb-2">
@@ -115,7 +153,7 @@ export default function BlogIndexPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {blogPosts.map((post) => (
             <Link
               key={post.href}
               href={post.href}
