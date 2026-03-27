@@ -112,8 +112,9 @@ function JsonLd({ config }: { config: ComparisonBlogConfig }) {
     description: config.metaDescription,
     image: "https://gudforus.com/app/opengraph-image.jpg",
     author: {
-      "@type": "Organization",
-      name: "Gud For Us",
+      "@type": "Person",
+      name: "Shivanshu Sharma",
+      url: "https://gudforus.com",
     },
     publisher: {
       "@type": "Organization",
@@ -216,7 +217,7 @@ export function ComparisonBlogPage({
               {config.readTime}
             </span>
             <span className="rounded-full border border-[#e5e3dd] bg-white/80 px-4 py-2">
-              Comparison + local market intent
+              Ingredient Scanner Comparison
             </span>
           </div>
           <div className="mt-10 flex flex-wrap gap-4">

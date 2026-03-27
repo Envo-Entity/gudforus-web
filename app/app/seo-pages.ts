@@ -8,7 +8,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       "Ingredient Scanner App | AI Ingredient Checker for Food Labels | Gud For Us",
     metaDescription:
       "Looking for an ingredient scanner app? Gud For Us scans food and cosmetic labels from photos, explains ingredients, shows a health score, calculates a compatibility score, and suggests better alternatives.",
-    heroEyebrow: "Commercial Query Cluster",
+    heroEyebrow: "Ingredient Scanner App",
     heroTitle:
       "An ingredient scanner app should do more than read a barcode.",
     heroDescription:
@@ -41,7 +41,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     sections: [
       {
         id: "what-people-mean",
-        eyebrow: "Search Intent",
+        eyebrow: "What Shoppers Need",
         title: "What people usually mean when they search for an ingredient scanner app",
         paragraphs: [
           "Most people are not looking for a giant ingredient database by itself. They are looking for a faster way to answer a real question in the aisle: what is this product, what is inside it, and is it a good fit for me?",
@@ -93,8 +93,8 @@ export const seoPages: Record<string, SeoLandingConfig> = {
           "Photo-based ingredient scanning moves the interaction closer to the actual decision point. Instead of asking whether a database entry exists, the app starts with the text that is physically on the package. That makes it more relevant when users are comparing products that have changed formulas, limited regional distribution, or difficult-to-read ingredient lists.",
         ],
         callout: {
-          label: "Why this page exists",
-          text: "This page is targeting the broad commercial intent behind ingredient scanner and food label scanner searches. It is meant to define the category clearly and then show where Gud For Us fits inside it.",
+          label: "When photo scanning matters most",
+          text: "Photo-based scanning becomes most useful when the barcode is missing, damaged, curved, or the product simply is not in a database. If the packaging is reflective or hard to scan, photo-first apps give you an answer anyway.",
         },
       },
       {
@@ -185,7 +185,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       "Allergy Ingredient Scanner | Personalized Food Scanning for Allergies | Gud For Us",
     metaDescription:
       "Need an allergy ingredient scanner? Gud For Us helps users scan food labels, understand ingredient names, view a compatibility score based on their profile, and compare safer alternatives with more context.",
-    heroEyebrow: "Personalized Health Query Cluster",
+    heroEyebrow: "Allergy Ingredient Scanner",
     heroTitle:
       "Allergy ingredient scanning only becomes useful when it is personal.",
     heroDescription:
@@ -217,7 +217,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     sections: [
       {
         id: "why-generic-fails",
-        eyebrow: "Why This Search Exists",
+        eyebrow: "Why Generic Fails",
         title: "Why generic food scores fail people shopping with allergies",
         paragraphs: [
           "A generic label score can still be useless for someone with a personal risk profile. A product that looks acceptable to the average shopper may be the wrong choice for someone who is trying to avoid a specific ingredient family, derivative, or sensitivity trigger.",
@@ -339,7 +339,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       "Cosmetic Ingredient Scanner | Beauty & Skincare Ingredient Checker App | Gud For Us",
     metaDescription:
       "Looking for a cosmetic ingredient scanner? Gud For Us helps users scan beauty and skincare products, view ingredient details, get a health score, see a compatibility score, and compare better alternatives.",
-    heroEyebrow: "Cosmetic Query Cluster",
+    heroEyebrow: "Cosmetic Ingredient Scanner",
     heroTitle:
       "Cosmetic ingredient scanning should help with clarity, not just ingredient overload.",
     heroDescription:
@@ -370,7 +370,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     sections: [
       {
         id: "why-cosmetic-labels-are-hard",
-        eyebrow: "Why This Search Exists",
+        eyebrow: "Why Labels Are Hard",
         title: "Why cosmetic ingredient scanner searches are growing",
         paragraphs: [
           "Cosmetic labels are crowded, technical, and often written in naming systems that most shoppers do not recognize. That makes the gap between curiosity and confidence surprisingly large. Many users can tell when a product sounds complicated, but they cannot tell whether the complexity is harmless, meaningful, or worth caring about.",
@@ -417,8 +417,8 @@ export const seoPages: Record<string, SeoLandingConfig> = {
           "That does not mean every cosmetic decision becomes simple. But it does mean the app can reduce the amount of manual label research users have to do before they decide whether a product deserves a closer look or a pass.",
         ],
         callout: {
-          label: "Where this page helps",
-          text: "This page is designed for users looking for a practical cosmetic or skincare ingredient scanner, not only a general app overview. It gives Google a clear cosmetic-specific destination instead of forcing all beauty intent into the homepage.",
+          label: "Food and cosmetics in one scan",
+          text: "One reason Gud For Us is useful across both skincare and food is that the ingredient-awareness habit is the same: you are asking what is actually in this product whether you are holding a serum or a snack bar.",
         },
       },
       {
@@ -493,7 +493,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       "Yuka Alternative | A More Personal Ingredient Scanning App | Gud For Us",
     metaDescription:
       "Looking for a Yuka alternative? Gud For Us offers photo-based scanning, ingredient explanations, a health score, a compatibility score based on your profile, and alternative suggestions across food and cosmetics.",
-    heroEyebrow: "Comparison Query Cluster",
+    heroEyebrow: "Yuka Alternative",
     heroTitle: "A good Yuka alternative should feel more personal, not just more technical.",
     heroDescription:
       "People searching for apps like Yuka are usually not looking for a random list of competitors. They are looking for a better fit: faster scanning, clearer explanations, broader product support, or more personal context than a generic barcode score can offer.",
@@ -523,7 +523,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     sections: [
       {
         id: "why-people-search",
-        eyebrow: "Search Intent",
+        eyebrow: "What Shoppers Want",
         title: "Why people search for a Yuka alternative in the first place",
         paragraphs: [
           "Most comparison searches begin with mild dissatisfaction, not abandonment. The user already understands the category. What they are really saying is that the current workflow is not quite enough. Maybe the barcode scan is too rigid. Maybe the score feels too generic. Maybe they want better product explanations or more personal relevance.",
@@ -563,7 +563,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       },
       {
         id: "what-best-means",
-        eyebrow: "Commercial Framing",
+        eyebrow: "Finding Your Best Fit",
         title: "What makes something the best Yuka alternative for a specific user",
         paragraphs: [
           "There is no single best alternative for everyone. The best fit depends on why the current tool is falling short. If the problem is speed and shelf friction, photo scanning matters. If the problem is generic scoring, compatibility context matters. If the problem is category coverage, food-and-cosmetic support matters.",
@@ -579,8 +579,8 @@ export const seoPages: Record<string, SeoLandingConfig> = {
           "If someone is still trying to understand what an ingredient scanner app is, the broader ingredient-scanner page is better. If they specifically care about allergy-aware scanning, the allergy page is more relevant. But if they arrive with Yuka in mind, this page should meet them there directly.",
         ],
         callout: {
-          label: "How this complements the blog",
-          text: "The existing Yuka comparison blog can carry the longer educational version. This page is the cleaner commercial destination for users with direct comparison intent.",
+          label: "Want a deeper comparison?",
+          text: "The full Yuka comparison article covers more ground: side-by-side feature breakdowns, regional use cases, and more detail on what makes each approach different. This page is the shorter, faster answer.",
         },
       },
     ],
@@ -603,7 +603,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       {
         question: "Should this page replace the blog comparison article?",
         answer:
-          "No. The blog article is useful for long-form education. This landing page exists to convert direct comparison intent with a cleaner, more product-focused explanation.",
+          "No. The blog article goes deeper on how each app works, regional use cases, and the differences between photo-first and barcode-first approaches. This page is a faster overview for shoppers who want to compare options quickly and move on.",
       },
     ],
     relatedLinks: [
@@ -640,7 +640,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       "How To Scan Food Ingredients | A Practical Guide to Reading Labels Faster | Gud For Us",
     metaDescription:
       "Learn how to scan food ingredients more effectively, what to look for on real labels, why ingredient lists are hard to interpret, and how Gud For Us helps turn confusing packaging into a clearer decision.",
-    heroEyebrow: "Education Query Cluster",
+    heroEyebrow: "Food Label Guide",
     heroTitle:
       "How to scan food ingredients without turning every shopping trip into research.",
     heroDescription:
@@ -671,7 +671,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     sections: [
       {
         id: "why-labels-feel-hard",
-        eyebrow: "Why This Search Exists",
+        eyebrow: "Why Labels Feel Hard",
         title: "Why ingredient lists feel harder to scan than they should",
         paragraphs: [
           "Ingredient panels are not written for speed. They are written to satisfy labeling requirements, fit into small packaging spaces, and stay consistent across manufacturers. That creates a reading experience that feels technical even when the underlying ingredient is familiar.",
@@ -702,8 +702,8 @@ export const seoPages: Record<string, SeoLandingConfig> = {
           "Gud For Us fits at that point of friction. It gives users a way to scan the product, understand ingredients faster, review a health score, see a compatibility score connected to their profile, and compare alternatives without turning the shopping trip into a research project.",
         ],
         callout: {
-          label: "Why this page matters for SEO",
-          text: "This page lets the site answer educational queries that are broader than a product pitch. That is useful for both traditional search and AI systems that want a clear, quotable explanation of the problem and the workflow.",
+          label: "A practical rule of thumb",
+          text: "Read the ingredient list before the front label. Front-of-pack claims are marketing. The ingredient list is the actual product — and it is worth checking more often than most people do.",
         },
       },
       {
@@ -772,7 +772,7 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       "How To Check Ingredients For Allergies | Know If Ingredients Are Safe For You | Gud For Us",
     metaDescription:
       "Learn how to check ingredients for allergies, how to know if ingredients are safe for you, and where Gud For Us helps by scanning labels, interpreting ingredients, and surfacing compatibility context.",
-    heroEyebrow: "Safety Education Query Cluster",
+    heroEyebrow: "Allergy Safety Guide",
     heroTitle:
       "Checking ingredients for allergies is not just about reading faster. It is about reading with the right context.",
     heroDescription:
@@ -836,15 +836,15 @@ export const seoPages: Record<string, SeoLandingConfig> = {
       },
       {
         id: "how-this-differs",
-        eyebrow: "Why This Page Exists",
+        eyebrow: "How These Pages Differ",
         title: "Why this page is different from the allergy scanner page",
         paragraphs: [
           "The allergy ingredient scanner page is more commercial. It is for people already shopping for a product category. This page is more educational. It is for people who are still figuring out the workflow, the question, and what kind of tool would actually help them.",
           "Both pages matter because they answer different intent. One captures users who want a solution now. The other captures users who are trying to understand the problem clearly enough to trust a solution.",
         ],
         callout: {
-          label: "Search strategy",
-          text: "This page is meant to absorb broader safety and allergy-checking intent without forcing those users into a purely product-heavy page before they are ready.",
+          label: "Not sure which page to start with?",
+          text: "If you already know you want an allergy-focused scanner, the allergy scanner page is a faster starting point. This page is better if you are still figuring out the process and what kind of tool would actually help.",
         },
       },
     ],

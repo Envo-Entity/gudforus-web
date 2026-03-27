@@ -90,9 +90,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${siteUrl}/`,
-      lastModified: new Date("2026-03-17"),
-      changeFrequency: "monthly",
-      priority: 0.4,
+      lastModified: new Date("2026-03-28"),
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
       url: `${siteUrl}/app/privacy`,

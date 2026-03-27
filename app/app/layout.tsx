@@ -74,11 +74,21 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       style={{ colorScheme: "light" }}
     >
       <head>
-        {/* Material Icons */}
+        {/* Material Icons — loaded non-blocking to avoid render-blocking CWV impact */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
+          rel="preload"
           href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-          rel="stylesheet"
+          as="style"
+          // @ts-expect-error onLoad is valid for non-blocking stylesheet load
+          onLoad="this.onload=null;this.rel='stylesheet'"
         />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+            rel="stylesheet"
+          />
+        </noscript>
       </head>
       <body className="bg-[#F2F0E9] text-[#1F2937] font-sans antialiased">
         {children}
