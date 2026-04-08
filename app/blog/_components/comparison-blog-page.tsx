@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TWITTER_IMAGE,
+  SITE_URL,
+} from "../../lib/site";
 
 type ComparisonRow = {
   feature: string;
@@ -44,44 +49,38 @@ export type ComparisonBlogConfig = {
   relatedLinks: RelatedLink[];
 };
 
-const siteUrl = "https://gudforus.com";
+const regionalAlternates = {
+  "x-default": `${SITE_URL}/blog/best-yuka-alternative`,
+  en: `${SITE_URL}/blog/best-yuka-alternative`,
+  "en-US": `${SITE_URL}/blog/best-yuka-alternative-usa`,
+  "en-GB": `${SITE_URL}/blog/best-yuka-alternative-uk`,
+  "en-IE": `${SITE_URL}/blog/best-yuka-alternative-ireland`,
+} satisfies Record<string, string>;
 
 export function buildComparisonMetadata(
   config: ComparisonBlogConfig
 ): Metadata {
-  const canonical = `${siteUrl}/blog/${config.slug}`;
+  const canonical = `${SITE_URL}/blog/${config.slug}`;
 
   return {
     title: config.metaTitle,
     description: config.metaDescription,
     alternates: {
       canonical,
+      languages: regionalAlternates,
     },
-    keywords: [
-      "Yuka alternative",
-      "best Yuka alternative",
-      config.title,
-      "apps like Yuka",
-      "ingredient scanner app",
-      "food scanner app",
-      "cosmetic ingredient scanner",
-    ],
     openGraph: {
       title: config.metaTitle,
       description: config.metaDescription,
       url: canonical,
       type: "article",
-      images: [
-        {
-          url: "https://gudforus.com/opengraph-image.jpg",
-        },
-      ],
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
       title: config.metaTitle,
       description: config.metaDescription,
-      images: ["https://gudforus.com/twitter-image.jpg"],
+      images: [DEFAULT_TWITTER_IMAGE],
     },
     robots: {
       index: true,
@@ -91,7 +90,7 @@ export function buildComparisonMetadata(
 }
 
 function JsonLd({ config }: { config: ComparisonBlogConfig }) {
-  const canonical = `${siteUrl}/blog/${config.slug}`;
+  const canonical = `${SITE_URL}/blog/${config.slug}`;
   const faq = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -114,14 +113,14 @@ function JsonLd({ config }: { config: ComparisonBlogConfig }) {
     author: {
       "@type": "Person",
       name: "Shivanshu Sharma",
-      url: "https://gudforus.com",
+      url: SITE_URL,
     },
     publisher: {
       "@type": "Organization",
       name: "Gud For Us",
       logo: {
         "@type": "ImageObject",
-        url: "https://gudforus.com/gud.png",
+        url: `${SITE_URL}/gud.png`,
       },
     },
     datePublished: "2026-03-27",
@@ -140,19 +139,19 @@ function JsonLd({ config }: { config: ComparisonBlogConfig }) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://gudforus.com",
+        item: SITE_URL,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "App",
-        item: "https://gudforus.com",
+        item: SITE_URL,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Blog",
-        item: "https://gudforus.com/blog",
+        item: `${SITE_URL}/blog`,
       },
       {
         "@type": "ListItem",

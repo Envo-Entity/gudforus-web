@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service - GudForUs",
   description: "Terms of Service for GudForUs mobile application",
+  alternates: {
+    canonical: `${SITE_URL}/terms`,
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function TermsOfServicePage() {

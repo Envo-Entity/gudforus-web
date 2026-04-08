@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - GudForUs",
   description: "Privacy Policy for GudForUs mobile application",
+  alternates: {
+    canonical: `${SITE_URL}/privacy`,
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function PrivacyPolicyPage() {

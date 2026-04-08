@@ -35,13 +35,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <div
+          <Link
+            href="/"
             className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <Image
               src="/gud.png"
-              alt="Logo"
+              alt="Gud For Us logo"
               width={70}
               height={70}
               className={`rounded-md ${isInHero ? "" : "invert transition-colors duration-500"}`}
@@ -53,7 +53,7 @@ export default function Navbar() {
             >
               GudForUs
             </span> */}
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">

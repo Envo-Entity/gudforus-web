@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "./blog-posts";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
   title: "Gud For Us Blog | Ingredient Labels, Allergies, and Smarter Scanning",
@@ -17,26 +18,45 @@ export const metadata: Metadata = {
     title: "Gud For Us Blog",
     description:
       "Articles about ingredient labels, allergens, food scanning, cosmetic scanning, and better product decisions.",
-    url: "https://gudforus.com/blog",
+    url: `${SITE_URL}/blog`,
     type: "website",
-    images: [
-      {
-        url: "https://gudforus.com/opengraph-image.jpg",
-      },
-    ],
+    images: [{ url: DEFAULT_OG_IMAGE }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Gud For Us Blog",
     description:
       "Articles about ingredient labels, allergens, food scanning, cosmetic scanning, and better product decisions.",
-    images: ["https://gudforus.com/twitter-image.jpg"],
+    images: [DEFAULT_TWITTER_IMAGE],
   },
 };
 
 export default function BlogIndexPage() {
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${SITE_URL}/blog`,
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[#fafaf7] text-[#1a1a17] font-sans overflow-x-hidden selection:bg-[#d8f3dc] selection:text-[#1a1a17]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <section className="relative px-6 pt-[140px] pb-20 text-center overflow-hidden">
         {/* Background Gradients from Yuka Alternative */}
         <div className="absolute inset-0 pointer-events-none" style={{

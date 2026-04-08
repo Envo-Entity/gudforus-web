@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { APP_STORE_URL, PLAY_STORE_URL } from "../lib/site";
 
 export default function Footer() {
   const footerLinks = {
@@ -14,12 +16,21 @@ export default function Footer() {
       links: [
         {
           label: "iOS App Store",
-          href: "https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992",
+          href: APP_STORE_URL,
         },
         {
           label: "Google Play Store",
-          href: "https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN",
+          href: PLAY_STORE_URL,
         },
+      ],
+    },
+    popular: {
+      title: "Popular Searches",
+      links: [
+        { label: "Ingredient Scanner App", href: "/ingredient-scanner-app" },
+        { label: "Allergy Ingredient Scanner", href: "/allergy-ingredient-scanner" },
+        { label: "Cosmetic Ingredient Scanner", href: "/cosmetic-ingredient-scanner" },
+        { label: "Yuka Alternative", href: "/yuka-alternative" },
       ],
     },
     /*
@@ -43,7 +54,7 @@ export default function Footer() {
             <div className="flex items-center">
               <Image
                 src="/gud.png"
-                alt="Logo"
+                alt="Gud For Us logo"
                 width={100}
                 height={100}
                 className="invert translate-x-[-10px]"
@@ -57,6 +68,7 @@ export default function Footer() {
 
           {/* Footer Links */}
           <FooterLinkSection {...footerLinks.company} />
+          <FooterLinkSection {...footerLinks.popular} />
           <FooterLinkSection {...footerLinks.download} />
           {/* <FooterLinkSection {...footerLinks.social} /> */}
         </div>
@@ -86,12 +98,12 @@ function FooterLinkSection({ title, links }: FooterLinkSectionProps) {
       <ul className="space-y-2 text-xs sm:text-sm text-[#6B7280]">
         {links.map((link, index) => (
           <li key={index}>
-            <a
+            <Link
               className="hover:text-[#2E7D32] transition-colors"
               href={link.href}
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

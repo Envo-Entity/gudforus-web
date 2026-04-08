@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TWITTER_IMAGE,
+  SITE_URL,
+} from "./lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,24 +19,11 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const SITE_URL = "https://gudforus.com";
-const PAGE_URL = SITE_URL;
-
 export const metadata: Metadata = {
   title: "GudForUs - Understand What You Consume",
   description:
     "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
   metadataBase: new URL(SITE_URL),
-  alternates: {
-    canonical: PAGE_URL,
-  },
-  keywords: [
-    "food scanner",
-    "ingredient analysis",
-    "nutrition",
-    "sustainability",
-    "health app",
-  ],
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -41,9 +33,14 @@ export const metadata: Metadata = {
     title: "GudForUs - Understand What You Consume",
     description:
       "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
-    url: PAGE_URL,
+    url: SITE_URL,
     siteName: "Gud For Us",
     type: "website",
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -51,6 +48,7 @@ export const metadata: Metadata = {
     description:
       "Decode labels instantly. From ingredient quality to personal compatibility, GudForUs gives you the clarity to make better choices for your body and the planet.",
     creator: "@GudForUs",
+    images: [DEFAULT_TWITTER_IMAGE],
   },
   robots: {
     index: true,

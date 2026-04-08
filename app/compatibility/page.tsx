@@ -1,21 +1,85 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TWITTER_IMAGE,
+  SITE_URL,
+} from "../lib/site";
+
+const faqItems = [
+  {
+    question: "How does Gud For Us generate compatibility insights?",
+    answer:
+      "Gud For Us reviews ingredient information from available product data, analyzes it with AI models, and compares the result against dietary, lifestyle, and preference criteria to produce a compatibility estimate.",
+  },
+  {
+    question: "Are compatibility scores guaranteed to be accurate?",
+    answer:
+      "No. Compatibility scores are estimates based on the information available at the time of analysis, and ingredient lists or manufacturer formulations may change without notice.",
+  },
+  {
+    question: "Can compatibility insights replace medical advice?",
+    answer:
+      "No. Compatibility insights are informational only and should not replace professional medical, nutritional, or allergy guidance.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Compatibility Insights & AI-Based Analysis - GudForUs",
   description:
     "Learn how GudForUs generates AI-powered compatibility scores, what their limitations are, and why they are not a substitute for professional medical advice.",
+  alternates: {
+    canonical: `${SITE_URL}/compatibility`,
+  },
+  openGraph: {
+    title: "Compatibility Insights & AI-Based Analysis - GudForUs",
+    description:
+      "Learn how GudForUs generates AI-powered compatibility scores, what their limitations are, and why they are not a substitute for professional medical advice.",
+    url: `${SITE_URL}/compatibility`,
+    type: "article",
+    images: [{ url: DEFAULT_OG_IMAGE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Compatibility Insights & AI-Based Analysis - GudForUs",
+    description:
+      "Learn how GudForUs generates AI-powered compatibility scores, what their limitations are, and why they are not a substitute for professional medical advice.",
+    images: [DEFAULT_TWITTER_IMAGE],
+  },
 };
 
 export default function CompatibilityPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#F2F0E9]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       {/* Header */}
       <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto max-w-4xl px-6 py-4">
           <Link href="/" className="inline-flex items-center">
-            <Image src="/gud.png" alt="GudForUs" width={120} height={40} className="h-10 w-auto invert" />
+            <Image
+              src="/gud.png"
+              alt="Gud For Us logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto invert"
+            />
           </Link>
         </div>
       </header>
@@ -303,6 +367,29 @@ export default function CompatibilityPage() {
                   Report an Issue
                 </a>
               </div>
+            </div>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          <section>
+            <h2 className="mb-4 text-2xl font-semibold">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqItems.map((item) => (
+                <div
+                  key={item.question}
+                  className="rounded-xl border border-gray-200 bg-white p-6"
+                >
+                  <h3 className="text-lg font-semibold text-[#1F2937]">
+                    {item.question}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-gray-700">
+                    {item.answer}
+                  </p>
+                </div>
+              ))}
             </div>
           </section>
 

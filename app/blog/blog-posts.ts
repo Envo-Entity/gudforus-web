@@ -4,6 +4,7 @@ export type BlogPost = {
   category: string;
   description: string;
   date: string;
+  lastModified: string;
 };
 
 export const blogPosts: BlogPost[] = [
@@ -14,6 +15,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "A sharper comparison of Gud For Us, Yuka, Open Food Facts, and Think Dirty with clearer buying-intent answers.",
     date: "March 27, 2026",
+    lastModified: "2026-03-27",
   },
   {
     href: "/blog/best-yuka-alternative-ireland",
@@ -22,6 +24,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "A localized guide for Irish shoppers who need ingredient scanning that works with mixed retailer brands, imports, and personal sensitivities.",
     date: "March 27, 2026",
+    lastModified: "2026-03-27",
   },
   {
     href: "/blog/best-yuka-alternative-usa",
@@ -30,6 +33,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "A US-focused comparison for shoppers dealing with supermarket variety, supplements, cosmetics, and profile-based ingredient decisions.",
     date: "March 27, 2026",
+    lastModified: "2026-03-27",
   },
   {
     href: "/blog/best-yuka-alternative-uk",
@@ -38,6 +42,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "A UK-specific page for shoppers comparing store brands, imported products, and ingredient labels that need more personal context.",
     date: "March 27, 2026",
+    lastModified: "2026-03-27",
   },
   {
     href: "/blog/allergy-ingredient-checker",
@@ -46,6 +51,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "A practical guide to hidden allergens, ingredient labels, and safer shopping with personalized ingredient analysis.",
     date: "March 17, 2026",
+    lastModified: "2026-03-17",
   },
   {
     href: "/blog/why-ingredient-lists-are-hard-to-understand",
@@ -54,5 +60,6 @@ export const blogPosts: BlogPost[] = [
     description:
       "An explanation of why labels feel unreadable, what vague ingredient terms really mean, and how modern tools help.",
     date: "March 17, 2026",
+    lastModified: "2026-03-17",
   },
 ];

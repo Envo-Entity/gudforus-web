@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Play, Pause, VolumeX, Volume2, Maximize, Minimize } from "lucide-react";
+import { demoVideoUrl } from "../lib/site";
 
 export default function VideoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -13,9 +14,6 @@ export default function VideoSection() {
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const VIDEO_URL =
-    "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/test.mov";
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -127,11 +125,12 @@ export default function VideoSection() {
           <video
             ref={videoRef}
             className="absolute inset-0 w-full h-full object-cover"
-            src={VIDEO_URL}
+            src={demoVideoUrl}
+            poster="/og.jpg"
             muted={isMuted}
             playsInline
             loop
-            preload="metadata"
+            preload="none"
             onClick={handlePlayPause}
           />
 
