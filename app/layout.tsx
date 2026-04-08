@@ -15,8 +15,7 @@ const playfair = Playfair_Display({
 });
 
 const SITE_URL = "https://gudforus.com";
-const PAGE_PATH = "/app";
-const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const PAGE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   title: "GudForUs - Understand What You Consume",

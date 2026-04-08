@@ -153,25 +153,25 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     ],
     relatedLinks: [
       {
-        href: "/app/allergy-ingredient-scanner",
+        href: "/allergy-ingredient-scanner",
         title: "Allergy Ingredient Scanner",
         description:
           "For users who need personal safety context, not just a general product read.",
       },
       {
-        href: "/app/cosmetic-ingredient-scanner",
+        href: "/cosmetic-ingredient-scanner",
         title: "Cosmetic Ingredient Scanner",
         description:
           "A page focused on skincare, beauty labels, and cosmetic ingredient checking.",
       },
       {
-        href: "/app/yuka-alternative",
+        href: "/yuka-alternative",
         title: "Yuka Alternative",
         description:
           "A comparison page for users explicitly searching for alternatives to barcode-first apps.",
       },
       {
-        href: "/app/how-to-scan-food-ingredients",
+        href: "/how-to-scan-food-ingredients",
         title: "How To Scan Food Ingredients",
         description:
           "A practical guide for people who are still trying to understand the workflow itself.",
@@ -307,25 +307,25 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     ],
     relatedLinks: [
       {
-        href: "/app/check-ingredients-for-allergies",
+        href: "/check-ingredients-for-allergies",
         title: "Check Ingredients For Allergies",
         description:
           "An educational page for users who are still learning how to evaluate labels safely.",
       },
       {
-        href: "/app/ingredient-scanner-app",
+        href: "/ingredient-scanner-app",
         title: "Ingredient Scanner App",
         description:
           "The broader commercial page for food label scanning and ingredient checking.",
       },
       {
-        href: "/app/how-to-scan-food-ingredients",
+        href: "/how-to-scan-food-ingredients",
         title: "How To Scan Food Ingredients",
         description:
           "A practical guide to scanning, reading, and comparing food labels more effectively.",
       },
       {
-        href: "/app/blog/allergy-ingredient-checker",
+        href: "/blog/allergy-ingredient-checker",
         title: "Allergy Blog Guide",
         description:
           "A deeper long-form article on hidden allergen names and label-reading traps.",
@@ -461,25 +461,25 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     ],
     relatedLinks: [
       {
-        href: "/app/ingredient-scanner-app",
+        href: "/ingredient-scanner-app",
         title: "Ingredient Scanner App",
         description:
           "The broad category page that covers food labels, ingredient checking, and overall scanner intent.",
       },
       {
-        href: "/app/yuka-alternative",
+        href: "/yuka-alternative",
         title: "Yuka Alternative",
         description:
           "Useful for comparison shoppers evaluating Gud For Us against existing barcode-driven apps.",
       },
       {
-        href: "/app/blog/best-yuka-alternative",
+        href: "/blog/best-yuka-alternative",
         title: "Yuka Alternative Blog",
         description:
           "A longer-form comparison article with more context on database-first vs photo-first tools.",
       },
       {
-        href: "/app/how-to-scan-food-ingredients",
+        href: "/how-to-scan-food-ingredients",
         title: "How To Scan Food Ingredients",
         description:
           "A related educational page that explains the scanning mindset from the food side.",
@@ -608,25 +608,25 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     ],
     relatedLinks: [
       {
-        href: "/app/blog/best-yuka-alternative",
+        href: "/blog/best-yuka-alternative",
         title: "Read the full comparison article",
         description:
           "A longer-form version for users who want more context before deciding.",
       },
       {
-        href: "/app/ingredient-scanner-app",
+        href: "/ingredient-scanner-app",
         title: "Ingredient Scanner App",
         description:
           "The broader category page for general scanner and ingredient-checker intent.",
       },
       {
-        href: "/app/allergy-ingredient-scanner",
+        href: "/allergy-ingredient-scanner",
         title: "Allergy Ingredient Scanner",
         description:
           "For comparison shoppers who care specifically about personal safety context.",
       },
       {
-        href: "/app/cosmetic-ingredient-scanner",
+        href: "/cosmetic-ingredient-scanner",
         title: "Cosmetic Ingredient Scanner",
         description:
           "For users comparing scanners through a beauty or skincare use case.",
@@ -740,25 +740,25 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     ],
     relatedLinks: [
       {
-        href: "/app/ingredient-scanner-app",
+        href: "/ingredient-scanner-app",
         title: "Ingredient Scanner App",
         description:
           "The broader commercial page for scanner-related product intent.",
       },
       {
-        href: "/app/check-ingredients-for-allergies",
+        href: "/check-ingredients-for-allergies",
         title: "Check Ingredients For Allergies",
         description:
           "A related educational page for people whose label-reading problem is tied to allergy risk.",
       },
       {
-        href: "/app/blog/why-ingredient-lists-are-hard-to-understand",
+        href: "/blog/why-ingredient-lists-are-hard-to-understand",
         title: "Ingredient Labels Blog",
         description:
           "A longer educational article focused on why ingredient lists feel unreadable in the first place.",
       },
       {
-        href: "/app/blog/allergy-ingredient-checker",
+        href: "/blog/allergy-ingredient-checker",
         title: "Allergy Label Blog",
         description:
           "A deeper article on hidden allergen names and ingredient-reading traps.",
@@ -872,25 +872,25 @@ export const seoPages: Record<string, SeoLandingConfig> = {
     ],
     relatedLinks: [
       {
-        href: "/app/allergy-ingredient-scanner",
+        href: "/allergy-ingredient-scanner",
         title: "Allergy Ingredient Scanner",
         description:
           "The more product-focused page for users who already know they want an allergy-aware scanner.",
       },
       {
-        href: "/app/how-to-scan-food-ingredients",
+        href: "/how-to-scan-food-ingredients",
         title: "How To Scan Food Ingredients",
         description:
           "A related guide on building a faster label-reading and scanning workflow.",
       },
       {
-        href: "/app/blog/allergy-ingredient-checker",
+        href: "/blog/allergy-ingredient-checker",
         title: "Allergy Blog Guide",
         description:
           "A deeper long-form article on hidden allergen names and labeling traps.",
       },
       {
-        href: "/app/blog/why-ingredient-lists-are-hard-to-understand",
+        href: "/blog/why-ingredient-lists-are-hard-to-understand",
         title: "Ingredient Labels Blog",
         description:
           "A companion article on why product labels feel harder to interpret than they should.",

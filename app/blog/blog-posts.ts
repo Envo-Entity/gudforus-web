@@ -8,7 +8,7 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
-    href: "/app/blog/best-yuka-alternative",
+    href: "/blog/best-yuka-alternative",
     title: "Best Yuka Alternative in 2026",
     category: "Comparison",
     description:
@@ -16,7 +16,7 @@ export const blogPosts: BlogPost[] = [
     date: "March 27, 2026",
   },
   {
-    href: "/app/blog/best-yuka-alternative-ireland",
+    href: "/blog/best-yuka-alternative-ireland",
     title: "Best Yuka Alternative for Ireland",
     category: "Regional SEO",
     description:
@@ -24,7 +24,7 @@ export const blogPosts: BlogPost[] = [
     date: "March 27, 2026",
   },
   {
-    href: "/app/blog/best-yuka-alternative-usa",
+    href: "/blog/best-yuka-alternative-usa",
     title: "Best Yuka Alternative for the USA",
     category: "Regional SEO",
     description:
@@ -32,7 +32,7 @@ export const blogPosts: BlogPost[] = [
     date: "March 27, 2026",
   },
   {
-    href: "/app/blog/best-yuka-alternative-uk",
+    href: "/blog/best-yuka-alternative-uk",
     title: "Best Yuka Alternative for the UK",
     category: "Regional SEO",
     description:
@@ -40,7 +40,7 @@ export const blogPosts: BlogPost[] = [
     date: "March 27, 2026",
   },
   {
-    href: "/app/blog/allergy-ingredient-checker",
+    href: "/blog/allergy-ingredient-checker",
     title: "How to Check if a Product Is Safe for Your Allergy",
     category: "Allergy Safety",
     description:
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     date: "March 17, 2026",
   },
   {
-    href: "/app/blog/why-ingredient-lists-are-hard-to-understand",
+    href: "/blog/why-ingredient-lists-are-hard-to-understand",
     title: "Why Ingredient Lists Are Hard to Understand",
     category: "Education",
     description:

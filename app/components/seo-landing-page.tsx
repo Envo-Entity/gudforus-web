@@ -53,7 +53,7 @@ export type SeoLandingConfig = {
 const siteUrl = "https://gudforus.com";
 
 export function createLandingMetadata(page: SeoLandingConfig) {
-  const url = `${siteUrl}/app/${page.slug}`;
+  const url = `${siteUrl}/${page.slug}`;
 
   return {
     title: page.metaTitle,
@@ -72,7 +72,7 @@ export function createLandingMetadata(page: SeoLandingConfig) {
       type: "website",
       images: [
         {
-          url: `${siteUrl}/app/opengraph-image.jpg`,
+          url: `${siteUrl}/opengraph-image.jpg`,
         },
       ],
     },
@@ -80,13 +80,13 @@ export function createLandingMetadata(page: SeoLandingConfig) {
       card: "summary_large_image",
       title: page.metaTitle,
       description: page.metaDescription,
-      images: [`${siteUrl}/app/twitter-image.jpg`],
+      images: [`${siteUrl}/twitter-image.jpg`],
     },
   };
 }
 
 export function SeoLandingPage({ page }: { page: SeoLandingConfig }) {
-  const pageUrl = `${siteUrl}/app/${page.slug}`;
+  const pageUrl = `${siteUrl}/${page.slug}`;
 
   const jsonLd = [
     {
@@ -114,7 +114,7 @@ export function SeoLandingPage({ page }: { page: SeoLandingConfig }) {
           "@type": "ListItem",
           position: 2,
           name: "App",
-          item: `${siteUrl}/app`,
+          item: `${siteUrl}/`,
         },
         {
           "@type": "ListItem",
@@ -130,7 +130,7 @@ export function SeoLandingPage({ page }: { page: SeoLandingConfig }) {
       name: "Gud For Us",
       applicationCategory: "HealthApplication",
       operatingSystem: "iOS, Android",
-      url: `${siteUrl}/app`,
+      url: `${siteUrl}/`,
       description:
         "Gud For Us scans food, cosmetics, and ingredient labels from photos, returns a health score and compatibility score, explains ingredients, and suggests better alternatives.",
       featureList: [
@@ -171,7 +171,7 @@ export function SeoLandingPage({ page }: { page: SeoLandingConfig }) {
       {/* Header — matches blog pages: logo + store CTAs */}
       <header className="sticky top-0 z-30 border-b border-[#edecea] bg-[#fafaf7]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1120px] items-center justify-between px-6 py-3">
-          <Link href="/app" className="inline-flex items-center">
+          <Link href="/" className="inline-flex items-center">
             <Image
               src="/gud.png"
               alt="Gud For Us"
@@ -245,7 +245,7 @@ export function SeoLandingPage({ page }: { page: SeoLandingConfig }) {
                 Download for iOS
               </a>
               <Link
-                href="/app/blog"
+                href="/blog"
                 className="inline-flex items-center gap-2 rounded-full border-[1.5px] border-[#e5e3dd] px-9 py-4 text-[0.95rem] font-semibold text-[#1a1a17] transition-all duration-300 hover:border-[#2d6a4f] hover:bg-[#edf7ee] hover:text-[#2d6a4f]"
               >
                 Read related guides

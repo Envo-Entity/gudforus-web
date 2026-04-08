@@ -55,19 +55,19 @@ const sharedWhyGudForUs = [
 
 const sharedRelated = [
   {
-    href: "/app/yuka-alternative",
+    href: "/yuka-alternative",
     label: "Yuka Alternative Landing Page",
     description:
       "A shorter commercial page for direct comparison intent.",
   },
   {
-    href: "/app/blog/allergy-ingredient-checker",
+    href: "/blog/allergy-ingredient-checker",
     label: "Allergy Ingredient Checker",
     description:
       "A stronger follow-up for safety-focused shoppers and high-stakes ingredient checks.",
   },
   {
-    href: "/app/blog/why-ingredient-lists-are-hard-to-understand",
+    href: "/blog/why-ingredient-lists-are-hard-to-understand",
     label: "Why Ingredient Lists Are Hard To Understand",
     description:
       "A supporting guide that explains why people need scanner apps in the first place.",
@@ -134,19 +134,19 @@ export const yukaAlternativePages: Record<string, ComparisonBlogConfig> = {
     relatedLinks: [
       ...sharedRelated,
       {
-        href: "/app/blog/best-yuka-alternative-usa",
+        href: "/blog/best-yuka-alternative-usa",
         label: "Best Yuka Alternative for the USA",
         description:
           "A region-specific version for US grocery, supplement, and cosmetic shoppers.",
       },
       {
-        href: "/app/blog/best-yuka-alternative-uk",
+        href: "/blog/best-yuka-alternative-uk",
         label: "Best Yuka Alternative for the UK",
         description:
           "A localized version for UK shoppers comparing store brands and imported products.",
       },
       {
-        href: "/app/blog/best-yuka-alternative-ireland",
+        href: "/blog/best-yuka-alternative-ireland",
         label: "Best Yuka Alternative for Ireland",
         description:
           "A localized version for Irish supermarket and pharmacy shopping patterns.",

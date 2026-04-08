@@ -69,7 +69,7 @@ export default function Navbar() {
             </a>
 
             <Link
-              href="/app/blog"
+              href="/blog"
               className={`text-sm font-medium transition-colors duration-500 ${
                 isInHero
                   ? "text-green-50 hover:text-white"
@@ -132,7 +132,7 @@ export default function Navbar() {
                     ? "text-green-50 hover:text-white"
                     : "text-[#5c5c52] hover:text-[#2d6a4f]"
                 }`}
-                href="/app/blog"
+                href="/blog"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Blog

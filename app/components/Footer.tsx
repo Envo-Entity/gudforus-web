@@ -5,8 +5,8 @@ export default function Footer() {
     company: {
       title: "Company",
       links: [
-        { label: "Terms & Conditions", href: "/app/terms" },
-        { label: "Privacy Policy", href: "/app/privacy" },
+        { label: "Terms & Conditions", href: "/terms" },
+        { label: "Privacy Policy", href: "/privacy" },
       ],
     },
     download: {

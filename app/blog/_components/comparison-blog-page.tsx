@@ -49,7 +49,7 @@ const siteUrl = "https://gudforus.com";
 export function buildComparisonMetadata(
   config: ComparisonBlogConfig
 ): Metadata {
-  const canonical = `${siteUrl}/app/blog/${config.slug}`;
+  const canonical = `${siteUrl}/blog/${config.slug}`;
 
   return {
     title: config.metaTitle,
@@ -73,7 +73,7 @@ export function buildComparisonMetadata(
       type: "article",
       images: [
         {
-          url: "https://gudforus.com/app/opengraph-image.jpg",
+          url: "https://gudforus.com/opengraph-image.jpg",
         },
       ],
     },
@@ -81,7 +81,7 @@ export function buildComparisonMetadata(
       card: "summary_large_image",
       title: config.metaTitle,
       description: config.metaDescription,
-      images: ["https://gudforus.com/app/twitter-image.jpg"],
+      images: ["https://gudforus.com/twitter-image.jpg"],
     },
     robots: {
       index: true,
@@ -91,7 +91,7 @@ export function buildComparisonMetadata(
 }
 
 function JsonLd({ config }: { config: ComparisonBlogConfig }) {
-  const canonical = `${siteUrl}/app/blog/${config.slug}`;
+  const canonical = `${siteUrl}/blog/${config.slug}`;
   const faq = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -110,7 +110,7 @@ function JsonLd({ config }: { config: ComparisonBlogConfig }) {
     "@type": "BlogPosting",
     headline: config.heroTitle,
     description: config.metaDescription,
-    image: "https://gudforus.com/app/opengraph-image.jpg",
+    image: "https://gudforus.com/opengraph-image.jpg",
     author: {
       "@type": "Person",
       name: "Shivanshu Sharma",
@@ -146,13 +146,13 @@ function JsonLd({ config }: { config: ComparisonBlogConfig }) {
         "@type": "ListItem",
         position: 2,
         name: "App",
-        item: "https://gudforus.com/app",
+        item: "https://gudforus.com",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Blog",
-        item: "https://gudforus.com/app/blog",
+        item: "https://gudforus.com/blog",
       },
       {
         "@type": "ListItem",
@@ -222,13 +222,13 @@ export function ComparisonBlogPage({
           </div>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
-              href="/app"
+              href="/"
               className="inline-flex items-center rounded-full bg-[#2d6a4f] px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-[1px] hover:bg-[#40916c]"
             >
               Try Gud For Us
             </Link>
             <Link
-              href="/app/yuka-alternative"
+              href="/yuka-alternative"
               className="inline-flex items-center rounded-full border border-[#d9d6cd] bg-white px-7 py-3.5 text-sm font-semibold text-[#1a1a17] transition hover:border-[#2d6a4f] hover:text-[#2d6a4f]"
             >
               See the product page
@@ -391,13 +391,13 @@ export function ComparisonBlogPage({
               </p>
               <div className="mt-7 flex flex-wrap gap-4">
                 <Link
-                  href="/app"
+                  href="/"
                   className="inline-flex items-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#1f5a43] transition hover:-translate-y-[1px]"
                 >
                   Open the app
                 </Link>
                 <Link
-                  href="/app/blog"
+                  href="/blog"
                   className="inline-flex items-center rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Browse more guides

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Read Gud For Us articles about ingredient labels, food and cosmetic scanning, hidden allergens, and better product decisions.",
   alternates: {
-    canonical: "https://gudforus.com/app/blog",
+    canonical: "https://gudforus.com/blog",
   },
   robots: {
     index: true,
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     title: "Gud For Us Blog",
     description:
       "Articles about ingredient labels, allergens, food scanning, cosmetic scanning, and better product decisions.",
-    url: "https://gudforus.com/app/blog",
+    url: "https://gudforus.com/blog",
     type: "website",
     images: [
       {
-        url: "https://gudforus.com/app/opengraph-image.jpg",
+        url: "https://gudforus.com/opengraph-image.jpg",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "Gud For Us Blog",
     description:
       "Articles about ingredient labels, allergens, food scanning, cosmetic scanning, and better product decisions.",
-    images: ["https://gudforus.com/app/twitter-image.jpg"],
+    images: ["https://gudforus.com/twitter-image.jpg"],
   },
 };
 
@@ -66,7 +66,7 @@ export default function BlogIndexPage() {
               Start reading
             </Link>
             <Link
-              href="/app"
+              href="/"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-transparent text-[#1a1a17] font-semibold text-[0.95rem] border-[1.5px] border-[#e5e3dd] hover:border-[#2d6a4f] hover:text-[#2d6a4f] hover:bg-[#edf7ee] transition-all duration-300"
             >
               Explore the app
@@ -89,37 +89,37 @@ export default function BlogIndexPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                href: "/app/ingredient-scanner-app",
+                href: "/ingredient-scanner-app",
                 title: "Ingredient Scanner App",
                 description:
                   "For broad product-intent searches around ingredient scanning, food labels, and AI ingredient checking.",
               },
               {
-                href: "/app/allergy-ingredient-scanner",
+                href: "/allergy-ingredient-scanner",
                 title: "Allergy Ingredient Scanner",
                 description:
                   "For users who need personal compatibility context and allergy-aware product decisions.",
               },
               {
-                href: "/app/cosmetic-ingredient-scanner",
+                href: "/cosmetic-ingredient-scanner",
                 title: "Cosmetic Ingredient Scanner",
                 description:
                   "For beauty and skincare ingredient-checking queries that need their own destination.",
               },
               {
-                href: "/app/yuka-alternative",
+                href: "/yuka-alternative",
                 title: "Yuka Alternative",
                 description:
                   "For comparison shoppers looking for an app with a more personal scanning flow.",
               },
               {
-                href: "/app/how-to-scan-food-ingredients",
+                href: "/how-to-scan-food-ingredients",
                 title: "How To Scan Food Ingredients",
                 description:
                   "For educational searches around reading food labels and understanding ingredient panels.",
               },
               {
-                href: "/app/check-ingredients-for-allergies",
+                href: "/check-ingredients-for-allergies",
                 title: "Check Ingredients For Allergies",
                 description:
                   "For safety-oriented users asking whether ingredients are actually a fit for them.",
