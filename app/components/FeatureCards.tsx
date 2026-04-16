@@ -70,37 +70,133 @@ function SmartPantryCard() {
 }
 
 function DailyDigestCard() {
+  const mockBars = [
+    { week: "Wk 1", score: 42 },
+    { week: "Wk 2", score: 58 },
+    { week: "Wk 3", score: 71 },
+    { week: "Wk 4", score: 85 },
+  ];
+  const positiveInfluences = ["Omega-3", "Fiber"];
+  const negativeInfluences = ["Trans Fat", "High Sugar"];
+
+  // Scale to actual data max + small headroom so bars fill the space
+  const maxScore = Math.max(...mockBars.map((b) => b.score)) + 8;
+  const chartW = 280;
+  const topPad = 16; // room above bars for score labels
+  const botPad = 20; // room below bars for week labels
+  const graphH = 170; // height of the bar area itself
+  const chartH = topPad + graphH + botPad;
+  const barW = 44;
+  const gap = (chartW - barW * mockBars.length) / (mockBars.length + 1);
+
   return (
-    <div className="iso-card bg-[#262626] rounded-2xl sm:rounded-[2rem] p-0 min-h-[350px] sm:min-h-[400px] relative overflow-hidden">
-      {/* Background Image */}
-      <Image
-        alt="Healthy food preparation"
-        className="absolute inset-0 w-full h-full object-cover opacity-60"
-        src="/app-images/food-preparation.webp"
-        fill
-        sizes="(max-width: 768px) 100vw, 33vw"
-      />
+    <div className="iso-card bg-white border border-gray-100 rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 min-h-[350px] sm:min-h-[400px] flex flex-col gap-5 relative overflow-hidden shadow-soft">
+      {/* Keyframe injected once with this card */}
+      <style>{`
+        @keyframes dd-growBar {
+          from { transform: scaleY(0); }
+          to   { transform: scaleY(1); }
+        }
+      `}</style>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/90"></div>
-
-      {/* Badge */}
-      <div className="absolute top-6 sm:top-8 left-6 sm:left-8 flex items-center gap-2 z-10">
-        <span className="w-2 h-2 rounded-full bg-white"></span>
-        <span className="text-white font-medium text-sm">Daily Digest</span>
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-gray-900" />
+          <span className="text-sm font-medium text-gray-900">Daily Digest</span>
+        </div>
+        <span className="text-[11px] text-gray-400">Last 4 weeks</span>
       </div>
 
-      {/* Content */}
-      <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8 right-6 sm:right-8 z-10">
-        <h3 className="text-2xl sm:text-3xl font-display text-white mb-2 leading-tight">
-          Your daily food insights.
-        </h3>
-        <p className="text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6">
-          Personalized reports based on what you scanned and consumed today.
-        </p>
-        <button className="bg-white text-black px-6 py-2 rounded-full text-sm font-medium shadow hover:bg-gray-100 transition-all">
-          View Demo
-        </button>
+      {/* Bar chart */}
+      <svg viewBox={`0 0 ${chartW} ${chartH}`} width="100%" height={chartH}>
+        {/* Subtle grid lines */}
+        {[25, 50, 75, 100].map((val) => {
+          const y = topPad + graphH - (val / maxScore) * graphH;
+          return (
+            <line
+              key={val}
+              x1={0} y1={y} x2={chartW} y2={y}
+              stroke="#000" strokeOpacity={0.05} strokeWidth={1}
+            />
+          );
+        })}
+
+        {/* Bars */}
+        {mockBars.map((bar, i) => {
+          const barH = (bar.score / maxScore) * graphH;
+          const x = gap + i * (barW + gap);
+          const yTop = topPad + graphH - barH;
+          const color =
+            bar.score >= 60 ? "#4a6c48"
+            : bar.score >= 30 ? "#FFD166"
+            : "#EF6B6B";
+
+          return (
+            <g key={i}>
+              {/* Score label */}
+              <text
+                x={x + barW / 2} y={yTop - 5}
+                textAnchor="middle" fontSize={10} fontWeight="bold" fill="#1a1a1a"
+              >
+                {bar.score}
+              </text>
+
+              {/* Animated bar */}
+              <rect
+                x={x} y={yTop} width={barW} height={barH} rx={7} ry={7}
+                fill={color}
+                style={{
+                  transformBox: "fill-box" as never,
+                  transformOrigin: "bottom center",
+                  animation: `dd-growBar 700ms cubic-bezier(0.23,1,0.32,1) ${i * 80}ms both`,
+                }}
+              />
+
+              {/* Week label */}
+              <text
+                x={x + barW / 2} y={topPad + graphH + 16}
+                textAnchor="middle" fontSize={10} fill="#636366"
+              >
+                {bar.week}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Influences */}
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.12em] text-gray-400">
+            Positive Influences
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {positiveInfluences.map((inf) => (
+              <span
+                key={inf}
+                className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-[9px] font-bold uppercase tracking-wide text-green-700"
+              >
+                {inf}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.12em] text-gray-400">
+            Negative Influences
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {negativeInfluences.map((inf) => (
+              <span
+                key={inf}
+                className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-[9px] font-bold uppercase tracking-wide text-red-600"
+              >
+                {inf}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
