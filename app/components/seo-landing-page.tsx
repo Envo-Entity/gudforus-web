@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import AppleStoreIcon from "./AppleStoreIcon";
+import { ImageCarousel } from "../blog/_components/image-carousel";
 import {
   APP_STORE_URL,
   DEFAULT_OG_IMAGE,
@@ -57,6 +58,7 @@ export type SeoLandingConfig = {
   sections: Section[];
   faqs: Faq[];
   relatedLinks: RelatedLink[];
+  images?: string[];
 };
 
 export function createLandingMetadata(page: SeoLandingConfig): Metadata {
@@ -280,6 +282,12 @@ export function SeoLandingPage({ page }: { page: SeoLandingConfig }) {
               ))}
             </ul>
           </nav>
+
+          {page.images && page.images.length > 0 && (
+            <div className="mb-14">
+              <ImageCarousel images={page.images} alt={page.title} />
+            </div>
+          )}
 
           <article>
             {page.sections.map((section, i) => (

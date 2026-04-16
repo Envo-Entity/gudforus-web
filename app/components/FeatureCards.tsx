@@ -1,5 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+
+// Images array for blueberry superfood widget + blog
+// [0] = square image for widget, [1] and [2] = 16:9 images for blog carousel
+export const blueberryImages: string[] = [
+  "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/blueberries.png",
+  "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/blueberries_1.jpg",
+  "https://ihichdejyaeignzbnfgb.supabase.co/storage/v1/object/public/website-assets/blueberries_2.jpg",
+];
 
 export default function FeatureCards() {
   return (
@@ -21,41 +30,41 @@ export default function FeatureCards() {
 }
 
 function SmartPantryCard() {
+  const widgetImage = blueberryImages[0];
+
   return (
-    <div className="iso-card bg-gray-200 rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 min-h-[350px] sm:min-h-[400px] flex flex-col justify-between relative overflow-hidden group">
-      {/* Background Glow */}
-      <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-[#2E7D32]/10 rounded-full blur-3xl -mr-12 sm:-mr-16 -mt-12 sm:-mt-16"></div>
+    <div className="iso-card relative overflow-hidden rounded-2xl sm:rounded-[2rem] min-h-[350px] sm:min-h-[400px] flex flex-col p-6 sm:p-8 bg-white border border-gray-100 shadow-soft">
 
-      <div>
-        <div className="flex items-center gap-2 mb-4">
-          <span className="w-2 h-2 rounded-full bg-[#2E7D32]"></span>
-          <span className="text-gray-600 font-medium text-sm">
-            Smart Pantry
-          </span>
-        </div>
-        <h3 className="text-2xl sm:text-3xl font-display text-gray-900 mb-4">
-          Inventory your health.
+
+      {/* Image — mix-blend-multiply dissolves the white bg into the card */}
+      <div className="relative z-10 flex flex-1 items-start justify-start py-3">
+        {widgetImage ? (
+          <Image
+            src={widgetImage}
+            alt="Blueberries — this week's superfood"
+            width={220}
+            height={220}
+            sizes="220px"
+            className="object-contain mix-blend-multiply"
+          />
+        ) : (
+          <div className="h-[180px] w-[180px] rounded-full bg-white/30" />
+        )}
+      </div>
+
+      {/* Title + CTA */}
+      <div className="relative z-10">
+        <h3 className="font-display text-[1.65rem] leading-[1.15] tracking-[-0.02em] text-[#1a0a2e]">
+          This week&apos;s<br />superfood
         </h3>
+        <Link
+          href="/blog/blueberries-superfood"
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#1a0a2e] px-5 py-2.5 text-[0.8rem] font-semibold text-white transition-transform duration-[160ms] active:scale-[0.97]"
+          style={{ transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
+        >
+          Read More <ArrowRight size={13} />
+        </Link>
       </div>
-
-      {/* UI Preview */}
-      <div className="relative z-10 flex justify-center mt-6 sm:mt-8">
-        <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-[180px] sm:max-w-[200px]">
-          <div className="space-y-3">
-            <div className="h-2 bg-gray-100 rounded w-3/4"></div>
-            <div className="h-2 bg-gray-100 rounded w-1/2"></div>
-            <div className="flex gap-2 mt-4">
-              <div className="h-7 w-7 sm:h-8 sm:w-8 rounded bg-green-100"></div>
-              <div className="h-7 w-7 sm:h-8 sm:w-8 rounded bg-orange-100"></div>
-              <div className="h-7 w-7 sm:h-8 sm:w-8 rounded bg-blue-100"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button className="bg-white text-gray-900 px-6 py-2 rounded-full w-max text-sm font-medium mt-6 sm:mt-8 shadow hover:shadow-lg transition-all">
-        Explore
-      </button>
     </div>
   );
 }

@@ -9,6 +9,15 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    href: "/blog/blueberries-superfood",
+    title: "Blueberries: The Superfood You Don't Have to Try Hard to Eat",
+    category: "Nutrition",
+    description:
+      "What the research actually says about anthocyanins, brain health, and the fresh vs. frozen debate — and how to make blueberries a daily habit.",
+    date: "April 16, 2026",
+    lastModified: "2026-04-16",
+  },
+  {
     href: "/blog/best-yuka-alternative",
     title: "Best Yuka Alternative in 2026",
     category: "Comparison",
