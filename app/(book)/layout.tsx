@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { League_Spartan, DM_Serif_Display } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/header";
 import { Component } from "@/components/ui/cursor-follower";
 
@@ -107,6 +108,9 @@ export default function RootLayout({
         <main className="mt-[84px]">{children}</main>
         <Component />
       </body>
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </html>
   );
 }
