@@ -11,22 +11,20 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Column - Content */}
           <div className="text-center md:text-left">
-            {/* Badge */}
+            {/* Action Buttons */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4a6c48]/10 border border-[#4a6c48]/20 text-[#4a6c48] mb-8 animate-fade-in-up">
-              <span className="w-2 h-2 rounded-full bg-[#4a6c48] animate-pulse"></span>
+             
               <span className="text-xs font-semibold uppercase tracking-wider">
-                AI-Powered Consumption Intelligence
+                Scan it. Trust it. Or put it back.
               </span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="font-display text-5xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 mb-4 sm:mb-8 leading-tight">
+             <h1 className="font-display text-5xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 mb-4 sm:mb-8 leading-tight">
               Know what you
               <br />
               <span className="inline-flex items-baseline gap-2">
-                <span className="font-display text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-gray-900">
-                  really{" "}
-                </span>
+                
                 <RotatingText
                   text={["consume", "buy"]}
                   duration={2000}
@@ -36,11 +34,14 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="mt-4 max-w-2xl mx-auto md:mx-0 text-md sm:text-xl text-gray-600 font-light leading-relaxed">
-              Decode labels instantly. From ingredient quality to personal
-              compatibility, gud for us gives you the clarity to make better
-              choices for your body and the planet.
-            </p>
+            <div className="mt-4 max-w-2xl mx-auto md:mx-0 text-md sm:text-lg text-gray-600 font-light leading-relaxed space-y-3">
+              <p>
+                Finally know what's actually in your grocery products. Decode labels instantly. From ingredient quality to personal fit.
+              </p>
+              <p>
+                Every product rated. In your language 
+              </p>
+            </div>
 
             {/* App Store Buttons */}
             <div className="mt-6 sm:mt-10">
