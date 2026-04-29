@@ -37,7 +37,7 @@ function SmartPantryCard() {
 
 
       {/* Image — mix-blend-multiply dissolves the white bg into the card */}
-      <div className="relative z-10 flex flex-1 items-start justify-start py-3">
+      <div className="relative z-10 flex flex-1 items-start justify-center py-1">
         {widgetImage ? (
           <Image
             src={widgetImage}
@@ -54,16 +54,18 @@ function SmartPantryCard() {
 
       {/* Title + CTA */}
       <div className="relative z-10">
-        <h3 className="font-display text-[1.65rem] leading-[1.15] tracking-[-0.02em] text-[#1a0a2e]">
+        <h3 className="text-center font-display text-[1.65rem] leading-[1.15] tracking-[-0.02em] text-[#1a0a2e]">
           This week&apos;s<br />superfood
         </h3>
-        <Link
-          href="/blog/blueberries-superfood"
-          className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#1a0a2e] px-5 py-2.5 text-[0.8rem] font-semibold text-white transition-transform duration-[160ms] active:scale-[0.97]"
-          style={{ transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
-        >
-          Read More <ArrowRight size={13} />
-        </Link>
+        <div className="flex justify-center">
+          <Link
+            href="/blog/blueberries-superfood"
+            className="mt-4 inline-flex items-center rounded-full bg-[#1a0a2e] px-5 py-2.5 text-[0.8rem] font-semibold text-white transition-transform duration-[160ms] active:scale-[0.97]"
+            style={{ transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
+          >
+            Read More
+          </Link>
+        </div>
       </div>
     </div>
   );
