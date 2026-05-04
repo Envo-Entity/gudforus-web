@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
 import { formatProductSlug } from "@/lib/products";
@@ -135,7 +136,7 @@ export default function IsHealthySearch({ initialProducts }: Props) {
             {results.map((product, i) => (
               <Link
                 key={product.id}
-                href={`/isHealthy/${product.slug}`}
+                href={`/ishealthy/${product.slug}`}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-4 px-5 py-3.5 hover:bg-[#f7f5ee] transition-colors ${
                   i !== 0 ? "border-t border-[#f0ede6]" : ""
@@ -143,13 +144,18 @@ export default function IsHealthySearch({ initialProducts }: Props) {
               >
                 <div className="w-11 h-11 rounded-xl bg-[#f2f0e9] shrink-0 overflow-hidden flex items-center justify-center">
                   {product.product_image_url ? (
-                    <img
+                    <Image
                       src={product.product_image_url}
                       alt={displayName(product)}
+                      width={44}
+                      height={44}
+                      unoptimized
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="text-xl">🥗</span>
+                    <span className="text-xs font-bold text-[#9ca3af]">
+                      G
+                    </span>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -183,7 +189,7 @@ export default function IsHealthySearch({ initialProducts }: Props) {
         {initialProducts.map((product) => (
           <Link
             key={product.id}
-            href={`/isHealthy/${product.slug}`}
+            href={`/ishealthy/${product.slug}`}
             className="px-4 py-1.5 rounded-full bg-[#ede9e0] text-sm text-[#4b5563] hover:bg-[#dff0de] hover:text-[#2e7d32] transition-colors duration-150"
           >
             {displayName(product)}

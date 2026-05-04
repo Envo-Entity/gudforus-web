@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
+import { getSeoReadyProducts } from "@/lib/products";
 import { blogPosts } from "./blog/blog-posts";
 import { SITE_URL } from "./lib/site";
+
+export const revalidate = 3600;
 
 const staticPages: MetadataRoute.Sitemap = [
   {
@@ -68,6 +71,19 @@ const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
   priority: post.href.includes("best-yuka-alternative") ? 0.86 : 0.85,
 }));
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [...staticPages, ...blogPages];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { data: products } = await getSeoReadyProducts();
+  const productPages: MetadataRoute.Sitemap = (products ?? []).map((product) => ({
+    url: `${SITE_URL}/ishealthy/${product.slug}`,
+    lastModified: new Date(
+      product.updated_at ??
+        product.published_at ??
+        product.seo_generated_at ??
+        Date.now(),
+    ),
+    changeFrequency: "weekly",
+    priority: 0.72,
+  }));
+
+  return [...staticPages, ...blogPages, ...productPages];
 }

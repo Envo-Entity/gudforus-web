@@ -3,7 +3,7 @@ import { getTopProductNames, isSupabaseConfigured } from "@/lib/products";
 import IsHealthySearch from "./IsHealthySearch";
 import MinimalNav from "@/app/components/MinimalNav";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function IsHealthyPage() {
   if (!isSupabaseConfigured) {
@@ -21,7 +21,7 @@ export default async function IsHealthyPage() {
             Food Product Health Scores
           </h1>
           <p className="mt-3 text-[#6b7280] text-center text-base max-w-md">
-            Search any packaged food to see its health score, ingredients, and verdict.
+            Search any packaged food to read its health score, ingredients, and verdict.
           </p>
 
           <div className="mt-10 w-full">
