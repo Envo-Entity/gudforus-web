@@ -67,6 +67,20 @@ export const getProducts = async () => {
     .order("created_at", { ascending: false });
 };
 
+export const getTopProductNames = async () => {
+  const supabase = createClient();
+
+  if (!supabase) {
+    return { data: null, error: null };
+  }
+
+  return supabase
+    .from("products")
+    .select("id, slug, product_name, product_image_url, category, health_score")
+    .order("created_at", { ascending: false })
+    .limit(50);
+};
+
 export const getProductBySlug = async (slug: string) => {
   const supabase = createClient();
 

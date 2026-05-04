@@ -6,6 +6,7 @@ import {
   DEFAULT_TWITTER_IMAGE,
   SITE_URL,
 } from "../lib/site";
+import MinimalNav from "@/app/components/MinimalNav";
 
 export const metadata: Metadata = {
   title: "Gud For Us Blog | Ingredient Labels, Allergies, and Smarter Scanning",
@@ -56,6 +57,8 @@ export default function BlogIndexPage() {
   };
 
   return (
+    <>
+    <MinimalNav />
     <main className="min-h-screen bg-[#fafaf7] text-[#1a1a17] font-sans overflow-x-hidden selection:bg-[#d8f3dc] selection:text-[#1a1a17]">
       <script
         type="application/ld+json"
@@ -219,5 +222,6 @@ export default function BlogIndexPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
