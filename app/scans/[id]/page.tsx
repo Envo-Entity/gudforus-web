@@ -527,7 +527,7 @@ function NutritionSection({ nutrition }: { nutrition: ScanNutritionFacts | null 
   if (!nutrition) return null;
 
   return (
-    <Card className="lg:col-span-5">
+    <Card>
       <h2 className="text-xl font-bold tracking-[-0.03em] text-[#242620]">
         Nutrition Facts
       </h2>
@@ -535,7 +535,7 @@ function NutritionSection({ nutrition }: { nutrition: ScanNutritionFacts | null 
         <MacroRing nutrition={nutrition} />
       </div>
       <div className="mt-6 border-t border-[#e2e6dc] pt-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <NutrientGauge
             label="Sugar"
             amount={nutrition.sugar_g}
@@ -684,15 +684,12 @@ export default async function SharedScanPage({ params }: Props) {
                   className="lg:col-span-5"
                 />
               </div>
-              <div className="grid gap-5 lg:grid-cols-12">
-                <NutritionSection nutrition={scan.nutritionFacts} />
-                <ListSection
-                  title="What You Will Like"
-                  items={scan.compatibility.positives}
-                  tone="positive"
-                  className="lg:col-span-7"
-                />
-              </div>
+              <NutritionSection nutrition={scan.nutritionFacts} />
+              <ListSection
+                title="What You Will Like"
+                items={scan.compatibility.positives}
+                tone="positive"
+              />
             </>
           )}
         </div>

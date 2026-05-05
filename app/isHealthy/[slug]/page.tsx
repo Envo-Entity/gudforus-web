@@ -36,9 +36,7 @@ export const revalidate = 3600;
 const productUrl = (slug: string) => `${SITE_URL}/ishealthy/${slug}`;
 
 const titleCase = (value: string) =>
-  value
-    .replaceAll("_", " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 
 const displayProductName = (product: ProductRecord) =>
   product.product_name ?? titleCase(formatProductSlug(product.slug));
@@ -152,7 +150,8 @@ const getIngredientGroups = (ingredients: ProductIngredient[]) => ({
     (ingredient) => ingredient.health_impact === "positive",
   ),
   neutral: ingredients.filter(
-    (ingredient) => ingredient.health_impact !== "positive" &&
+    (ingredient) =>
+      ingredient.health_impact !== "positive" &&
       ingredient.health_impact !== "negative",
   ),
   negative: ingredients.filter(
@@ -270,7 +269,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     removePlanetScoreSentences(product.verdict_summary) ??
     `Read the Gud For Us health analysis for ${displayProductName(product)}.`;
   const canonical = productUrl(product.slug);
-  const image = product.og_image_url ?? product.product_image_url ?? DEFAULT_OG_IMAGE;
+  const image =
+    product.og_image_url ?? product.product_image_url ?? DEFAULT_OG_IMAGE;
 
   return {
     title,
@@ -293,10 +293,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: [product.og_image_url ?? product.product_image_url ?? DEFAULT_TWITTER_IMAGE],
+      images: [
+        product.og_image_url ??
+          product.product_image_url ??
+          DEFAULT_TWITTER_IMAGE,
+      ],
     },
   };
 }
+
+const nutriGrades = [
+  { letter: "A", min: 80, bg: "#1a7340", text: "#ffffff", label: "Excellent" },
+  { letter: "B", min: 60, bg: "#85bb2f", text: "#ffffff", label: "Good" },
+  { letter: "C", min: 40, bg: "#fecb02", text: "#1a1a17", label: "Mixed" },
+  { letter: "D", min: 20, bg: "#ee8100", text: "#ffffff", label: "Poor" },
+  { letter: "E", min: 0, bg: "#e63312", text: "#ffffff", label: "Watch out" },
+] as const;
 
 function ScoreBar({ score }: { score: number | null }) {
   const tone = scoreTone(score);
@@ -308,7 +320,9 @@ function ScoreBar({ score }: { score: number | null }) {
         <p className="text-sm font-semibold text-[#5c5c52]">Health score</p>
         <p className="text-3xl font-bold tracking-tight text-[#1a1a17]">
           {score ?? "N/A"}
-          {score !== null ? <span className="text-base text-[#8a877d]"> / 100</span> : null}
+          {score !== null ? (
+            <span className="text-base text-[#8a877d]"> / 100</span>
+          ) : null}
         </p>
       </div>
       <div className="relative mt-8">
@@ -371,7 +385,11 @@ function VerdictCard({
   );
 }
 
-function IngredientSection({ ingredients }: { ingredients: ProductIngredient[] }) {
+function IngredientSection({
+  ingredients,
+}: {
+  ingredients: ProductIngredient[];
+}) {
   if (!ingredients.length) {
     return null;
   }
@@ -464,7 +482,9 @@ function NutrientGauge({
         <div>
           <p className="text-sm font-semibold text-[#1a1a17]">{label}</p>
           <p className="text-xs text-[#8a877d]">
-            {amount !== null && amount !== undefined ? `${amount}${unit}` : "Not available"}
+            {amount !== null && amount !== undefined
+              ? `${amount}${unit}`
+              : "Not available"}
           </p>
         </div>
         <span
@@ -535,7 +555,8 @@ function NutritionSection({
             </p>
           ) : null}
         </div>
-        {nutrition.energy_kcal !== null && nutrition.energy_kcal !== undefined ? (
+        {nutrition.energy_kcal !== null &&
+        nutrition.energy_kcal !== undefined ? (
           <div className="rounded-[16px] bg-[#f5f3ee] px-5 py-3 text-right">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#8a877d]">
               Energy
@@ -629,7 +650,8 @@ export default async function IsHealthyProductPage({ params }: Props) {
     verdictSummary ??
     seo.intro_paragraph;
   const image = product.product_image_url;
-  const ogImage = product.og_image_url ?? product.product_image_url ?? DEFAULT_OG_IMAGE;
+  const ogImage =
+    product.og_image_url ?? product.product_image_url ?? DEFAULT_OG_IMAGE;
   const tags = product.category_tags ?? [];
 
   const schema = [
@@ -769,7 +791,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
               <h1 className="mt-6 max-w-[760px] font-display text-[clamp(2.5rem,5vw,4.3rem)] leading-[1.04] tracking-[-0.025em] text-[#1a1a17]">
                 {title}
               </h1>
-              {seo.intro_paragraph ?? verdictSummary ? (
+              {(seo.intro_paragraph ?? verdictSummary) ? (
                 <p className="mt-6 max-w-[720px] text-[1.08rem] leading-8 text-[#5c5c52]">
                   {seo.intro_paragraph ?? verdictSummary}
                 </p>
@@ -846,37 +868,60 @@ export default async function IsHealthyProductPage({ params }: Props) {
               </section>
             ) : null}
 
-            <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
-              <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-[#1a1a17] prose-p:text-[#4f4f45] prose-p:leading-8 prose-strong:text-[#1a1a17]">
-                {seo.expert_analysis ? (
-                  <>
-                    <h2>Expert analysis</h2>
-                    <p>{seo.expert_analysis}</p>
-                  </>
+            {seo.expert_analysis ||
+            seo.who_it_is_for ||
+            seo.who_should_avoid ||
+            verdictSummary ? (
+              <section className="mt-14">
+                {seo.expert_analysis ||
+                (!seo.who_it_is_for &&
+                  !seo.who_should_avoid &&
+                  verdictSummary) ? (
+                  <div className="relative border-y border-[#e5e3dd] py-10">
+                    <span
+                      aria-hidden
+                      className="font-display pointer-events-none absolute -top-2 right-0 select-none text-[7rem] leading-none text-[#2d6a4f]/[0.07]"
+                    >
+                      &ldquo;
+                    </span>
+                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#2d6a4f]">
+                      Expert analysis
+                    </p>
+                    <h2 className="font-display mt-3 text-2xl leading-snug text-[#1a1a17]">
+                      Our read on this product
+                    </h2>
+                    <p className="mt-5 max-w-[65ch] text-[1.05rem] leading-[1.9] text-[#3a3a35]">
+                      {seo.expert_analysis ?? verdictSummary}
+                    </p>
+                  </div>
                 ) : null}
-                {seo.who_it_is_for ? (
-                  <>
-                    <h2>Who it is for</h2>
-                    <p>{seo.who_it_is_for}</p>
-                  </>
+
+                {seo.who_it_is_for || seo.who_should_avoid ? (
+                  <div className="mt-6 grid gap-4 md:grid-cols-2">
+                    {seo.who_it_is_for ? (
+                      <div className="rounded-[22px] border border-[#d5ede0] bg-[#f6fbf8] p-6">
+                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-[#147d3e]">
+                          Best for
+                        </p>
+                        <p className="mt-3 text-sm leading-7 text-[#4f4f45]">
+                          {seo.who_it_is_for}
+                        </p>
+                      </div>
+                    ) : null}
+                    {seo.who_should_avoid ? (
+                      <div className="rounded-[22px] border border-[#f0ddd0] bg-[#fdf8f5] p-6">
+                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-[#b54708]">
+                          Approach with care
+                        </p>
+                        <p className="mt-3 text-sm leading-7 text-[#4f4f45]">
+                          {seo.who_should_avoid}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
                 ) : null}
-                {seo.who_should_avoid ? (
-                  <>
-                    <h2>Who should avoid it</h2>
-                    <p>{seo.who_should_avoid}</p>
-                  </>
-                ) : null}
-                {!seo.expert_analysis &&
-                !seo.who_it_is_for &&
-                !seo.who_should_avoid &&
-                verdictSummary ? (
-                  <>
-                    <h2>What the score means</h2>
-                    <p>{verdictSummary}</p>
-                  </>
-                ) : null}
-              </div>
-            </section>
+              </section>
+            ) : null}
 
             <IngredientSection ingredients={ingredients} />
             <NutritionSection nutrition={analysis.nutrition_facts} />
@@ -886,35 +931,49 @@ export default async function IsHealthyProductPage({ params }: Props) {
                 <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
                   Health goal fit
                 </h2>
-                <div className="mt-6 grid gap-4 md:grid-cols-2">
-                  {healthGoals.map(([key, goal]) => {
-                    const tone = scoreTone(goal.score ?? null);
+                <div className="mt-6 overflow-x-auto">
+                  <table className="w-full border-collapse text-sm">
+                    <thead>
+                      <tr className="border-b border-[#edecea]">
+                        <th className="pb-3 text-left text-xs font-bold uppercase tracking-[0.1em] text-[#8a877d]">
+                          Goal
+                        </th>
+                        <th className="pb-3 text-center text-xs font-bold uppercase tracking-[0.1em] text-[#8a877d]">
+                          Grade
+                        </th>
+                        <th className="pb-3 pl-4 text-left text-xs font-bold uppercase tracking-[0.1em] text-[#8a877d]">
+                          Notes
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#f2f0e9]">
+                      {healthGoals.map(([key, goal]) => {
+                        const tone = scoreTone(goal.score ?? null);
 
-                    return (
-                      <article
-                        key={key}
-                        className="rounded-[18px] border border-[#edecea] bg-[#fcfbf7] p-5"
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <h3 className="text-lg font-semibold text-[#1a1a17]">
-                            {titleCase(key)}
-                          </h3>
-                          {goal.label || goal.score !== null ? (
-                            <span
-                              className={`rounded-full px-3 py-1 text-xs font-bold ${tone.bg} ${tone.text}`}
-                            >
-                              {goal.label ?? goal.score}
-                            </span>
-                          ) : null}
-                        </div>
-                        {goal.summary ? (
-                          <p className="mt-3 text-sm leading-7 text-[#5c5c52]">
-                            {goal.summary}
-                          </p>
-                        ) : null}
-                      </article>
-                    );
-                  })}
+                        return (
+                          <tr key={key} className="group">
+                            <td className="py-4 pr-4 font-semibold text-[#1a1a17]">
+                              {titleCase(key)}
+                            </td>
+                            <td className="py-4 pr-4 text-center">
+                              {goal.label || goal.score !== null ? (
+                                <span
+                                  className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${tone.bg} ${tone.text}`}
+                                >
+                                  {goal.label ?? goal.score}
+                                </span>
+                              ) : (
+                                <span className="text-[#8a877d]">—</span>
+                              )}
+                            </td>
+                            <td className="py-4 pl-4 leading-6 text-[#5c5c52]">
+                              {goal.summary ?? "—"}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </section>
             ) : null}
@@ -962,16 +1021,24 @@ export default async function IsHealthyProductPage({ params }: Props) {
                 <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
                   Frequently asked questions
                 </h2>
-                <div className="mt-6 divide-y divide-[#edecea]">
+                <div className="mt-6 divide-y divide-[#f2f0e9]">
                   {faqs.map((faq) => (
-                    <div key={faq.question} className="py-5 first:pt-0 last:pb-0">
-                      <h3 className="text-lg font-semibold text-[#1a1a17]">
-                        {faq.question}
-                      </h3>
-                      <p className="mt-2 text-base leading-7 text-[#5c5c52]">
+                    <details
+                      key={faq.question}
+                      className="group py-5 first:pt-0 last:pb-0"
+                    >
+                      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 [&::-webkit-details-marker]:hidden">
+                        <h3 className="text-base font-semibold leading-7 text-[#1a1a17]">
+                          {faq.question}
+                        </h3>
+                        <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#f2f0e9] text-xs font-bold text-[#5c5c52] transition-transform duration-200 group-open:rotate-45">
+                          +
+                        </span>
+                      </summary>
+                      <p className="mt-3 text-base leading-7 text-[#5c5c52]">
                         {faq.answer}
                       </p>
-                    </div>
+                    </details>
                   ))}
                 </div>
               </section>
@@ -1003,7 +1070,9 @@ export default async function IsHealthyProductPage({ params }: Props) {
                   Lab tested
                 </p>
                 <p className="mt-3 text-lg font-semibold text-[#1a1a17]">
-                  {analysis.lab_tested.available ? "Available" : "Not available"}
+                  {analysis.lab_tested.available
+                    ? "Available"
+                    : "Not available"}
                 </p>
                 {analysis.lab_tested.summary ? (
                   <p className="mt-2 text-sm leading-7 text-[#5c5c52]">
