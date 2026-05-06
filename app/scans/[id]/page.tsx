@@ -30,9 +30,7 @@ export const metadata: Metadata = {
 };
 
 const titleCase = (value: string) =>
-  value
-    .replaceAll("_", " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 
 const scoreBand = (score: number | null) => {
   if (score === null) return "Not scored";
@@ -158,7 +156,10 @@ function ProductSummary({ scan }: { scan: NormalizedScan }) {
             </p>
           ) : null}
           <h2 className="mt-1 max-w-3xl text-2xl font-bold leading-tight tracking-[-0.035em] text-[#242620] sm:text-3xl">
-            {scan.productName ?? scan.productSubtitle ?? scan.barcode ?? "Shared scan"}
+            {scan.productName ??
+              scan.productSubtitle ??
+              scan.barcode ??
+              "Shared scan"}
           </h2>
           {scan.productSubtitle && scan.productName ? (
             <p className="mt-2 max-w-2xl text-sm leading-6 text-[#697168]">
@@ -246,7 +247,10 @@ function CompatibilityCard({ scan }: { scan: NormalizedScan }) {
 
   if (!hasData) return null;
 
-  const label = compatibilityLabel(scan.compatibility.label, scan.compatibility.score);
+  const label = compatibilityLabel(
+    scan.compatibility.label,
+    scan.compatibility.score,
+  );
 
   return (
     <Card className="min-h-[220px]">
@@ -326,7 +330,8 @@ function LabCard({ scan }: { scan: NormalizedScan }) {
         </div>
       </div>
       <p className="mt-5 text-sm leading-6 text-[#697168]">
-        {lab.summary ?? "No independent lab testing data found for this product."}
+        {lab.summary ??
+          "No independent lab testing data found for this product."}
       </p>
       {lab.source ? (
         <div className="mt-4 rounded-2xl bg-[#eef2ea] px-4 py-3 text-sm font-medium text-[#242620]">
@@ -343,7 +348,11 @@ function LabCard({ scan }: { scan: NormalizedScan }) {
   );
 }
 
-function IngredientSection({ groups }: { groups: NormalizedScan["ingredients"] }) {
+function IngredientSection({
+  groups,
+}: {
+  groups: NormalizedScan["ingredients"];
+}) {
   const hasIngredients =
     groups.good.length || groups.okay.length || groups.bad.length;
 
@@ -361,7 +370,7 @@ function IngredientSection({ groups }: { groups: NormalizedScan["ingredients"] }
       chip: "border-[#ee6e16] bg-[#fff4e9] text-[#bc4c0c]",
     },
     {
-      title: "Watch out",
+      title: "Bad",
       items: groups.bad,
       chip: "border-[#d8463c] bg-[#fdeaea] text-[#c7372f]",
     },
@@ -489,7 +498,9 @@ function NutrientGauge({
             {unit} per serving
           </p>
         </div>
-        <span className={`rounded-full px-3 py-1 text-xs font-bold ${style.badge}`}>
+        <span
+          className={`rounded-full px-3 py-1 text-xs font-bold ${style.badge}`}
+        >
           {style.label}
         </span>
       </div>
@@ -517,7 +528,11 @@ function NutrientGauge({
   );
 }
 
-function NutritionSection({ nutrition }: { nutrition: ScanNutritionFacts | null }) {
+function NutritionSection({
+  nutrition,
+}: {
+  nutrition: ScanNutritionFacts | null;
+}) {
   if (!nutrition) return null;
 
   return (
@@ -650,7 +665,9 @@ export default async function SharedScanPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-[#eef0ec] text-[#242620]">
-      <MinimalNav title={scan.productName ?? scan.productSubtitle ?? "Shared scan"} />
+      <MinimalNav
+        title={scan.productName ?? scan.productSubtitle ?? "Shared scan"}
+      />
       <div className="mx-auto max-w-[1180px] px-4 pb-5 pt-24 sm:px-6 lg:px-8 lg:pb-8">
         <div className="grid gap-5">
           <ProductSummary scan={scan} />
