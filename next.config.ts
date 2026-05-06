@@ -44,16 +44,6 @@ const nextConfig: NextConfig = {
         destination: "/:path*",
         permanent: true,
       },
-      {
-        source: "/isHealthy",
-        destination: "/ishealthy",
-        permanent: true,
-      },
-      {
-        source: "/isHealthy/:path*",
-        destination: "/ishealthy/:path*",
-        permanent: true,
-      },
     ];
   },
 };

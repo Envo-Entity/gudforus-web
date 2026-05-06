@@ -5,8 +5,6 @@ import type { ReactNode } from "react";
 import MinimalNav from "@/app/components/MinimalNav";
 import {
   getScanById,
-  isSupabaseConfigured,
-  isSupabaseServiceConfigured,
   normalizeScan,
   type NormalizedScan,
   type ScanNutritionFacts,
@@ -108,10 +106,6 @@ const levelStyle = (level: NutrientLevel | null, inverted = false) => {
 };
 
 async function getScan(id: string) {
-  if (!isSupabaseConfigured && !isSupabaseServiceConfigured) {
-    notFound();
-  }
-
   const { data, error } = await getScanById(id);
 
   if (error || !data) {

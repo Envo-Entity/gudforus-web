@@ -69,6 +69,17 @@ export default function Navbar() {
             </a>
 
             <Link
+              href="/ishealthy"
+              className={`text-sm font-medium transition-colors duration-500 ${
+                isInHero
+                  ? "text-green-50 hover:text-white"
+                  : "text-[#5c5c52] hover:text-[#2d6a4f]"
+              }`}
+            >
+              Food Scores
+            </Link>
+
+            <Link
               href="/blog"
               className={`text-sm font-medium transition-colors duration-500 ${
                 isInHero
@@ -125,6 +136,18 @@ export default function Navbar() {
               >
                 How it works
               </a>
+
+              <Link
+                className={`text-sm font-medium transition-colors duration-500 ${
+                  isInHero
+                    ? "text-green-50 hover:text-white"
+                    : "text-[#5c5c52] hover:text-[#2d6a4f]"
+                }`}
+                href="/ishealthy"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Food Scores
+              </Link>
 
               <Link
                 className={`text-sm font-medium transition-colors duration-500 ${

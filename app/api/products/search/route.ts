@@ -1,18 +1,10 @@
 import { NextResponse } from "next/server";
-import { getTopProductNames, isSupabaseConfigured } from "@/lib/products";
-import {
-  createClient,
-  createServiceClient,
-  isSupabaseServiceConfigured,
-} from "@/utils/supabase/server";
+import { getTopProductNames } from "@/lib/products";
+import { createServiceClient } from "@/utils/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-  if (!isSupabaseConfigured && !isSupabaseServiceConfigured) {
-    return NextResponse.json({ products: [] }, { status: 200 });
-  }
-
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q")?.trim();
 
@@ -21,11 +13,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ products: data ?? [] });
   }
 
-  const supabase = createServiceClient() ?? createClient();
-
-  if (!supabase) {
-    return NextResponse.json({ products: [] }, { status: 200 });
-  }
+  const supabase = createServiceClient();
 
   const { data, error } = await supabase
     .from("products")

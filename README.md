@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project Notes
+
+- Product health pages use lowercase `/ishealthy` as the canonical route.
+- The landing navbar label for `/ishealthy` should be `Food Scores`, not `Is Healthy`.
+
 ## Getting Started
 
 First, run the development server:

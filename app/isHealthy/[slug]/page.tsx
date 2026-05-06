@@ -11,8 +11,6 @@ import {
 import {
   formatProductSlug,
   getProductBySlug,
-  isSupabaseConfigured,
-  isSupabaseServiceConfigured,
   parseAnalysisData,
   parseFaqItems,
   parseHealthGoals,
@@ -247,10 +245,6 @@ const nutrientBadge = (level: NutrientLevel | null, inverted = false) => {
 };
 
 async function getProduct(slug: string) {
-  if (!isSupabaseConfigured && !isSupabaseServiceConfigured) {
-    notFound();
-  }
-
   const { data, error } = await getProductBySlug(slug);
 
   if (error || !data) {
