@@ -1,4 +1,9 @@
-import { createClient, isSupabaseConfigured } from "@/utils/supabase/server";
+import {
+  createClient,
+  createServiceClient,
+  isSupabaseConfigured,
+  isSupabaseServiceConfigured,
+} from "@/utils/supabase/server";
 
 export type ProductRecord = {
   idx: number | null;
@@ -235,8 +240,10 @@ export const parseMythBusters = (value: Jsonish): ProductMythBuster[] => {
   });
 };
 
+const createProductClient = () => createServiceClient() ?? createClient();
+
 export const getProducts = async () => {
-  const supabase = createClient();
+  const supabase = createProductClient();
 
   if (!supabase) {
     return { data: null, error: null };
@@ -249,7 +256,7 @@ export const getProducts = async () => {
 };
 
 export const getSeoReadyProducts = async () => {
-  const supabase = createClient();
+  const supabase = createProductClient();
 
   if (!supabase) {
     return { data: null, error: null };
@@ -263,7 +270,7 @@ export const getSeoReadyProducts = async () => {
 };
 
 export const getTopProductNames = async () => {
-  const supabase = createClient();
+  const supabase = createProductClient();
 
   if (!supabase) {
     return { data: null, error: null };
@@ -277,7 +284,7 @@ export const getTopProductNames = async () => {
 };
 
 export const getProductBySlug = async (slug: string) => {
-  const supabase = createClient();
+  const supabase = createProductClient();
 
   if (!supabase) {
     return { data: null, error: null };
@@ -286,4 +293,4 @@ export const getProductBySlug = async (slug: string) => {
   return supabase.from("products").select("*").eq("slug", slug).maybeSingle();
 };
 
-export { isSupabaseConfigured };
+export { isSupabaseConfigured, isSupabaseServiceConfigured };
