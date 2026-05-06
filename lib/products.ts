@@ -1,4 +1,4 @@
-import { createServiceClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 export type ProductRecord = {
   idx: number | null;
@@ -236,7 +236,7 @@ export const parseMythBusters = (value: Jsonish): ProductMythBuster[] => {
 };
 
 export const getProducts = async () => {
-  const supabase = createServiceClient();
+  const supabase = createClient();
 
   return supabase
     .from("products")
@@ -245,7 +245,7 @@ export const getProducts = async () => {
 };
 
 export const getSeoReadyProducts = async () => {
-  const supabase = createServiceClient();
+  const supabase = createClient();
 
   return supabase
     .from("products")
@@ -255,7 +255,7 @@ export const getSeoReadyProducts = async () => {
 };
 
 export const getTopProductNames = async () => {
-  const supabase = createServiceClient();
+  const supabase = createClient();
 
   return supabase
     .from("products")
@@ -265,7 +265,7 @@ export const getTopProductNames = async () => {
 };
 
 export const getProductBySlug = async (slug: string) => {
-  const supabase = createServiceClient();
+  const supabase = createClient();
 
   return supabase.from("products").select("*").eq("slug", slug).maybeSingle();
 };

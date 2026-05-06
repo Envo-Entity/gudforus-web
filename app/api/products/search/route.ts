@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getTopProductNames } from "@/lib/products";
-import { createServiceClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ products: data ?? [] });
   }
 
-  const supabase = createServiceClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("products")
