@@ -1,9 +1,4 @@
-import {
-  createClient,
-  createServiceClient,
-  isSupabaseConfigured,
-  isSupabaseServiceConfigured,
-} from "@/utils/supabase/server";
+import { createServiceClient } from "@/utils/supabase/server";
 
 type Jsonish =
   | string
@@ -345,11 +340,7 @@ export const normalizeScan = (scan: ScanRecord): NormalizedScan => {
 };
 
 export const getScanById = async (id: string) => {
-  const supabase = createServiceClient() ?? createClient();
-
-  if (!supabase) {
-    return { data: null, error: null };
-  }
+  const supabase = createServiceClient();
 
   return supabase
     .from("scans")
@@ -360,5 +351,3 @@ export const getScanById = async (id: string) => {
     .is("deleted_at", null)
     .maybeSingle();
 };
-
-export { isSupabaseConfigured, isSupabaseServiceConfigured };

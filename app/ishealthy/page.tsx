@@ -1,15 +1,10 @@
-import { notFound } from "next/navigation";
-import { getTopProductNames, isSupabaseConfigured } from "@/lib/products";
+import { getTopProductNames } from "@/lib/products";
 import IsHealthySearch from "./IsHealthySearch";
 import MinimalNav from "@/app/components/MinimalNav";
 
 export const revalidate = 3600;
 
 export default async function IsHealthyPage() {
-  if (!isSupabaseConfigured) {
-    notFound();
-  }
-
   const { data: products } = await getTopProductNames();
 
   return (

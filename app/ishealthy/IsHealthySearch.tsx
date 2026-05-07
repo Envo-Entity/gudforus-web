@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
-import { formatProductSlug } from "@/lib/products";
 
 type ProductChip = {
   id: string;
@@ -35,22 +33,19 @@ export default function IsHealthySearch({ initialProducts }: Props) {
     }
 
     setLoading(true);
-    const supabase = createClient();
-    if (!supabase) {
+    try {
+      const response = await fetch(
+        `/api/products/search?q=${encodeURIComponent(q)}`,
+      );
+      const data = (await response.json()) as { products?: ProductChip[] };
+      setResults(data.products ?? []);
+      setOpen(true);
+    } catch {
+      setResults([]);
+      setOpen(true);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const { data } = await supabase
-      .from("products")
-      .select("id, slug, product_name, product_image_url, category, health_score")
-      .ilike("product_name", `%${q}%`)
-      .order("created_at", { ascending: false })
-      .limit(8);
-
-    setResults(data ?? []);
-    setOpen(true);
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -72,7 +67,7 @@ export default function IsHealthySearch({ initialProducts }: Props) {
   }, []);
 
   const displayName = (p: ProductChip) =>
-    p.product_name ?? formatProductSlug(p.slug);
+    p.product_name ?? p.slug.replace(/-review$/, "").replaceAll("-", " ");
 
   const scoreColor = (score: number | null) => {
     if (score === null) return "text-[#9ca3af]";

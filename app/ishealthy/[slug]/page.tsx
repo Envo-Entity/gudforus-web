@@ -11,7 +11,6 @@ import {
 import {
   formatProductSlug,
   getProductBySlug,
-  isSupabaseConfigured,
   parseAnalysisData,
   parseFaqItems,
   parseHealthGoals,
@@ -246,10 +245,6 @@ const nutrientBadge = (level: NutrientLevel | null, inverted = false) => {
 };
 
 async function getProduct(slug: string) {
-  if (!isSupabaseConfigured) {
-    notFound();
-  }
-
   const { data, error } = await getProductBySlug(slug);
 
   if (error || !data) {
@@ -301,14 +296,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
-
-const nutriGrades = [
-  { letter: "A", min: 80, bg: "#1a7340", text: "#ffffff", label: "Excellent" },
-  { letter: "B", min: 60, bg: "#85bb2f", text: "#ffffff", label: "Good" },
-  { letter: "C", min: 40, bg: "#fecb02", text: "#1a1a17", label: "Mixed" },
-  { letter: "D", min: 20, bg: "#ee8100", text: "#ffffff", label: "Poor" },
-  { letter: "E", min: 0, bg: "#e63312", text: "#ffffff", label: "Watch out" },
-] as const;
 
 function ScoreBar({ score }: { score: number | null }) {
   const tone = scoreTone(score);
