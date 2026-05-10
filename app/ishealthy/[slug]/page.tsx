@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import MinimalNav from "@/app/components/MinimalNav";
 import {
   DEFAULT_OG_IMAGE,
-  DEFAULT_TWITTER_IMAGE,
   SITE_URL,
 } from "@/app/lib/site";
 import {
@@ -264,8 +263,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     removePlanetScoreSentences(product.verdict_summary) ??
     `Read the Gud For Us health analysis for ${displayProductName(product)}.`;
   const canonical = productUrl(product.slug);
-  const image =
-    product.og_image_url ?? product.product_image_url ?? DEFAULT_OG_IMAGE;
 
   return {
     title,
@@ -282,17 +279,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: canonical,
       type: "article",
-      images: [{ url: image }],
+      images: [{ url: `${SITE_URL}/ishealthy/${slug}/opengraph-image`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [
-        product.og_image_url ??
-          product.product_image_url ??
-          DEFAULT_TWITTER_IMAGE,
-      ],
+      images: [`${SITE_URL}/ishealthy/${slug}/opengraph-image`],
     },
   };
 }
