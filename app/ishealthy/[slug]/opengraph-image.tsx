@@ -33,6 +33,11 @@ export default async function Image({ params }: { params: Params }) {
   );
   const heartDataUri = `data:image/png;base64,${heartBuffer.toString("base64")}`;
 
+  const faviconBuffer = fs.readFileSync(
+    path.join(process.cwd(), "public/favicon.png"),
+  );
+  const faviconDataUri = `data:image/png;base64,${faviconBuffer.toString("base64")}`;
+
   const rawName =
     product?.product_name ?? slug.replaceAll("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
   const name = rawName.length > 54 ? rawName.slice(0, 54).trimEnd() + "…" : rawName;
@@ -200,13 +205,25 @@ export default async function Image({ params }: { params: Params }) {
         <div
           style={{
             position: "absolute",
-            bottom: 32,
+            bottom: 36,
             right: 52,
             display: "flex",
             alignItems: "center",
           }}
         >
-          <span style={{ fontSize: 14, color: "#8a877d", fontWeight: 600 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={faviconDataUri}
+            width={36}
+            height={36}
+            alt=""
+            style={{
+              borderRadius: 10,
+              marginRight: 12,
+              display: "flex",
+            }}
+          />
+          <span style={{ fontSize: 18, color: "#3a3a35", fontWeight: 700 }}>
             gudforus.com
           </span>
         </div>
