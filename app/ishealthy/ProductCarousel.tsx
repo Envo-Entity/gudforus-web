@@ -67,9 +67,9 @@ export default function ProductCarousel({
             <Link
               key={`${product.id}-${i}`}
               href={`/ishealthy/${product.slug}`}
-              className="shrink-0 w-44 rounded-2xl bg-white border border-[#e8e5de] p-4 flex flex-col items-center gap-3 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+              className="shrink-0 w-44 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 p-4 flex flex-col items-center gap-3 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
             >
-              <div className="w-24 h-24 rounded-xl bg-[#f2f0e9] flex items-center justify-center overflow-hidden">
+              <div className="w-24 h-24 rounded-xl bg-white/50 flex items-center justify-center overflow-hidden">
                 {product.product_image_url ? (
                   <Image
                     src={toThumbUrl(product.product_image_url) ?? ""}
