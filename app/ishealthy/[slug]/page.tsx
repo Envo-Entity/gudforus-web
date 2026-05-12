@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import AppleStoreIcon from "@/app/components/AppleStoreIcon";
+import ScoreBar from "./ScoreBar";
 import { notFound } from "next/navigation";
 import MinimalNav from "@/app/components/MinimalNav";
 import {
@@ -219,27 +221,22 @@ const nutrientBadge = (level: NutrientLevel | null, inverted = false) => {
         ? "high"
         : level;
 
-  const styles = {
-    low: {
-      label: level,
-      className: "bg-[#e7f5ec] text-[#147d3e]",
-      pointer: "left-[14%] border-b-[#147d3e]",
-    },
-    medium: {
-      label: level,
-      className: "bg-[#fef3e7] text-[#b54708]",
-      pointer: "left-[47%] border-b-[#b54708]",
-    },
-    high: {
-      label: level,
-      className: "bg-[#fee7e7] text-[#c81e1e]",
-      pointer: "left-[80%] border-b-[#c81e1e]",
-    },
+  const positions = {
+    low: "left-[14%]",
+    medium: "left-[47%]",
+    high: "left-[80%]",
+  };
+
+  const visual = {
+    low: { className: "bg-[#e7f5ec] text-[#147d3e]", pointerColor: "border-b-[#147d3e]" },
+    medium: { className: "bg-[#fef3e7] text-[#b54708]", pointerColor: "border-b-[#b54708]" },
+    high: { className: "bg-[#fee7e7] text-[#c81e1e]", pointerColor: "border-b-[#c81e1e]" },
   };
 
   return {
-    ...styles[displayLevel],
     label: level,
+    className: visual[displayLevel].className,
+    pointer: `${positions[level]} ${visual[displayLevel].pointerColor}`,
   };
 };
 
@@ -341,53 +338,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function ScoreBar({ score }: { score: number | null }) {
-  const tone = scoreTone(score);
-  const width = `${Math.max(0, Math.min(100, score ?? 0))}%`;
-
-  return (
-    <div className="rounded-[22px] border border-[#edecea] bg-white p-6 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
-      <div className="flex items-baseline justify-between gap-5">
-        <p className="text-sm font-semibold text-[#5c5c52]">Health score</p>
-        <p className="text-3xl font-bold tracking-tight text-[#1a1a17]">
-          {score ?? "N/A"}
-          {score !== null ? (
-            <span className="text-base text-[#8a877d]"> / 100</span>
-          ) : null}
-        </p>
-      </div>
-      <div className="relative mt-8">
-        <div className="flex h-5 overflow-hidden rounded-lg shadow-[inset_0_0_0_1px_rgba(26,26,23,0.06)]">
-          <div className="flex-1 bg-[#f87171]" />
-          <div className="flex-1 bg-[#fb923c]" />
-          <div className="flex-1 bg-[#fbbf24]" />
-          <div className="flex-1 bg-[#a3e635]" />
-          <div className="flex-1 bg-[#4ade80]" />
-        </div>
-        {score !== null ? (
-          <div
-            className="absolute -top-7 -translate-x-1/2"
-            style={{ left: width }}
-          >
-            <div className="rounded-lg bg-[#1a1a17] px-2.5 py-1 text-xs font-bold text-white">
-              {score}
-            </div>
-            <div className="mx-auto h-0 w-0 border-x-[6px] border-t-[6px] border-x-transparent border-t-[#1a1a17]" />
-          </div>
-        ) : null}
-      </div>
-      <div className="mt-3 flex justify-between text-[0.72rem] font-medium text-[#8a877d]">
-        <span>Poor</span>
-        <span>Excellent</span>
-      </div>
-      <span
-        className={`mt-5 inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] ${tone.bg} ${tone.text}`}
-      >
-        {tone.label}
-      </span>
-    </div>
-  );
-}
 
 function VerdictCard({
   verdict,
@@ -915,10 +865,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
                     >
                       &ldquo;
                     </span>
-                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#2d6a4f]">
-                      Expert analysis
-                    </p>
-                    <h2 className="font-display mt-3 text-2xl leading-snug text-[#1a1a17]">
+                    <h2 className="font-display text-3xl leading-snug text-[#1a1a17]">
                       Our read on this product
                     </h2>
                     <p className="mt-5 max-w-[65ch] text-[1.05rem] leading-[1.9] text-[#3a3a35]">
@@ -931,7 +878,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
                   <div className="mt-6 grid gap-4 md:grid-cols-2">
                     {seo.who_it_is_for ? (
                       <div className="rounded-[22px] border border-[#d5ede0] bg-[#f6fbf8] p-6">
-                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-[#147d3e]">
+                        <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#147d3e]">
                           Best for
                         </p>
                         <p className="mt-3 text-sm leading-7 text-[#4f4f45]">
@@ -941,7 +888,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
                     ) : null}
                     {seo.who_should_avoid ? (
                       <div className="rounded-[22px] border border-[#f0ddd0] bg-[#fdf8f5] p-6">
-                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-[#b54708]">
+                        <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#b54708]">
                           Approach with care
                         </p>
                         <p className="mt-3 text-sm leading-7 text-[#4f4f45]">
@@ -960,7 +907,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
             {healthGoals.length ? (
               <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
                 <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
-                  Health goal fit
+                  How it scores against your goal
                 </h2>
                 <div className="mt-6 overflow-x-auto">
                   <table className="w-full border-collapse text-sm">
@@ -1137,12 +1084,32 @@ export default async function IsHealthyProductPage({ params }: Props) {
                 Use the app to decode labels, health scores, and ingredient
                 details while you shop.
               </p>
-              <Link
-                href="/"
-                className="mt-5 inline-flex rounded-full bg-[#2d6a4f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#40916c]"
-              >
-                Explore the app
-              </Link>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a
+                  href="https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#1a1a17] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#333]"
+                >
+                  <AppleStoreIcon className="h-4 w-4 text-white shrink-0" />
+                  <span>App Store</span>
+                </a>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#2d6a4f]/30 bg-white px-4 py-2.5 text-sm font-semibold text-[#1a1a17] transition hover:bg-[#f0faf2]"
+                >
+                  <Image
+                    src="/app-images/google-play-store-icon.webp"
+                    alt="Google Play"
+                    width={16}
+                    height={16}
+                    className="shrink-0"
+                  />
+                  <span>Google Play</span>
+                </a>
+              </div>
             </section>
           </aside>
         </div>
