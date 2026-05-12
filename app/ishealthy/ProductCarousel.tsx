@@ -10,6 +10,28 @@ type ProductChip = {
   health_score: number | null;
 };
 
+function toThumbUrl(
+  url: string | null,
+  w = 240,
+  h = 240,
+  q = 60,
+): string | null {
+  if (!url) return null;
+  try {
+    const transformed = url.replace(
+      "/storage/v1/object/public/",
+      "/storage/v1/render/image/public/",
+    );
+    const u = new URL(transformed);
+    u.searchParams.set("width", String(w));
+    u.searchParams.set("height", String(h));
+    u.searchParams.set("quality", String(q));
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
 function displayName(p: ProductChip) {
   return p.product_name ?? p.slug.replace(/-review$/, "").replaceAll("-", " ");
 }
@@ -21,7 +43,11 @@ function scoreBadge(score: number | null) {
   return { bg: "bg-[#fee2e2]", text: "text-[#b91c1c]" };
 }
 
-export default function ProductCarousel({ products }: { products: ProductChip[] }) {
+export default function ProductCarousel({
+  products,
+}: {
+  products: ProductChip[];
+}) {
   const doubled = [...products, ...products];
 
   return (
@@ -46,7 +72,7 @@ export default function ProductCarousel({ products }: { products: ProductChip[] 
               <div className="w-24 h-24 rounded-xl bg-[#f2f0e9] flex items-center justify-center overflow-hidden">
                 {product.product_image_url ? (
                   <Image
-                    src={product.product_image_url}
+                    src={toThumbUrl(product.product_image_url) ?? ""}
                     alt={displayName(product)}
                     width={96}
                     height={96}
@@ -60,8 +86,12 @@ export default function ProductCarousel({ products }: { products: ProductChip[] 
               <p className="text-xs font-semibold text-[#1f2937] text-center line-clamp-2 leading-snug w-full min-h-[2.5rem]">
                 {displayName(product)}
               </p>
-              <div className={`px-3 py-1 rounded-full text-xs font-bold ${badge.bg} ${badge.text}`}>
-                {product.health_score !== null ? `${product.health_score}/100` : "Unrated"}
+              <div
+                className={`px-3 py-1 rounded-full text-xs font-bold ${badge.bg} ${badge.text}`}
+              >
+                {product.health_score !== null
+                  ? `${product.health_score}/100`
+                  : "Unrated"}
               </div>
             </Link>
           );
