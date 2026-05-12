@@ -251,6 +251,7 @@ export const getSeoReadyProducts = async () => {
     .from("products")
     .select("id, slug, updated_at, published_at, seo_generated_at")
     .eq("seo_status", "done")
+    .neq("image_status", "rejected")
     .order("updated_at", { ascending: false });
 };
 
@@ -260,6 +261,7 @@ export const getTopProductNames = async () => {
   return supabase
     .from("products")
     .select("id, slug, product_name, product_image_url, category, health_score")
+    .neq("image_status", "rejected")
     .order("created_at", { ascending: false })
     .limit(50);
 };

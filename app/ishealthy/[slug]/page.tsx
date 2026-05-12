@@ -294,7 +294,7 @@ function HealthGoalRating({ grade }: { grade: string }) {
 async function getProduct(slug: string) {
   const { data, error } = await getProductBySlug(slug);
 
-  if (error || !data) {
+  if (error || !data || data.image_status === "rejected") {
     notFound();
   }
 

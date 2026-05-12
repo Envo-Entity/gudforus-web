@@ -19,6 +19,7 @@ export async function GET(request: Request) {
     .from("products")
     .select("id, slug, product_name, product_image_url, category, health_score")
     .ilike("product_name", `%${query}%`)
+    .neq("image_status", "rejected")
     .order("created_at", { ascending: false })
     .limit(8);
 
