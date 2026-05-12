@@ -156,6 +156,21 @@ body {
   box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
 }
 
+/* Infinite carousel scroll */
+@keyframes carousel-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-carousel {
+  animation: carousel-scroll 80s linear infinite;
+  width: max-content;
+}
+
+.animate-carousel:hover {
+  animation-play-state: paused;
+}
+
 /* Score value animation */
 @keyframes score-count {
   from {

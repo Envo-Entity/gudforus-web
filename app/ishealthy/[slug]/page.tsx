@@ -243,6 +243,57 @@ const nutrientBadge = (level: NutrientLevel | null, inverted = false) => {
   };
 };
 
+const GRADE_PALETTE: Record<string, string> = {
+  A: "#1b6e2e",
+  B: "#4d8f27",
+  C: "#a3b800",
+  D: "#e07000",
+  E: "#d42020",
+};
+
+function HealthGoalRating({ grade }: { grade: string }) {
+  const grades = ["A", "B", "C", "D", "E"] as const;
+  const g = grade.toUpperCase() as (typeof grades)[number];
+  const activeIdx = grades.indexOf(g);
+
+  if (activeIdx === -1) return null;
+
+  return (
+    <div className="flex items-center">
+      {grades.map((label, i) => {
+        const isActive = i === activeIdx;
+        const color = GRADE_PALETTE[label];
+
+        if (isActive) {
+          return (
+            <div
+              key={label}
+              className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-md"
+              style={{
+                backgroundColor: color,
+                outline: "2.5px solid white",
+                outlineOffset: "0px",
+              }}
+            >
+              {label}
+            </div>
+          );
+        }
+
+        return (
+          <div
+            key={label}
+            className={`flex h-7 w-7 shrink-0 items-center justify-center text-[11px] font-semibold text-white${i === 0 ? " rounded-l-full" : ""}${i === grades.length - 1 ? " rounded-r-full" : ""}`}
+            style={{ backgroundColor: color }}
+          >
+            {label}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 async function getProduct(slug: string) {
   const { data, error } = await getProductBySlug(slug);
 
@@ -935,8 +986,10 @@ export default async function IsHealthyProductPage({ params }: Props) {
                             <td className="py-4 pr-4 font-semibold text-[#1a1a17]">
                               {titleCase(key)}
                             </td>
-                            <td className="py-4 pr-4 text-center">
-                              {goal.label || goal.score !== null ? (
+                            <td className="py-4 pr-4">
+                              {goal.label && /^[A-Ea-e]$/.test(goal.label) ? (
+                                <HealthGoalRating grade={goal.label} />
+                              ) : goal.label || goal.score !== null ? (
                                 <span
                                   className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${tone.bg} ${tone.text}`}
                                 >
