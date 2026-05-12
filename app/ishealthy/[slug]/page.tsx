@@ -1009,7 +1009,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
                   {faqs.map((faq, index) => (
                     <details
                       key={faq.question}
-                      defaultOpen={index === 0}
+                      open={index === 0 || undefined}
                       className="group py-5 first:pt-0 last:pb-0"
                     >
                       <summary className="flex cursor-pointer list-none items-start justify-between gap-4 [&::-webkit-details-marker]:hidden">
