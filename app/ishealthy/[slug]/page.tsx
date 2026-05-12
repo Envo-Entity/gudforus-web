@@ -358,7 +358,7 @@ function VerdictCard({
         </p>
       ) : null}
       {summary ? (
-        <p className="mt-3 text-lg font-semibold leading-8 text-[#1a1a17]">
+        <p className="verdict-summary mt-3 text-lg font-semibold leading-8 text-[#1a1a17]">
           {summary}
         </p>
       ) : null}
@@ -660,6 +660,10 @@ export default async function IsHealthyProductPage({ params }: Props) {
         "@type": "WebPage",
         "@id": canonical,
       },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", ".verdict-summary", ".quick-answer"],
+      },
     },
     {
       "@context": "https://schema.org",
@@ -773,7 +777,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
                 {title}
               </h1>
               {(seo.intro_paragraph ?? verdictSummary) ? (
-                <p className="mt-6 max-w-[720px] text-[1.08rem] leading-8 text-[#5c5c52]">
+                <p className="quick-answer mt-6 max-w-[720px] text-[1.08rem] leading-8 text-[#5c5c52]">
                   {seo.intro_paragraph ?? verdictSummary}
                 </p>
               ) : null}
@@ -1002,9 +1006,10 @@ export default async function IsHealthyProductPage({ params }: Props) {
                   Frequently asked questions
                 </h2>
                 <div className="mt-6 divide-y divide-[#f2f0e9]">
-                  {faqs.map((faq) => (
+                  {faqs.map((faq, index) => (
                     <details
                       key={faq.question}
+                      defaultOpen={index === 0}
                       className="group py-5 first:pt-0 last:pb-0"
                     >
                       <summary className="flex cursor-pointer list-none items-start justify-between gap-4 [&::-webkit-details-marker]:hidden">
