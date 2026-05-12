@@ -11,8 +11,19 @@ export default async function IsHealthyPage() {
 
   return (
     <>
+      {/* Background image — desktops/tablets only, phones excluded */}
+      <div
+        className="hidden sm:block fixed inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/bg.webp')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          opacity: 0.4,
+        }}
+      />
       <MinimalNav />
-      <main className="min-h-screen bg-[#f7f5ee] overflow-x-hidden flex flex-col">
+      <main className="relative z-10 min-h-screen bg-[#f7f5ee] sm:bg-transparent overflow-x-hidden flex flex-col">
         {/* Centered content */}
         <div className="mx-auto max-w-3xl w-full px-4 sm:px-6 flex flex-col items-center pt-[calc(8vh+48px)] pb-8">
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1f2937] text-center tracking-tight leading-tight">
