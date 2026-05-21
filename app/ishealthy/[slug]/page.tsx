@@ -383,7 +383,7 @@ function IngredientSection({
   ] as const;
 
   return (
-    <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
+    <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)] overflow-hidden">
       <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
         Ingredient breakdown
       </h2>
@@ -524,7 +524,7 @@ function NutritionSection({
   }
 
   return (
-    <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
+    <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)] overflow-hidden">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
@@ -828,14 +828,14 @@ export default async function IsHealthyProductPage({ params }: Props) {
         </section>
 
         <div className="mx-auto grid max-w-[1120px] gap-10 px-6 pb-24 lg:grid-cols-[minmax(0,720px)_320px]">
-          <article>
+          <article className="min-w-0">
             <div className="grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
               <ScoreBar score={product.health_score} />
               <VerdictCard verdict={product.verdict} summary={verdictSummary} />
             </div>
 
             {seo.key_takeaways?.length ? (
-              <section className="mt-10 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
+              <section className="mt-10 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)] overflow-hidden">
                 <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
                   Key takeaways
                 </h2>
@@ -909,11 +909,42 @@ export default async function IsHealthyProductPage({ params }: Props) {
             <NutritionSection nutrition={analysis.nutrition_facts} />
 
             {healthGoals.length ? (
-              <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
+              <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)] overflow-hidden">
                 <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
                   How it scores against your goal
                 </h2>
-                <div className="mt-6 overflow-x-auto">
+                {/* Mobile: card layout */}
+                <div className="mt-6 space-y-4 md:hidden">
+                  {healthGoals.map(([key, goal]) => {
+                    const tone = scoreTone(goal.score ?? null);
+
+                    return (
+                      <div key={key} className="rounded-[16px] border border-[#edecea] bg-[#fcfbf7] p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="font-semibold text-[#1a1a17]">
+                            {titleCase(key)}
+                          </p>
+                          {goal.label && /^[A-Ea-e]$/.test(goal.label) ? (
+                            <HealthGoalRating grade={goal.label} />
+                          ) : goal.label || goal.score !== null ? (
+                            <span
+                              className={`inline-flex shrink-0 rounded-full px-3 py-1 text-xs font-bold ${tone.bg} ${tone.text}`}
+                            >
+                              {goal.label ?? goal.score}
+                            </span>
+                          ) : (
+                            <span className="text-[#8a877d]">—</span>
+                          )}
+                        </div>
+                        <p className="mt-2 text-sm leading-6 text-[#5c5c52]">
+                          {goal.summary ?? "—"}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Desktop: table layout */}
+                <div className="mt-6 hidden overflow-x-auto md:block">
                   <table className="w-full border-collapse text-sm">
                     <thead>
                       <tr className="border-b border-[#edecea]">
@@ -1001,7 +1032,7 @@ export default async function IsHealthyProductPage({ params }: Props) {
             ) : null}
 
             {faqs.length ? (
-              <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
+              <section className="mt-12 rounded-[24px] border border-[#edecea] bg-white p-7 shadow-[0_12px_40px_rgba(26,26,23,0.04)] overflow-hidden">
                 <h2 className="font-display text-3xl leading-tight text-[#1a1a17]">
                   Frequently asked questions
                 </h2>

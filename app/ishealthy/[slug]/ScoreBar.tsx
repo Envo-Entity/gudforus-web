@@ -41,7 +41,7 @@ export default function ScoreBar({ score }: { score: number | null }) {
   }, [score]);
 
   return (
-    <div className="flex flex-col rounded-[22px] border border-[#edecea] bg-white p-6 shadow-[0_12px_40px_rgba(26,26,23,0.04)]">
+    <div className="flex flex-col rounded-[22px] border border-[#edecea] bg-white p-6 shadow-[0_12px_40px_rgba(26,26,23,0.04)] overflow-hidden">
 
       {/* Top row: title left, badge right */}
       <div className="flex items-center justify-between gap-4">
@@ -58,7 +58,7 @@ export default function ScoreBar({ score }: { score: number | null }) {
 
       {/* Score — hero number, right above the bar */}
       <div className="mt-auto mb-3 flex items-baseline justify-end gap-1">
-        <p className="text-8xl font-bold leading-none tracking-tight text-[#1a1a17]">
+        <p className="text-6xl md:text-8xl font-bold leading-none tracking-tight text-[#1a1a17]">
           {score !== null ? displayed : "N/A"}
         </p>
         {score !== null ? (
