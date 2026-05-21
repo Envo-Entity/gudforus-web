@@ -68,55 +68,25 @@ export default function PhoneScrollPreview() {
             </div>
           </motion.div>
 
-          {/* iPhone Card */}
+          {/* Phone Mockup Image */}
           <motion.div
             style={{
               rotateX: rotate,
               scale,
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             }}
-            className="shrink-0 w-[250px] md:w-[235px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-gray-900"
+            className="shrink-0 w-[270px] md:w-[260px] overflow-hidden"
           >
-            {/* iPhone Frame - 20:9 aspect ratio */}
-            <div className="relative bg-gray-900 rounded-[2.5rem] md:rounded-[3rem] p-[6px] md:p-[8px]">
-              {/* Inner black fill to prevent corner artifacts */}
-              <div className="absolute inset-[4px] md:inset-[6px] bg-black rounded-[2.3rem] md:rounded-[2.8rem]"></div>
-
-              {/* iPhone outer frame ring */}
-              <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] ring-1 ring-white/10"></div>
-
-              {/* Side buttons - Volume */}
-              <div className="absolute -left-[3px] top-[100px] w-[3px] h-[40px] bg-gray-800 rounded-l-sm"></div>
-              <div className="absolute -left-[3px] top-[150px] w-[3px] h-[40px] bg-gray-800 rounded-l-sm"></div>
-
-              {/* Side button - Power */}
-              <div className="absolute -right-[3px] top-[130px] w-[3px] h-[60px] bg-gray-800 rounded-r-sm"></div>
-
-              {/* Screen Container - 20:9 aspect ratio */}
-              <div
-                className="relative bg-black rounded-[2rem] md:rounded-[2.5rem] overflow-hidden z-10"
-                style={{ aspectRatio: "9/20" }}
-              >
-                {/* Dynamic Island */}
-                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[60px] md:w-[75px] h-[20px] md:h-[24px] bg-black rounded-full z-30 flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-                </div>
-
-                {/* Content - Bread Image */}
-                <Image
-                  src="/app-images/hero-background.webp"
-                  alt="Artisan bread product"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-
-                {/* Subtle gradient overlay at top for dynamic island blend */}
-                <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/30 to-transparent z-20 pointer-events-none"></div>
-
-                {/* Home Indicator */}
-                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-[100px] md:w-[120px] h-[4px] md:h-[5px] bg-white/30 rounded-full z-30"></div>
-              </div>
+            <div
+              className="relative w-full"
+              style={{ aspectRatio: "9/20" }}
+            >
+              <Image
+                src="/app-images/hero-background.webp"
+                alt="GudForUs app preview"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </motion.div>
 

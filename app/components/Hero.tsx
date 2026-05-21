@@ -3,6 +3,7 @@
 import { RotatingText } from "@/components/ui/rotating-text";
 import Image from "next/image";
 import AppleStoreIcon from "./AppleStoreIcon";
+import HeroSearch from "./HeroSearch";
 
 export default function Hero() {
   return (
@@ -11,16 +12,8 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Column - Content */}
           <div className="text-center md:text-left">
-            {/* Action Buttons */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4a6c48]/10 border border-[#4a6c48]/20 text-[#4a6c48] mb-8 animate-fade-in-up">
-             
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                Scan it. Trust it. Or put it back.
-              </span>
-            </div>
-
             {/* Main Heading */}
-             <h1 className="font-display text-5xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 mb-4 sm:mb-8 leading-tight">
+             <h1 className="font-display text-5xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 leading-tight">
               Know what you
               <br />
               <span className="inline-flex items-baseline gap-2">
@@ -33,18 +26,18 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <div className="mt-4 max-w-2xl mx-auto md:mx-0 text-md sm:text-lg text-gray-600 font-light leading-relaxed space-y-3">
-              <p>
-                Finally know what's actually in your grocery products. Decode labels instantly. From ingredient quality to personal fit.
-              </p>
-              <p>
-                Every product rated. In your language 
-              </p>
+            {/* Subtitle — tight to heading */}
+            <p className="mt-5 max-w-2xl mx-auto md:mx-0 text-md sm:text-lg text-gray-600 font-light leading-relaxed">
+              Finally know what&apos;s actually in your grocery products. Decode labels instantly. From ingredient quality to personal fit.
+            </p>
+
+            {/* Search Bar — primary CTA, generous spacing */}
+            <div className="mt-10 w-full">
+              <HeroSearch />
             </div>
 
             {/* App Store Buttons */}
-            <div className="mt-6 sm:mt-10">
+            <div className="mt-8">
               <div className="flex flex-row gap-3 sm:gap-4 justify-center md:justify-start items-center md:items-start w-full sm:w-auto">
                 <a
                   target="_blank"
@@ -69,8 +62,8 @@ export default function Hero() {
                 </a>
               </div>
 
-              {/* Stats */}
-              <div className="mt-8 hidden md:flex justify-center md:justify-start gap-6 text-sm text-gray-600 flex-wrap">
+              {/* Stats — close to buttons, secondary info */}
+              <div className="mt-5 hidden md:flex justify-center md:justify-start gap-6 text-sm text-gray-600 flex-wrap">
                 <span className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#4a6c48]"></span>{" "}
                   10M+ Products
