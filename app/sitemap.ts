@@ -62,6 +62,12 @@ const staticPages: MetadataRoute.Sitemap = [
     changeFrequency: "monthly",
     priority: 0.5,
   },
+  {
+    url: `${SITE_URL}/ishealthy`,
+    lastModified: new Date("2026-05-21"),
+    changeFrequency: "daily",
+    priority: 0.95,
+  },
 ];
 
 const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({

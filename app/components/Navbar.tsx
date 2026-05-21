@@ -76,7 +76,7 @@ export default function Navbar() {
                   : "text-[#5c5c52] hover:text-[#2d6a4f]"
               }`}
             >
-              Food Scores
+              Is This Healthy
             </Link>
 
             <Link
@@ -146,7 +146,7 @@ export default function Navbar() {
                 href="/ishealthy"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Food Scores
+                Is This Healthy
               </Link>
 
               <Link
