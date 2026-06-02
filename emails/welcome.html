@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Welcome to Gud</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!--
+    Google Fonts — supported in Apple Mail, Outlook for Mac, Samsung Mail.
+    Falls back to Georgia / Arial in Gmail and older clients.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    /* ── Reset ── */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+    /* ── Kill auto-detected link colours ── */
+    a[x-apple-data-detectors],
+    u + #body a,
+    #MessageViewBody a {
+      color: inherit !important;
+      text-decoration: none !important;
+      font-size: inherit !important;
+      font-family: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+    }
+
+    /* ── Playfair Display font stack ── */
+    .playfair {
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif !important;
+    }
+    .inter {
+      font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+    }
+
+    /* ── Responsive ── */
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; max-width: 100% !important; }
+      .header-cell { padding-top: 28px !important; padding-bottom: 24px !important; padding-left: 24px !important; padding-right: 24px !important; }
+      .h1 { font-size: 30px !important; line-height: 1.2 !important; }
+      .subtitle { font-size: 14px !important; }
+      .footer-cell { padding-left: 24px !important; padding-right: 24px !important; padding-top: 32px !important; padding-bottom: 32px !important; }
+      .store-btn { display: block !important; width: 100% !important; margin-bottom: 10px !important; }
+      .store-table { width: 100% !important; }
+      .store-td { display: block !important; width: 100% !important; padding-right: 0 !important; padding-left: 0 !important; }
+    }
+
+    /* ── Dark mode ── */
+    @media (prefers-color-scheme: dark) {
+      .dm-bg   { background-color: #141A0E !important; }
+      .dm-card { background-color: #1C2B14 !important; }
+      .dm-h1   { color: #F5F0E8 !important; }
+      .dm-sub  { color: #8FAB7A !important; }
+      .dm-divider { border-color: #2E4421 !important; }
+      .dm-footer { background-color: #0E160A !important; }
+      .dm-btn-bg { background-color: #2E4421 !important; }
+      .dm-btn-text { color: #C4D9B0 !important; }
+      .dm-link { color: #8FAB7A !important; }
+    }
+  </style>
+</head>
+
+<!--
+  TEMPLATE VARIABLES
+  ──────────────────
+  {{name}}            → user's first name
+  {{unsubscribe_url}} → one-click unsubscribe link
+-->
+
+<body id="body" style="margin: 0; padding: 0; background-color: #EDE8DE; -webkit-text-size-adjust: none; text-size-adjust: none;">
+
+  <!-- Hidden preview text -->
+  <div aria-hidden="true" style="display: none; max-height: 0; overflow: hidden; mso-hide: all; font-size: 1px; line-height: 1px; color: #EDE8DE; opacity: 0;">
+    You now know what's in everything you eat, scan, and apply. Welcome to Gud.&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌
+  </div>
+
+  <!-- ╔══════════════════════════════════════════════════════╗
+       ║  OUTER WRAPPER                                       ║
+       ╚══════════════════════════════════════════════════════╝ -->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="dm-bg" style="background-color: #EDE8DE;">
+    <tr>
+      <td align="center" valign="top" style="padding: 32px 16px 0 16px;">
+
+        <!-- 600 px container -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" class="email-container" style="max-width: 600px; width: 100%;">
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  HEADER — logo · greeting                    │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" class="header-cell dm-card" style="background-color: #EDE8DE; padding-top: 40px; padding-bottom: 36px; padding-left: 40px; padding-right: 40px;">
+
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                <!-- Logo -->
+                <tr>
+                  <td align="center" style="padding-bottom: 28px;">
+                    <a href="https://goodforus.com" target="_blank" style="text-decoration: none; display: inline-block;">
+                      <img src="https://goodforus.com/gud.png"
+                           alt="Gud"
+                           width="72"
+                           height="72"
+                           style="display: block; border: 0; width: 72px; height: 72px; -ms-interpolation-mode: bicubic;" />
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- Decorative rule -->
+                <tr>
+                  <td align="center" style="padding-bottom: 28px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="width: 32px; border-bottom: 1.5px solid #3D5C2A; font-size: 0; line-height: 0;">&nbsp;</td>
+                        <td style="width: 8px;">&nbsp;</td>
+                        <td style="width: 6px; height: 6px; border-radius: 50%; background-color: #3D5C2A; font-size: 0; line-height: 0;">&nbsp;</td>
+                        <td style="width: 8px;">&nbsp;</td>
+                        <td style="width: 32px; border-bottom: 1.5px solid #3D5C2A; font-size: 0; line-height: 0;">&nbsp;</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Hi, name -->
+                <tr>
+                  <td align="center" style="padding-bottom: 10px;">
+                    <h1 class="h1 playfair dm-h1" style="margin: 0; font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif; font-size: 38px; font-weight: 700; line-height: 1.15; color: #1C2B14; letter-spacing: -0.5px;">
+                      Hi, {{name}}.
+                    </h1>
+                  </td>
+                </tr>
+
+                <!-- Subtitle -->
+                <tr>
+                  <td align="center">
+                    <p class="subtitle inter dm-sub" style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 15px; font-weight: 400; line-height: 1.65; color: #4A5C3A; max-width: 380px;">
+                      Welcome to Gud — here's everything you can now<br />do every time you shop.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  IMAGE 1 — Grocery bag / feature intro       │
+               │  "The most powerful health decisions are      │
+               │   the ones you take at the grocery store."   │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" style="padding: 0; line-height: 0; font-size: 0;">
+              <a href="https://goodforus.com" target="_blank" style="display: block; text-decoration: none; line-height: 0; font-size: 0;">
+                <img src="https://goodforus.com/email/1.jpg"
+                     alt="The most powerful health decisions are the ones you take at the grocery store — Gud gives you a compatibility score, ingredient breakdown, and personalised insights for every product."
+                     width="600"
+                     style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; -ms-interpolation-mode: bicubic;" />
+              </a>
+            </td>
+          </tr>
+
+          <!-- Hairline gap -->
+          <tr><td style="height: 4px; font-size: 0; line-height: 0; background-color: #EDE8DE;">&nbsp;</td></tr>
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  IMAGE 2 — Product comparison                │
+               │  "A small swap, a big difference."           │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" style="padding: 0; line-height: 0; font-size: 0;">
+              <a href="https://goodforus.com" target="_blank" style="display: block; text-decoration: none; line-height: 0; font-size: 0;">
+                <img src="https://goodforus.com/email/2.jpg"
+                     alt="A small swap, a big difference — Gud scans both products and shows you the healthier choice with an Overall Health Score."
+                     width="600"
+                     style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; -ms-interpolation-mode: bicubic;" />
+              </a>
+            </td>
+          </tr>
+
+          <!-- Hairline gap -->
+          <tr><td style="height: 4px; font-size: 0; line-height: 0; background-color: #EDE8DE;">&nbsp;</td></tr>
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  IMAGE 3 — Cosmetics / skincare scan         │
+               │  "Some ingredients belong nowhere            │
+               │   near your skin."                           │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" style="padding: 0; line-height: 0; font-size: 0;">
+              <a href="https://goodforus.com" target="_blank" style="display: block; text-decoration: none; line-height: 0; font-size: 0;">
+                <img src="https://goodforus.com/email/3.jpg"
+                     alt="Some ingredients belong nowhere near your skin — Gud reveals hormone-disrupting chemicals hidden in everyday cosmetics and gives you a Cosmetic Score."
+                     width="600"
+                     style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; -ms-interpolation-mode: bicubic;" />
+              </a>
+            </td>
+          </tr>
+
+          <!-- Hairline gap -->
+          <tr><td style="height: 4px; font-size: 0; line-height: 0; background-color: #EDE8DE;">&nbsp;</td></tr>
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  IMAGE 4 — Complete your profile CTA         │
+               │  "Complete your profile"                     │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" style="padding: 0; line-height: 0; font-size: 0;">
+              <a href="https://goodforus.com/profile" target="_blank" style="display: block; text-decoration: none; line-height: 0; font-size: 0;">
+                <img src="https://goodforus.com/email/4.jpg"
+                     alt="Complete your profile — your health scores get sharper the more Gud knows you. Takes less than 60 seconds."
+                     width="600"
+                     style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; -ms-interpolation-mode: bicubic;" />
+              </a>
+            </td>
+          </tr>
+
+          <!-- Hairline gap -->
+          <tr><td style="height: 4px; font-size: 0; line-height: 0; background-color: #EDE8DE;">&nbsp;</td></tr>
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  IMAGE 5 — App in action / closing CTA       │
+               │  "Next time you're shopping,                 │
+               │   you'll know."                              │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" style="padding: 0; line-height: 0; font-size: 0;">
+              <a href="https://goodforus.com" target="_blank" style="display: block; text-decoration: none; line-height: 0; font-size: 0;">
+                <img src="https://goodforus.com/email/5.jpg"
+                     alt="Next time you're shopping, you wouldn't have to guess — you'll know. Open Gud and start scanning."
+                     width="600"
+                     style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; -ms-interpolation-mode: bicubic;" />
+              </a>
+            </td>
+          </tr>
+
+          <!-- ┌──────────────────────────────────────────────┐
+               │  FOOTER                                      │
+               └──────────────────────────────────────────────┘ -->
+          <tr>
+            <td align="center" valign="top" class="footer-cell dm-footer" style="background-color: #1C2B14; padding-top: 40px; padding-bottom: 40px; padding-left: 40px; padding-right: 40px;">
+
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                <!-- ── Download the app ── -->
+                <tr>
+                  <td align="center" style="padding-bottom: 8px;">
+                    <p class="inter" style="margin: 0 0 20px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 500; line-height: 1; color: #6B8F52; letter-spacing: 2px; text-transform: uppercase;">
+                      Download the app
+                    </p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="store-table">
+                      <tr>
+                        <!-- App Store -->
+                        <td align="right" valign="middle" class="store-td" style="padding-right: 6px;">
+                          <!--[if mso]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td style="border-radius: 10px; background-color: #F5F0E8;"><![endif]-->
+                          <a href="https://apps.apple.com/app/gud" target="_blank" class="store-btn"
+                             style="display: inline-block; background-color: #F5F0E8; border-radius: 10px; text-decoration: none; font-family: 'Inter', Arial, Helvetica, sans-serif; color: #1C2B14; text-align: center; padding-top: 12px; padding-bottom: 12px; padding-left: 22px; padding-right: 22px; min-width: 140px; mso-padding-alt: 12px 22px;">
+                            <span style="display: block; font-size: 13px; font-weight: 700; color: #1C2B14; line-height: 1.2;">&#xf8ff;&ensp;App Store</span>
+                            <span style="display: block; font-size: 10px; font-weight: 400; color: #4A5C3A; margin-top: 2px;">Download for iOS</span>
+                          </a>
+                          <!--[if mso]></td></tr></table><![endif]-->
+                        </td>
+                        <!-- Play Store -->
+                        <td align="left" valign="middle" class="store-td" style="padding-left: 6px;">
+                          <!--[if mso]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td style="border-radius: 10px; background-color: #F5F0E8;"><![endif]-->
+                          <a href="https://play.google.com/store/apps/details?id=com.goodforus.gud" target="_blank" class="store-btn"
+                             style="display: inline-block; background-color: #F5F0E8; border-radius: 10px; text-decoration: none; font-family: 'Inter', Arial, Helvetica, sans-serif; color: #1C2B14; text-align: center; padding-top: 12px; padding-bottom: 12px; padding-left: 22px; padding-right: 22px; min-width: 140px; mso-padding-alt: 12px 22px;">
+                            <span style="display: block; font-size: 13px; font-weight: 700; color: #1C2B14; line-height: 1.2;">&#9654;&ensp;Play Store</span>
+                            <span style="display: block; font-size: 10px; font-weight: 400; color: #4A5C3A; margin-top: 2px;">Download for Android</span>
+                          </a>
+                          <!--[if mso]></td></tr></table><![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding-top: 28px; padding-bottom: 28px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr><td class="dm-divider" style="border-top: 1px solid #2E4421; font-size: 0; line-height: 0;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- ── From our blog ── -->
+                <tr>
+                  <td align="center" style="padding-bottom: 28px;">
+                    <p class="inter" style="margin: 0 0 14px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 500; line-height: 1; color: #6B8F52; letter-spacing: 2px; text-transform: uppercase;">
+                      From our blog
+                    </p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td align="center" style="padding-bottom: 8px;">
+                          <a href="https://goodforus.com/blog/hidden-ingredients" target="_blank" class="inter dm-link"
+                             style="font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 400; color: #B8D4A0; text-decoration: none; line-height: 1.5;">
+                            Hidden Ingredients in Everyday Foods →
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center" style="padding-bottom: 8px;">
+                          <a href="https://goodforus.com/blog/clean-beauty" target="_blank" class="inter dm-link"
+                             style="font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 400; color: #B8D4A0; text-decoration: none; line-height: 1.5;">
+                            How to Build a Cleaner Skincare Routine →
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+                          <a href="https://goodforus.com/blog/smarter-swaps" target="_blank" class="inter dm-link"
+                             style="font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 400; color: #B8D4A0; text-decoration: none; line-height: 1.5;">
+                            5 Smarter Swaps at the Grocery Store →
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding-bottom: 28px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr><td class="dm-divider" style="border-top: 1px solid #2E4421; font-size: 0; line-height: 0;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- ── Website wordmark ── -->
+                <tr>
+                  <td align="center" style="padding-bottom: 12px;">
+                    <a href="https://goodforus.com" target="_blank" class="playfair"
+                       style="font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif; font-size: 22px; font-weight: 700; color: #F5F0E8; text-decoration: none; letter-spacing: -0.3px;">
+                      goodforus.com
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- ── Tagline ── -->
+                <tr>
+                  <td align="center" style="padding-bottom: 24px;">
+                    <p class="inter" style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 400; line-height: 1.6; color: #4A6E35;">
+                      Good Forest Technologies &mdash; smarter choices, every aisle.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- ── Unsubscribe ── -->
+                <tr>
+                  <td align="center">
+                    <a href="{{unsubscribe_url}}" target="_blank" class="inter"
+                       style="font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 400; color: #4A6E35; text-decoration: underline; text-underline-offset: 2px; letter-spacing: 0.3px;">
+                      Unsubscribe from these emails
+                    </a>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Bottom breathing room -->
+          <tr>
+            <td class="dm-bg" style="height: 32px; background-color: #EDE8DE; font-size: 0; line-height: 0;">&nbsp;</td>
+          </tr>
+
+        </table>
+        <!-- /600px container -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- /Outer wrapper -->
+
+</body>
+</html>
