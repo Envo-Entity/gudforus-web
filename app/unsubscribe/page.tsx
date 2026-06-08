@@ -29,10 +29,14 @@ async function processUnsubscribe(
       cache: "no-store",
     });
     const json = await res.json();
-    if (!res.ok) return { success: false, error: json.error ?? "Something went wrong" };
+    if (!res.ok)
+      return { success: false, error: json.error ?? "Something went wrong" };
     return { success: true };
   } catch {
-    return { success: false, error: "Could not reach the server. Please try again." };
+    return {
+      success: false,
+      error: "Could not reach the server. Please try again.",
+    };
   }
 }
 
@@ -74,15 +78,18 @@ export default async function UnsubscribePage({ searchParams }: PageProps) {
                   stroke="currentColor"
                   strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
               <h1 className="mb-3 text-2xl font-bold text-[#1F2937]">
                 You&apos;re unsubscribed
               </h1>
               <p className="mb-8 text-gray-500">
-                We won&apos;t send you any more emails. If you change your mind, you can always
-                re-subscribe from the app settings.
+                We won&apos;t send you any more emails.
               </p>
               <Link
                 href="/"
@@ -114,8 +121,8 @@ export default async function UnsubscribePage({ searchParams }: PageProps) {
                 Invalid link
               </h1>
               <p className="mb-8 text-gray-500">
-                This unsubscribe link is missing required information. Please use the link
-                directly from your email.
+                This unsubscribe link is missing required information. Please
+                use the link directly from your email.
               </p>
               <Link
                 href="/"
@@ -147,7 +154,8 @@ export default async function UnsubscribePage({ searchParams }: PageProps) {
                 Something went wrong
               </h1>
               <p className="mb-8 text-gray-500">
-                {result?.error ?? "We couldn’t process your request. Please try again."}
+                {result?.error ??
+                  "We couldn’t process your request. Please try again."}
               </p>
               <Link
                 href="/"
