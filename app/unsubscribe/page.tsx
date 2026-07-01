@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-  searchParams: Promise<{ token?: string; email?: string; uid?: string }>;
+  searchParams: Promise<{ token?: string; email?: string; uid?: string; sid?: string }>;
 }
 
 async function processUnsubscribe(
   token: string,
   email: string,
-  uid: string,
+  uid?: string,
+  sid?: string,
 ): Promise<{ success: boolean; error?: string }> {
   const edgeFnUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/unsubscribe`;
 
@@ -25,7 +26,7 @@ async function processUnsubscribe(
     const res = await fetch(edgeFnUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, email, uid }),
+      body: JSON.stringify({ token, email, uid, sid }),
       cache: "no-store",
     });
     const json = await res.json();
@@ -41,16 +42,16 @@ async function processUnsubscribe(
 }
 
 export default async function UnsubscribePage({ searchParams }: PageProps) {
-  const { token, email, uid } = await searchParams;
+  const { token, email, uid, sid } = await searchParams;
 
   let result: { success: boolean; error?: string } | null = null;
 
-  if (token && email && uid) {
-    result = await processUnsubscribe(token, email, uid);
+  if (token && email && (uid || sid)) {
+    result = await processUnsubscribe(token, email, uid, sid);
   }
 
   const isSuccess = result?.success === true;
-  const isMissingParams = !token || !email || !uid;
+  const isMissingParams = !token || !email || (!uid && !sid);
   const isError = !isMissingParams && result && !result.success;
 
   return (

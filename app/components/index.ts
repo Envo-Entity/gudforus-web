@@ -6,4 +6,5 @@ export { default as Features } from "./Features";
 export { default as ScoresSection } from "./ScoresSection";
 export { default as VideoSection } from "./VideoSection";
 export { default as FeatureCards } from "./FeatureCards";
+export { default as NewsletterSignup } from "./NewsletterSignup";
 export { default as Footer } from "./Footer";

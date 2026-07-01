@@ -7,13 +7,10 @@ import {
   ScoresSection,
   VideoSection,
   FeatureCards,
+  NewsletterSignup,
   Footer,
 } from "./components";
-import {
-  DEFAULT_OG_IMAGE,
-  DEFAULT_TWITTER_IMAGE,
-  SITE_URL,
-} from "./lib/site";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "./lib/site";
 
 const popularSearches = [
   {
@@ -146,6 +143,7 @@ export default function AppPage() {
             </div>
           </div>
         </section>
+        <NewsletterSignup />
       </main>
       <Footer />
     </>
