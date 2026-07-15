@@ -28,16 +28,20 @@ export default function Hero() {
       <div className="relative z-10 flex h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 items-center pt-36 pb-16 md:pt-24 md:pb-12">
         {/* Left Column - Content */}
         <div className="text-center md:text-left w-full">
-          {/* Main Heading */}
+          {/* Main Heading — static canonical phrase for crawlers/screen readers;
+              the animated cycling word below is a purely visual duplicate. */}
           <h1 className="font-display text-[clamp(2.75rem,13.5vw,3.75rem)] sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-white leading-tight">
-            Know what you
-            <br />
-            <span className="inline-flex items-baseline gap-2">
-              <RotatingText
-                text={["consume", "buy"]}
-                duration={2000}
-                className="font-display text-[clamp(2.75rem,13.5vw,3.75rem)] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-[#a5d6a7] italic"
-              />
+            <span className="sr-only">Know what you consume</span>
+            <span aria-hidden="true">
+              Know what you
+              <br />
+              <span className="inline-flex items-baseline gap-2">
+                <RotatingText
+                  text={["consume", "buy"]}
+                  duration={2000}
+                  className="font-display text-[clamp(2.75rem,13.5vw,3.75rem)] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-[#a5d6a7] italic"
+                />
+              </span>
             </span>
           </h1>
 
