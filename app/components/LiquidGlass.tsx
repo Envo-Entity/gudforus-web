@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -8,8 +8,9 @@ import { cn } from "@/lib/utils";
  * behind the element (video, content, scroll) the way light bends through
  * curved glass. Technique per https://kube.io/blog/liquid-glass-css-svg/.
  *
- * Only Chromium renders SVG filters as `backdrop-filter`, so everywhere
- * else this degrades to a plain frosted-glass blur + tint.
+ * Always applied, regardless of browser — support for SVG filters as
+ * `backdrop-filter` varies (reliably in Chromium, inconsistently or not
+ * at all elsewhere).
  */
 
 function smoothStep(edge0: number, edge1: number, x: number) {
@@ -92,13 +93,6 @@ function buildDisplacementMap(width: number, height: number, radius: number, edg
   return { dataUrl: canvas.toDataURL(), scale: maxScale * 2 };
 }
 
-function supportsSvgBackdropFilter() {
-  if (typeof window === "undefined") return false;
-  // Only Chromium implements SVG filter references as backdrop-filter;
-  // Safari/Firefox parse the syntax but never render the distortion.
-  return Boolean((window as unknown as { chrome?: unknown }).chrome) && /Chrome|Chromium/.test(navigator.userAgent);
-}
-
 interface LiquidGlassProps {
   className?: string;
   style?: React.CSSProperties;
@@ -127,15 +121,7 @@ export default function LiquidGlass({
   const wrapRef = useRef<HTMLDivElement>(null);
   const feImageRef = useRef<SVGFEImageElement>(null);
   const feDisplacementRef = useRef<SVGFEDisplacementMapElement>(null);
-  const [supported, setSupported] = useState(false);
-  const [ready, setReady] = useState(false);
-
   useEffect(() => {
-    setSupported(supportsSvgBackdropFilter());
-  }, []);
-
-  useEffect(() => {
-    if (!supported) return;
     const el = wrapRef.current;
     if (!el) return;
 
@@ -148,16 +134,13 @@ export default function LiquidGlass({
       feImageRef.current.setAttribute("width", String(Math.round(width)));
       feImageRef.current.setAttribute("height", String(Math.round(height)));
       feDisplacementRef.current.setAttribute("scale", String(map.scale));
-      setReady(true);
     };
 
     render();
     const ro = new ResizeObserver(render);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [supported, cornerRadius, edgeDepth]);
-
-  const useLiquid = supported && ready;
+  }, [cornerRadius, edgeDepth]);
 
   return (
     <div
@@ -165,36 +148,34 @@ export default function LiquidGlass({
       className={cn("relative isolate overflow-hidden", className)}
       style={{ borderRadius: cornerRadius, ...style }}
     >
-      {supported && (
-        <svg aria-hidden className="absolute h-0 w-0 overflow-hidden">
-          <filter
-            id={filterId}
-            colorInterpolationFilters="sRGB"
-            x="0%"
-            y="0%"
-            width="100%"
-            height="100%"
-          >
-            <feImage ref={feImageRef} result="displacementMap" preserveAspectRatio="none" />
-            <feDisplacementMap
-              ref={feDisplacementRef}
-              in="SourceGraphic"
-              in2="displacementMap"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </svg>
-      )}
+      <svg aria-hidden className="absolute h-0 w-0 overflow-hidden">
+        <filter
+          id={filterId}
+          colorInterpolationFilters="sRGB"
+          x="0%"
+          y="0%"
+          width="100%"
+          height="100%"
+        >
+          <feImage ref={feImageRef} result="displacementMap" preserveAspectRatio="none" />
+          <feDisplacementMap
+            ref={feDisplacementRef}
+            in="SourceGraphic"
+            in2="displacementMap"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+      </svg>
 
       <div
         className="absolute inset-0 z-0"
         style={{
-          backdropFilter: useLiquid ? `url(#${filterId}) saturate(1.15)` : "blur(18px) saturate(1.15)",
-          WebkitBackdropFilter: useLiquid
-            ? `url(#${filterId}) saturate(1.15)`
-            : "blur(18px) saturate(1.15)",
+          backdropFilter: `url(#${filterId}) saturate(1.15)`,
+          WebkitBackdropFilter: `url(#${filterId}) saturate(1.15)`,
           background: tint,
+          willChange: "backdrop-filter",
+          transform: "translateZ(0)",
         }}
       />
 

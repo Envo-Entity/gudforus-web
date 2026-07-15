@@ -25,18 +25,18 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/85 via-black/50 to-black/15 md:to-transparent" />
       </div>
 
-      <div className="relative z-10 flex h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 items-center pt-28 pb-16 md:pt-24 md:pb-12">
+      <div className="relative z-10 flex h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 items-center pt-36 pb-16 md:pt-24 md:pb-12">
         {/* Left Column - Content */}
         <div className="text-center md:text-left w-full">
           {/* Main Heading */}
-          <h1 className="font-display text-5xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-white leading-tight">
+          <h1 className="font-display text-[clamp(2.75rem,13.5vw,3.75rem)] sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-white leading-tight">
             Know what you
             <br />
             <span className="inline-flex items-baseline gap-2">
               <RotatingText
                 text={["consume", "buy"]}
                 duration={2000}
-                className="font-display text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-[#a5d6a7] italic"
+                className="font-display text-[clamp(2.75rem,13.5vw,3.75rem)] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-[#a5d6a7] italic"
               />
             </span>
           </h1>
@@ -53,10 +53,10 @@ export default function Hero() {
 
           {/* App Store Buttons */}
           <div className="mt-8">
-            <div className="flex flex-row gap-3 sm:gap-4 justify-center md:justify-start items-center md:items-start w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start items-center md:items-start w-full sm:w-auto">
               <a
                 target="_blank"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 sm:gap-3 bg-gray-900 text-white px-5 sm:px-8 py-3.5 sm:py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-xl min-w-0 sm:min-w-[180px] text-sm sm:text-base"
+                className="w-full sm:w-auto sm:flex-none inline-flex items-center justify-center gap-2 sm:gap-3 bg-gray-900 text-white px-5 sm:px-8 py-3.5 sm:py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-xl min-w-0 sm:min-w-[180px] text-sm sm:text-base"
                 href="https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992"
               >
                 <AppleStoreIcon className="w-5 h-5 text-white shrink-0" />
@@ -64,7 +64,7 @@ export default function Hero() {
               </a>
               <a
                 target="_blank"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 sm:gap-3 bg-white text-gray-900 border border-gray-200 px-5 sm:px-8 py-3.5 sm:py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-lg min-w-0 sm:min-w-[180px] text-sm sm:text-base"
+                className="w-full sm:w-auto sm:flex-none inline-flex items-center justify-center gap-2 sm:gap-3 bg-white text-gray-900 border border-gray-200 px-5 sm:px-8 py-3.5 sm:py-4 rounded-full font-medium transition-transform hover:scale-105 shadow-lg min-w-0 sm:min-w-[180px] text-sm sm:text-base"
                 href="https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN"
               >
                 <Image

@@ -216,11 +216,11 @@ export default function HeroSearch() {
         <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">
           Popular:
         </span>
-        {popularTags.map((tag) => (
+        {popularTags.map((tag, i) => (
           <button
             key={tag}
             onClick={() => handleTagClick(tag)}
-            className="px-3 py-1.5 rounded-full border border-[#e5e3dd] bg-white text-xs font-medium text-[#374151] hover:border-[#4a6c48]/40 hover:bg-[#f7fbf7] transition-all hover:scale-[1.03] active:scale-[0.97]"
+            className={`px-3 py-1.5 rounded-full border border-[#e5e3dd] bg-white text-xs font-medium text-[#374151] hover:border-[#4a6c48]/40 hover:bg-[#f7fbf7] transition-all hover:scale-[1.03] active:scale-[0.97] ${i >= 2 ? "hidden md:inline-block" : ""}`}
           >
             {tag}
           </button>
