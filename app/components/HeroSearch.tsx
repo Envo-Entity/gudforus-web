@@ -108,107 +108,107 @@ export default function HeroSearch() {
     >
       {/* Search bar — liquid glass surface refracting the hero video behind it */}
       <div className="rounded-full border border-white/40 shadow-xl focus-within:border-[#2e7d32] focus-within:ring-2 focus-within:ring-[#2e7d32]/20 transition-all">
-      <LiquidGlass
-        cornerRadius={9999}
-        edgeDepth={16}
-        tint="rgba(255,255,255,0.68)"
-        specular="rgba(255,255,255,0.75)"
-      >
-      <div className="flex items-center pl-5 pr-1.5 py-1.5">
-        {loading ? (
-          <svg
-            className="w-5 h-5 text-[#2e7d32] animate-spin shrink-0 mr-3"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-5 h-5 text-[#6b7280] shrink-0 mr-3"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
-            />
-          </svg>
-        )}
-        <input
-          ref={inputRef}
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => results.length > 0 && setOpen(true)}
-          onKeyDown={handleKeyDown}
-          placeholder="Try: Coke Zero, Lay's, Cetap"
-          className="flex-1 bg-transparent text-[#1f2937] placeholder-[#9ca3af] text-base outline-none min-w-0"
-          spellCheck={false}
-        />
-        {query && (
-          <button
-            onClick={() => {
-              setQuery("");
-              setResults([]);
-              setOpen(false);
-            }}
-            className="text-[#9ca3af] hover:text-[#6b7280] transition-colors mr-2"
-            aria-label="Clear search"
-          >
-            <svg
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        )}
-        <button
-          onClick={handleCheckIt}
-          className="bg-[#1f3d20] hover:bg-[#2d5a2e] text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap flex items-center gap-1.5 shadow-sm"
+        <LiquidGlass
+          cornerRadius={9999}
+          edgeDepth={16}
+          tint="rgba(255,255,255,0.68)"
+          specular="rgba(255,255,255,0.75)"
         >
-          Check it
-          <svg
-            className="w-4 h-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+          <div className="flex items-center pl-5 pr-1.5 py-1.5">
+            {loading ? (
+              <svg
+                className="w-5 h-5 text-[#2e7d32] animate-spin shrink-0 mr-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-5 h-5 text-[#6b7280] shrink-0 mr-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+                />
+              </svg>
+            )}
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => results.length > 0 && setOpen(true)}
+              onKeyDown={handleKeyDown}
+              placeholder="Try Coke Zero, Lay's"
+              className="flex-1 bg-transparent text-[#1f2937] placeholder-[#6b7280] text-base outline-none min-w-0"
+              spellCheck={false}
             />
-          </svg>
-        </button>
-      </div>
-      </LiquidGlass>
+            {query && (
+              <button
+                onClick={() => {
+                  setQuery("");
+                  setResults([]);
+                  setOpen(false);
+                }}
+                className="text-[#9ca3af] hover:text-[#6b7280] transition-colors mr-2"
+                aria-label="Clear search"
+              >
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            )}
+            <button
+              onClick={handleCheckIt}
+              className="bg-[#1f3d20] hover:bg-[#2d5a2e] text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap flex items-center gap-1.5 shadow-sm"
+            >
+              Check it
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </button>
+          </div>
+        </LiquidGlass>
       </div>
 
       {/* Popular tags */}
