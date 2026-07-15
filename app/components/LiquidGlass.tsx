@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
  * behind the element (video, content, scroll) the way light bends through
  * curved glass. Technique per https://kube.io/blog/liquid-glass-css-svg/.
  *
- * Always applied, regardless of browser — support for SVG filters as
- * `backdrop-filter` varies (reliably in Chromium, inconsistently or not
- * at all elsewhere).
+ * The SVG refraction runs everywhere except real WebKit (Safari), which
+ * parses the `url(#filter)` reference but never renders it — there we skip
+ * straight to plain `blur() saturate()` so the glass still looks intentional
+ * instead of silently doing nothing.
  */
 
 function smoothStep(edge0: number, edge1: number, x: number) {
@@ -30,6 +31,23 @@ function roundedRectSDF(
   return (
     Math.min(Math.max(qx, qy), 0) + Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) - radius
   );
+}
+
+/** Safari/WebKit parses `url(#filter)` in backdrop-filter but never renders
+ * the SVG displacement — Chrome/Edge/Arc-on-desktop all report "AppleWebKit"
+ * too, so check for the absence of a Blink-only token to isolate real WebKit. */
+function isRealWebKit() {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent;
+  return /AppleWebKit/.test(ua) && !/Chrome|Chromium|CriOS|Edg/.test(ua);
+}
+
+function subscribeNever() {
+  return () => {};
+}
+
+function getServerSnapshot() {
+  return false;
 }
 
 /** Where glass is flat, points pass straight through; near the edge, the
@@ -125,7 +143,10 @@ export default function LiquidGlass({
   const wrapRef = useRef<HTMLDivElement>(null);
   const feImageRef = useRef<SVGFEImageElement>(null);
   const feDisplacementRef = useRef<SVGFEDisplacementMapElement>(null);
+  const isWebKit = useSyncExternalStore(subscribeNever, isRealWebKit, getServerSnapshot);
+
   useEffect(() => {
+    if (isWebKit) return;
     const el = wrapRef.current;
     if (!el) return;
 
@@ -144,7 +165,11 @@ export default function LiquidGlass({
     const ro = new ResizeObserver(render);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [cornerRadius, edgeDepth]);
+  }, [isWebKit, cornerRadius, edgeDepth]);
+
+  const filterValue = isWebKit
+    ? `blur(${blurLevel}px) saturate(1.15)`
+    : `url(#${filterId}) blur(${blurLevel}px) saturate(1.15)`;
 
   return (
     <div
@@ -152,31 +177,33 @@ export default function LiquidGlass({
       className={cn("relative isolate overflow-hidden", className)}
       style={{ borderRadius: cornerRadius, ...style }}
     >
-      <svg aria-hidden className="absolute h-0 w-0 overflow-hidden">
-        <filter
-          id={filterId}
-          colorInterpolationFilters="sRGB"
-          x="0%"
-          y="0%"
-          width="100%"
-          height="100%"
-        >
-          <feImage ref={feImageRef} result="displacementMap" preserveAspectRatio="none" />
-          <feDisplacementMap
-            ref={feDisplacementRef}
-            in="SourceGraphic"
-            in2="displacementMap"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
-      </svg>
+      {!isWebKit && (
+        <svg aria-hidden className="absolute h-0 w-0 overflow-hidden">
+          <filter
+            id={filterId}
+            colorInterpolationFilters="sRGB"
+            x="0%"
+            y="0%"
+            width="100%"
+            height="100%"
+          >
+            <feImage ref={feImageRef} result="displacementMap" preserveAspectRatio="none" />
+            <feDisplacementMap
+              ref={feDisplacementRef}
+              in="SourceGraphic"
+              in2="displacementMap"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </svg>
+      )}
 
       <div
         className="absolute inset-0 z-0"
         style={{
-          backdropFilter: `url(#${filterId}) blur(${blurLevel}px) saturate(1.15)`,
-          WebkitBackdropFilter: `url(#${filterId}) blur(${blurLevel}px) saturate(1.15)`,
+          backdropFilter: filterValue,
+          WebkitBackdropFilter: filterValue,
           background: tint,
           willChange: "backdrop-filter",
           transform: "translateZ(0)",
