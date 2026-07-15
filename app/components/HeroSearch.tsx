@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import LiquidGlass from "./LiquidGlass";
 
 type ProductChip = {
   id: string;
@@ -105,8 +106,15 @@ export default function HeroSearch() {
       ref={containerRef}
       className="relative w-full max-w-xl mx-auto md:mx-0"
     >
-      {/* Search bar */}
-      <div className="flex items-center bg-white rounded-full border border-[#dad7cc] pl-5 pr-1.5 py-1.5 shadow-lg focus-within:border-[#2e7d32] focus-within:ring-2 focus-within:ring-[#2e7d32]/10 transition-all">
+      {/* Search bar — liquid glass surface refracting the hero video behind it */}
+      <div className="rounded-full border border-white/40 shadow-xl focus-within:border-[#2e7d32] focus-within:ring-2 focus-within:ring-[#2e7d32]/20 transition-all">
+      <LiquidGlass
+        cornerRadius={9999}
+        edgeDepth={16}
+        tint="rgba(255,255,255,0.68)"
+        specular="rgba(255,255,255,0.75)"
+      >
+      <div className="flex items-center pl-5 pr-1.5 py-1.5">
         {loading ? (
           <svg
             className="w-5 h-5 text-[#2e7d32] animate-spin shrink-0 mr-3"
@@ -200,10 +208,12 @@ export default function HeroSearch() {
           </svg>
         </button>
       </div>
+      </LiquidGlass>
+      </div>
 
       {/* Popular tags */}
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">
+        <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">
           Popular:
         </span>
         {popularTags.map((tag) => (

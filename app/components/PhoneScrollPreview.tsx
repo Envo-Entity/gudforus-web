@@ -39,7 +39,7 @@ export default function PhoneScrollPreview() {
   const infoXRight = useTransform(scrollYProgress, [0.2, 0.6], [20, 0]);
 
   return (
-    <section className="relative -mt-32 md:-mt-48 z-20" ref={containerRef}>
+    <section className="relative z-20" ref={containerRef}>
       {/* Container height for scroll tracking - phone stays at bottom */}
       <div className="h-[50rem] md:h-[70rem] flex items-end justify-center relative px-4 pb-8 md:pb-24">
         <div
