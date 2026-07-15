@@ -100,6 +100,9 @@ interface LiquidGlassProps {
   cornerRadius?: number;
   /** Thickness of the refracting edge band, in px. */
   edgeDepth?: number;
+  /** Gaussian blur applied alongside the refraction, in px. Works in tandem
+   * with the SVG displacement — not a fallback for it. 0 disables blur. */
+  blurLevel?: number;
   /** Glass tint, any CSS color (include alpha). */
   tint?: string;
   /** Rim-light color for the inset specular highlight. */
@@ -112,6 +115,7 @@ export default function LiquidGlass({
   style,
   cornerRadius = 24,
   edgeDepth = 18,
+  blurLevel = 4,
   tint = "rgba(255,255,255,0.35)",
   specular = "rgba(255,255,255,0.6)",
   children,
@@ -171,8 +175,8 @@ export default function LiquidGlass({
       <div
         className="absolute inset-0 z-0"
         style={{
-          backdropFilter: `url(#${filterId}) saturate(1.15)`,
-          WebkitBackdropFilter: `url(#${filterId}) saturate(1.15)`,
+          backdropFilter: `url(#${filterId}) blur(${blurLevel}px) saturate(1.15)`,
+          WebkitBackdropFilter: `url(#${filterId}) blur(${blurLevel}px) saturate(1.15)`,
           background: tint,
           willChange: "backdrop-filter",
           transform: "translateZ(0)",
