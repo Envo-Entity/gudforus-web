@@ -10,28 +10,6 @@ type ProductChip = {
   health_score: number | null;
 };
 
-function toThumbUrl(
-  url: string | null,
-  w = 240,
-  h = 240,
-  q = 60,
-): string | null {
-  if (!url) return null;
-  try {
-    const transformed = url.replace(
-      "/storage/v1/object/public/",
-      "/storage/v1/render/image/public/",
-    );
-    const u = new URL(transformed);
-    u.searchParams.set("width", String(w));
-    u.searchParams.set("height", String(h));
-    u.searchParams.set("quality", String(q));
-    return u.toString();
-  } catch {
-    return url;
-  }
-}
-
 function displayName(p: ProductChip) {
   return p.product_name ?? p.slug.replace(/-review$/, "").replaceAll("-", " ");
 }
@@ -72,11 +50,10 @@ export default function ProductCarousel({
               <div className="w-24 h-24 rounded-xl bg-white/50 flex items-center justify-center overflow-hidden">
                 {product.product_image_url ? (
                   <Image
-                    src={toThumbUrl(product.product_image_url) ?? ""}
+                    src={product.product_image_url}
                     alt={displayName(product)}
                     width={96}
                     height={96}
-                    unoptimized
                     className="w-full h-full object-contain p-1"
                   />
                 ) : (
