@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { sendGAEvent } from "@next/third-parties/google";
 import { APP_STORE_URL, PLAY_STORE_URL } from "../../lib/site";
@@ -9,8 +9,6 @@ import { APP_STORE_URL, PLAY_STORE_URL } from "../../lib/site";
 const OFFER_ENDS_AT = Date.parse("2026-11-30T23:59:59+05:30");
 const APP_SCHEME = "gudforus";
 const ANDROID_PACKAGE = "com.app.gudforus";
-// If the app hasn't taken over the screen by then, it isn't installed (iOS only).
-const IOS_STORE_FALLBACK_MS = 1500;
 
 type Platform = "ios" | "android" | "desktop";
 
@@ -37,7 +35,6 @@ const noSubscribe = () => () => {};
 export default function PerkOffer() {
   const platform = useSyncExternalStore<Platform | null>(noSubscribe, detectPlatform, () => null);
   const expired = useSyncExternalStore(noSubscribe, isExpired, () => false);
-  const fallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openApp = useCallback(
     (trigger: "auto" | "tap") => {
@@ -50,32 +47,13 @@ export default function PerkOffer() {
         return;
       }
 
-      // iOS has no built-in fallback: try the app, and go to the App Store if the
-      // page is still on screen a moment later.
-      if (fallbackTimer.current) clearTimeout(fallbackTimer.current);
-      fallbackTimer.current = setTimeout(() => {
-        if (document.visibilityState === "visible") window.location.href = APP_STORE_URL;
-      }, IOS_STORE_FALLBACK_MS);
+      // iOS has no reliable "not installed" signal: the "Open in Gud?" prompt keeps the
+      // page visible, so a timed App Store fallback fires on top of the app. People
+      // without the app use the App Store badge on the page instead.
       window.location.href = `${APP_SCHEME}://${path}`;
     },
     [platform, expired],
   );
-
-  useEffect(() => {
-    const cancelFallback = () => {
-      if (document.visibilityState === "hidden" && fallbackTimer.current) {
-        clearTimeout(fallbackTimer.current);
-        fallbackTimer.current = null;
-      }
-    };
-    document.addEventListener("visibilitychange", cancelFallback);
-    window.addEventListener("pagehide", cancelFallback);
-    return () => {
-      document.removeEventListener("visibilitychange", cancelFallback);
-      window.removeEventListener("pagehide", cancelFallback);
-      if (fallbackTimer.current) clearTimeout(fallbackTimer.current);
-    };
-  }, []);
 
   // Try once automatically on phones. The button covers browsers that block this.
   useEffect(() => {
@@ -127,7 +105,7 @@ export default function PerkOffer() {
                 {expired ? "Open Gud" : "Open Gud & get 50% off"} &rarr;
               </button>
               <p className="mt-4 text-[12px] leading-relaxed text-[#6b7a62]">
-                {expired ? "" : "Just installed? Tap the button again to claim your offer."}
+                {expired ? "" : "No Gud app yet? Get it below, then tap the button again."}
               </p>
             </>
           )}

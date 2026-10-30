@@ -52,8 +52,9 @@ purpose). On load it detects the device from the browser's user agent:
 
 - **Android** — opens an `intent://` link: Gud on the offer screen if installed,
   otherwise the Play Store (Android handles the fallback itself).
-- **iPhone / iPad** — opens `gudforus://offer`; if the page is still visible 1.5 s
-  later, Gud isn't installed, so it goes to the App Store.
+- **iPhone / iPad** — opens `gudforus://offer` and stays on the page. No automatic
+  App Store jump: iOS's "Open in Gud?" prompt keeps the page visible, so a timed
+  fallback opened the App Store on top of the app. People without Gud use the badge.
 - **Computer** — no redirect; says to open the link on a phone and shows both badges.
 - **After 30 Nov 2026 23:59 IST** — shows "This offer has ended"; the button opens
   Gud normally. No redeploy needed.
