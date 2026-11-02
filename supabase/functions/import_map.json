@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@shared/": "./shared/",
+    "@google/genai": "npm:@google/genai"
+  }
+}

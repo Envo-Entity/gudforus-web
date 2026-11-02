@@ -5,8 +5,8 @@ everyday food choices healthier.
 
 ## Status
 
-**Draft.** Template, both images, and the landing page (`app/perk/ngme3k/`) are ready.
-The Supabase wiring is not done yet. Only test sends so far. Runs until
+**Sending.** Queued on 2 Nov 2026 with `queue.sql` (670 users, 2–10 Nov) through
+`send-pending-emails` v24. Landing page: `app/perk/ngme3k/`. The offer runs until
 **30 November 2026 (IST)**, per the founder.
 
 ## Template
@@ -145,16 +145,62 @@ card), `public/email/incomplete_profile/impact_for_you.jpg` (feature row icons).
 > 4) magnifier icon — "Every ingredient explained" / "Additives decoded in plain words."
 > Bottom-right: a cream handwritten sticky note, slightly rotated: "Better food. / Better you."
 
-## Sending pipeline (to do)
+## Sending pipeline
 
-Same queue as the other campaigns (`email_events` → `send-pending-emails` → Resend):
+Same queue as the other campaigns: `email_events` → `send-pending-emails` (pg_cron job 27,
+every 5 minutes, up to 10 emails per run) → Resend. Source is in this repo under
+`supabase/functions/` (`send-pending-emails/index.ts`, `shared/`, `import_map.json`),
+copied from the deployed version before editing.
 
-1. `shared/email-templates.ts` — add the template and
-   `renderPro50OffEmail(firstName, unsubscribeUrl)`.
-2. `send-pending-emails/index.ts` — add a `pro_50_off` case in `buildEmail()` and
-   suppress it in `isEligibleAppUser()` when `newsletter_enabled` is false.
-3. Queue it once: a one-off insert into `email_events` for the free-user audience above,
-   or a small scheduler like `schedule-others-in-health-profile-emails` if it should
-   also reach users who sign up during the offer window.
+- **Template**: `shared/email-templates.ts` has `PRO_50_OFF_TEMPLATE` (a copy of
+  `email.html`) and `renderPro50OffEmail(firstName, unsubscribeUrl)`. If you change
+  `email.html`, copy it into the template and redeploy.
+- **Sender**: `send-pending-emails/index.ts` has a `pro_50_off` case in `buildEmail()`
+  (same From and List-Unsubscribe headers as the other campaigns). `isEligibleAppUser()`
+  marks it `skipped` when `subscribed` or `newsletter_enabled` is false.
+- **Daily cap**: Resend's free plan allows 100 emails/day. Each run counts `sent` rows
+  from the last 24 hours. Welcome emails are fetched first and always go out. Other
+  emails fill the rest of the run only while that count is under `DAILY_SEND_CAP = 95`;
+  anything over stays `pending`, untouched, until the window frees up.
+- **Resend quota errors**: a daily (or monthly) quota error doesn't count as an attempt.
+  The row stays `pending` with `scheduled_for` moved to the next 04:30 UTC (10:00 IST).
+  The per-second rate limit (also a 429) keeps the normal retry: 5 min × attempt,
+  `failed` after 3 attempts.
+- **Rate limit**: Resend allows 10 requests/second, so each run starts its sends 150 ms
+  apart (`SEND_SPACING_MS`).
+- **Queueing**: `queue.sql` is a one-off `INSERT … SELECT` of the audience above, minus
+  anyone who already has a `pro_50_off` event. It staggers `scheduled_for`: 40 emails at
+  `day0_at`, then 80 per day from `day1_at`, released at 04:30 UTC (10:00 IST). Run on
+  2 Nov 2026 for 670 users: 40 on 2 Nov, 80/day 3–9 Nov, 70 on 10 Nov. No new scheduler
+  is needed, because the sender ignores rows until `scheduled_for` has passed. Users who
+  sign up during the offer aren't included.
 
-The sender handles 10 emails per 5-minute run, so ~667 emails take about 5½ hours.
+### Run it
+
+1. Run the commented-out preview at the bottom of `queue.sql` (read-only) and check the
+   per-day counts.
+2. Run the `INSERT` once. It is safe to re-run: anyone already queued is excluded.
+
+### Monitor
+
+```sql
+-- progress by day and status
+select metadata->>'batch_day' as day, status, count(*)
+from email_events where email_type = 'pro_50_off'
+group by 1, 2 order by (metadata->>'batch_day')::int nulls first, 2;
+
+-- sends in the trailing 24h (the cap is 95)
+select count(*) from email_events where status = 'sent' and sent_at > now() - interval '24 hours';
+
+-- recent errors
+select email_type, status, attempts, last_error, scheduled_for
+from email_events where last_error is not null order by created_at desc limit 20;
+
+-- recent sender runs (the JSON includes sent / failed / deferred / sent_last_24h)
+select status_code, left(content::text, 200), created
+from net._http_response order by created desc limit 5;
+```
+
+To pause the campaign, push its pending rows into the future, e.g.
+`update email_events set scheduled_for = scheduled_for + interval '1 day' where email_type = 'pro_50_off' and status = 'pending';`
+To cancel it, set them to `skipped`.
