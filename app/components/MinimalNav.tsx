@@ -1,10 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-export default function MinimalNav({ title }: { title?: string | null }) {
+export default function MinimalNav({
+  title,
+  action,
+}: {
+  title?: string | null;
+  action?: ReactNode;
+}) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#fafaf7]/90 backdrop-blur-md border-b border-[#e5e3dd]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 grid grid-cols-[48px_minmax(0,1fr)_48px] items-center gap-3">
+      <div
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 grid items-center gap-3 ${
+          action
+            ? "grid-cols-[48px_minmax(0,1fr)_auto]"
+            : "grid-cols-[48px_minmax(0,1fr)_48px]"
+        }`}
+      >
         <Link href="/" className="flex items-center" aria-label="Gud For Us home">
           <Image
             src="/gud.png"
@@ -21,7 +34,7 @@ export default function MinimalNav({ title }: { title?: string | null }) {
         ) : (
           <span aria-hidden />
         )}
-        <span aria-hidden />
+        {action ?? <span aria-hidden />}
       </div>
     </nav>
   );

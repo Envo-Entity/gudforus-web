@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
+import { cache, type ReactNode } from "react";
+import AppleStoreIcon from "@/app/components/AppleStoreIcon";
+import GetAppButton from "@/app/components/GetAppButton";
 import MinimalNav from "@/app/components/MinimalNav";
+import { APP_STORE_URL, playStoreUrlWithSource } from "@/app/lib/app-links";
+import { SITE_URL } from "@/app/lib/site";
 import {
   getScanById,
   normalizeScan,
@@ -21,13 +25,43 @@ type NutrientLevel = "low" | "medium" | "high";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Shared Scan Result | Gud For Us",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+const SHARE_SOURCE = "shared_scan";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const scan = normalizeScan(await getScan(id));
+  const name = scan.productName ?? scan.productSubtitle ?? "this product";
+  const title =
+    scan.healthScore !== null
+      ? `${name} scored ${scan.healthScore}/100 on Gud For Us`
+      : `${name} on Gud For Us`;
+  const description = `See the health score, ingredient breakdown and nutrition facts for ${name}. Scan your own food with the Gud For Us app.`;
+  const url = `${SITE_URL}/scans/${id}`;
+  const image = `${SITE_URL}/scans/${id}/opengraph-image`;
+
+  return {
+    title: { absolute: title },
+    description,
+    robots: {
+      index: false,
+      follow: false,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Gud For Us",
+      type: "website",
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
+  };
+}
 
 const titleCase = (value: string) =>
   value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
@@ -37,14 +71,6 @@ const scoreBand = (score: number | null) => {
   if (score >= 80) return "Excellent";
   if (score >= 60) return "Good";
   if (score >= 40) return "Moderate";
-  return "Poor";
-};
-
-const compatibilityLabel = (label: string | null, score: number | null) => {
-  if (label) return titleCase(label);
-  if (score === null) return "Unknown";
-  if (score >= 80) return "Great";
-  if (score >= 55) return "Moderate";
   return "Poor";
 };
 
@@ -103,7 +129,8 @@ const levelStyle = (level: NutrientLevel | null, inverted = false) => {
   return map[display];
 };
 
-async function getScan(id: string) {
+// Cached so generateMetadata and the page share one query per request.
+const getScan = cache(async (id: string) => {
   const { data, error } = await getScanById(id);
 
   if (error || !data) {
@@ -111,7 +138,7 @@ async function getScan(id: string) {
   }
 
   return data as ScanRecord;
-}
+});
 
 function Card({
   children,
@@ -239,66 +266,6 @@ function ScoreMeter({
   );
 }
 
-function CompatibilityCard({ scan }: { scan: NormalizedScan }) {
-  const hasData =
-    scan.compatibility.label ||
-    scan.compatibility.score !== null ||
-    scan.compatibility.summary;
-
-  if (!hasData) return null;
-
-  const label = compatibilityLabel(
-    scan.compatibility.label,
-    scan.compatibility.score,
-  );
-
-  return (
-    <Card className="min-h-[220px]">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold text-[#6c736d]">Compatibility</p>
-          <h2 className="mt-3 text-4xl font-bold tracking-[-0.06em] text-[#242620]">
-            {label}
-          </h2>
-          {scan.compatibility.score !== null ? (
-            <p className="mt-1 text-sm font-semibold text-[#b65e10]">
-              {scan.compatibility.score}/100 match
-            </p>
-          ) : null}
-        </div>
-        <Image
-          src="/app-images/compatibility.png"
-          alt="Compatibility"
-          width={92}
-          height={92}
-          className="h-20 w-20 object-contain drop-shadow-sm"
-        />
-      </div>
-      {scan.compatibility.score !== null ? (
-        <div className="mt-7">
-          <div className="h-3 rounded-full bg-[#e4e7df]">
-            <div
-              className="h-full rounded-full bg-[linear-gradient(90deg,#ef4444_0%,#f97316_52%,#eab308_100%)]"
-              style={{
-                width: `${Math.max(8, Math.min(100, scan.compatibility.score))}%`,
-              }}
-            />
-          </div>
-          <div className="mt-3 flex justify-between text-xs font-medium text-[#99a096]">
-            <span>Poor match</span>
-            <span>Perfect match</span>
-          </div>
-        </div>
-      ) : null}
-      {scan.compatibility.summary ? (
-        <p className="mt-5 line-clamp-4 text-sm leading-6 text-[#697168]">
-          {scan.compatibility.summary}
-        </p>
-      ) : null}
-    </Card>
-  );
-}
-
 function LabCard({ scan }: { scan: NormalizedScan }) {
   const lab = scan.labTested;
   if (!lab) return null;
@@ -377,7 +344,7 @@ function IngredientSection({
   ];
 
   return (
-    <Card className="lg:col-span-7">
+    <Card>
       <div className="flex items-center justify-between gap-4">
         <h2 className="text-xl font-bold tracking-[-0.03em] text-[#242620]">
           Ingredient Breakdown
@@ -587,47 +554,6 @@ function NutritionSection({
   );
 }
 
-function ListSection({
-  title,
-  items,
-  tone,
-  className = "",
-}: {
-  title: string;
-  items: string[];
-  tone: "positive" | "warning";
-  className?: string;
-}) {
-  if (!items.length) return null;
-
-  return (
-    <Card className={className}>
-      <h2 className="text-lg font-bold tracking-[-0.03em] text-[#242620]">
-        {title}
-      </h2>
-      <div className="mt-4 grid gap-3">
-        {items.slice(0, 5).map((item) => (
-          <div
-            key={item}
-            className="grid grid-cols-[28px_1fr] gap-3 rounded-2xl bg-[#f3f6ef] p-3 text-sm leading-6 text-[#3f473f]"
-          >
-            <span
-              className={`grid h-7 w-7 place-items-center rounded-full text-sm font-bold ${
-                tone === "positive"
-                  ? "bg-[#e7f5ec] text-[#19894b]"
-                  : "bg-[#fdeaea] text-[#c7372f]"
-              }`}
-            >
-              {tone === "positive" ? "+" : "!"}
-            </span>
-            <p>{item}</p>
-          </div>
-        ))}
-      </div>
-    </Card>
-  );
-}
-
 function ErrorState({ scan }: { scan: NormalizedScan }) {
   return (
     <Card>
@@ -657,6 +583,56 @@ function ErrorState({ scan }: { scan: NormalizedScan }) {
   );
 }
 
+function GetAppCard() {
+  return (
+    <section
+      id="get-app"
+      className="scroll-mt-24 rounded-[24px] bg-[#1f3a2b] p-6 text-white shadow-[0_10px_28px_rgba(31,41,55,0.12)] sm:p-8"
+    >
+      <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a9d8b3]">
+            Gud For Us
+          </p>
+          <h2 className="mt-2 text-2xl font-bold leading-tight tracking-[-0.035em] sm:text-3xl">
+            Check what&apos;s in your food
+          </h2>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-[#d4e6d8]">
+            Scan any product to see its health score, ingredients and how well
+            it matches your own health profile.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={APP_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#1a1a17] transition hover:bg-[#eef2ea]"
+          >
+            <AppleStoreIcon className="h-4 w-4 shrink-0 fill-[#1a1a17]" />
+            <span>App Store</span>
+          </a>
+          <a
+            href={playStoreUrlWithSource(SHARE_SOURCE)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+          >
+            <Image
+              src="/app-images/google-play-store-icon.webp"
+              alt=""
+              width={16}
+              height={16}
+              className="shrink-0"
+            />
+            <span>Google Play</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function SharedScanPage({ params }: Props) {
   const { id } = await params;
   const record = await getScan(id);
@@ -667,6 +643,7 @@ export default async function SharedScanPage({ params }: Props) {
     <main className="min-h-screen bg-[#eef0ec] text-[#242620]">
       <MinimalNav
         title={scan.productName ?? scan.productSubtitle ?? "Shared scan"}
+        action={<GetAppButton source={SHARE_SOURCE} />}
       />
       <div className="mx-auto max-w-[1180px] px-4 pb-5 pt-24 sm:px-6 lg:px-8 lg:pb-8">
         <div className="grid gap-5">
@@ -675,7 +652,7 @@ export default async function SharedScanPage({ params }: Props) {
             <ErrorState scan={scan} />
           ) : (
             <>
-              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-5 md:grid-cols-2">
                 <ScoreMeter
                   score={scan.healthScore}
                   label="Health Score"
@@ -683,26 +660,13 @@ export default async function SharedScanPage({ params }: Props) {
                   iconAlt="Health score"
                   gradient="linear-gradient(90deg,#ef4444 0%,#f97316 45%,#22c55e 100%)"
                 />
-                <CompatibilityCard scan={scan} />
                 <LabCard scan={scan} />
               </div>
-              <div className="grid gap-5 lg:grid-cols-12">
-                <IngredientSection groups={scan.ingredients} />
-                <ListSection
-                  title="What Might Concern You"
-                  items={scan.compatibility.concerns}
-                  tone="warning"
-                  className="lg:col-span-5"
-                />
-              </div>
+              <IngredientSection groups={scan.ingredients} />
               <NutritionSection nutrition={scan.nutritionFacts} />
-              <ListSection
-                title="What You Will Like"
-                items={scan.compatibility.positives}
-                tone="positive"
-              />
             </>
           )}
+          <GetAppCard />
         </div>
       </div>
     </main>
