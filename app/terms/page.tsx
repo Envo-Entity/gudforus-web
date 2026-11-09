@@ -578,19 +578,10 @@ export default function TermsOfServicePage() {
               <p className="mt-2">
                 Email:{" "}
                 <a
-                  href="mailto:support@envo.club"
+                  href="mailto:info@envo.club"
                   className="text-[#4A6C48] underline"
                 >
-                  support@envo.club
-                </a>
-              </p>
-              <p className="mt-1">
-                Support:{" "}
-                <a
-                  href="mailto:support@envo.club"
-                  className="text-[#4A6C48] underline"
-                >
-                  support@envo.club
+                  info@envo.club
                 </a>
               </p>
             </div>

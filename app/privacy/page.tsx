@@ -234,10 +234,10 @@ export default function PrivacyPolicyPage() {
             <p className="mt-4">
               To exercise these rights, please contact us at{" "}
               <a
-                href="mailto:support@envo.club"
+                href="mailto:info@envo.club"
                 className="text-[#4A6C48] underline"
               >
-                support@envo.club
+                info@envo.club
               </a>
               .
             </p>
@@ -312,10 +312,10 @@ export default function PrivacyPolicyPage() {
               <p className="mt-1">
                 Support:{" "}
                 <a
-                  href="mailto:support@envo.club"
+                  href="mailto:info@envo.club"
                   className="text-[#4A6C48] underline"
                 >
-                  support@envo.club
+                  info@envo.club
                 </a>
               </p>
             </div>

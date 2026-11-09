@@ -348,7 +348,7 @@ export default function CompatibilityPage() {
               </p>
               <div className="mt-6">
                 <a
-                  href="mailto:support@envo.club"
+                  href="mailto:info@envo.club"
                   className="inline-flex items-center gap-2 rounded-lg bg-[#4A6C48] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#3a5638]"
                 >
                   <svg
