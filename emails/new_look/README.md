@@ -62,6 +62,19 @@ addresses. Full rules in `queue.sql`:
 
 ## How to send
 
+**Test first** (one email through the real pipeline). `force_send` skips only the
+"opened the app in 7 days" check, so active accounts can receive the test:
+
+```sql
+insert into public.email_events (user_id, email_type, recipient, status, scheduled_for, metadata)
+select u.id, 'new_look', u.email, 'pending', now(),
+       jsonb_build_object('campaign', 'new_look', 'test', true, 'force_send', true)
+from auth.users u where lower(u.email) = 'you@example.com';  -- your address
+```
+
+The sender picks it up within 5 minutes. A test row also stops that address from
+being queued again by `queue.sql` (it skips anyone with a `new_look` row).
+
 1. Merge this branch into `production` (website + function source).
 2. Deploy the sender: `supabase functions deploy send-pending-emails` (from the repo root,
    linked to `ihichdejyaeignzbnfgb`). Without this, `new_look` rows log

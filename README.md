@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Project Notes
 
+- **`production` is the main branch of this repo, not `main`.** It's what AWS Amplify
+  deploys to gudforus.com, and the source of truth for the Supabase edge functions.
+  Branch from `production`, merge into `production`.
 - Product health pages use lowercase `/ishealthy` as the canonical route.
 - The landing navbar label for `/ishealthy` should be `Food Scores`, not `Is Healthy`.
 

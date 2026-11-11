@@ -165,6 +165,8 @@ function isApplePrivateRelay(recipient: string): boolean {
 // so re-check at send time: anyone who has opened the app since is skipped
 // (status 'skipped', last_error 'active_recently'). profiles.last_seen_at is updated by
 // the app on launch, sign-in and every return to the foreground.
+// Test sends can set metadata.force_send = true to bypass this check only (Apple relay
+// and unsubscribe/preference rules still apply). queue.sql never sets it.
 const INACTIVE_ONLY_TYPES = new Set(["new_look"]);
 const INACTIVE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -503,6 +505,7 @@ serve(async (req) => {
       if (
         INACTIVE_ONLY_TYPES.has(row.email_type) &&
         row.user_id &&
+        row.metadata?.force_send !== true &&
         isRecentlyActive(lastSeenByUser.get(row.user_id))
       ) {
         activeSkipped.push(row);
