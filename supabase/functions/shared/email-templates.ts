@@ -1000,3 +1000,390 @@ export function renderPro50OffEmail(
       .replace(/\{\{unsubscribe_url\}\}/g, unsubscribeUrl),
   };
 }
+
+// ─── New look (Season 2 redesign announcement) ───────────────────────────────
+// Source: emails/new_look/email.html. Images are served from
+// https://gudforus.com/email/new_look/new_look_{1..6}.jpg (public/email/new_look/).
+// Template variables: {{name}} (intro line), {{unsubscribe_url}} (footer).
+
+const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <!-- The slices carry their own #F0EFEA ground, so ask clients not to recolour the page in dark mode. -->
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light only" />
+    <title>Gud has a new look</title>
+
+    <!--
+    CAMPAIGN: new_look
+    Subject (pick one, see COPY.md):  Gud has a new look (and a blueberry with feelings)
+    Preheader: below, in the hidden div.
+
+    TEMPLATE VARIABLES
+    {{name}}            → first name (intro line)
+    {{unsubscribe_url}} → signed one-click unsubscribe link
+
+    IMAGES: every src below is a TODO. Generate the slices from PROMPTS.md, put them in
+    gud-for-us-app-web/public/email/new_look/ and deploy the web app before sending, so they are
+    live at https://gudforus.com/email/new_look/new_look_N.jpg (same pattern as pro_50_off).
+    -->
+
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+
+    <!-- DM Serif Display = the new look's display face. Falls back to Georgia where web fonts aren't supported (Gmail, Outlook). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+
+        /* Apple Link Detection Fix */
+        a[x-apple-data-detectors],
+        u + #body a,
+        #MessageViewBody a {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* Mobile Responsive Rules */
+        @media screen and (max-width: 600px) {
+            .email-container { width: 100% !important; }
+            .header-cell { padding-left: 24px !important; padding-right: 24px !important; }
+            .text-cell { padding-left: 28px !important; padding-right: 28px !important; }
+            .cta-heading { font-size: 28px !important; }
+            .cta-btn-cell { display: block !important; width: 100% !important; padding: 0 0 12px 0 !important; }
+            .cta-btn { display: block !important; text-align: center !important; }
+            .footer-cell { padding-top: 32px !important; padding-bottom: 32px !important; padding-left: 24px !important; padding-right: 24px !important; }
+            .store-badge-cell { display: block !important; width: 100% !important; padding-right: 0 !important; }
+            .store-badge { display: block !important; width: 100% !important; margin-bottom: 10px !important; }
+        }
+    </style>
+</head>
+<body id="body" style="margin:0;padding:0;background-color:#F0EFEA;-webkit-text-size-adjust:none;text-size-adjust:none;">
+
+    <!-- Preheader (Hidden Preview Text) -->
+    <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#F0EFEA;opacity:0;">
+        Fresh new look, same honest answers. Plus: you can share your scans now.&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+    </div>
+
+    <!-- Outer Wrapper -->
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#F0EFEA" style="border-collapse:collapse !important;background-color:#F0EFEA;">
+        <tr>
+            <td align="center">
+
+                <!-- Inner Container -->
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" bgcolor="#F0EFEA" class="email-container" style="border-collapse:collapse !important;width:600px;background-color:#F0EFEA;">
+
+                    <!-- Header Section -->
+                    <tr>
+                        <td align="center" class="header-cell" style="padding:40px 40px 0 40px;background-color:#F0EFEA;">
+                            <a href="https://gudforus.com" target="_blank" style="text-decoration:none;display:inline-block;">
+                                <img
+                                    src="https://gudforus.com/gud-green.png"
+                                    alt="Gud"
+                                    width="216"
+                                    style="display:block;border:0;width:216px;height:auto;-ms-interpolation-mode:bicubic;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Image 1: Hero — slices/new_look_1.jpg (1200 × 1500) -->
+                    <tr>
+                        <td align="center" style="padding:24px 0 0 0;background-color:#F0EFEA;font-size:0;line-height:0;">
+                            <!-- TODO: link target. gudforus.com for now; swap for an "open the app" smart link if one is built (see README). -->
+                            <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
+                                <!-- TODO: upload slices/new_look_1.jpg → public/email/new_look/new_look_1.jpg -->
+                                <img
+                                    src="https://gudforus.com/email/new_look/new_look_1.jpg"
+                                    alt="Gud has a new look. Same honest answers, fresh everything else. Our blueberry mascot mid-hop, very pleased about it."
+                                    width="600"
+                                    style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.3;color:#1C1C1A;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- HTML 1: Intro -->
+                    <tr>
+                        <td align="left" class="text-cell" style="padding:8px 56px 36px 56px;background-color:#F0EFEA;">
+                            <p style="margin:0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#1C1C1A;line-height:1.6;">
+                                Hi {{name}}, it&rsquo;s been a while. While you were away, Gud got a glow-up: cleaner screens, clearer scores, and a blueberry that reacts to how you&rsquo;re doing. You can also share your scans with friends now.
+                            </p>
+                            <p style="margin:12px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#66655C;line-height:1.6;">
+                                Here&rsquo;s the quick tour.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Image 2: The new Home — slices/new_look_2.jpg (1200 × 1600) -->
+                    <tr>
+                        <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
+                            <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
+                                <!-- TODO: upload slices/new_look_2.jpg → public/email/new_look/new_look_2.jpg -->
+                                <img
+                                    src="https://gudforus.com/email/new_look/new_look_2.jpg"
+                                    alt="The new Gud Home screen on an iPhone: your Ingredient Health Score up front, your ingredient profile in Good, Okay and Bad, and your blueberry right next to your score."
+                                    width="600"
+                                    style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;color:#1C1C1A;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Image 3: Meet your blueberry — slices/new_look_3.jpg (1200 × 1200) -->
+                    <tr>
+                        <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
+                            <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
+                                <!-- TODO: upload slices/new_look_3.jpg → public/email/new_look/new_look_3.jpg -->
+                                <img
+                                    src="https://gudforus.com/email/new_look/new_look_3.jpg"
+                                    alt="Meet your blueberry. Its mood follows your score: under 40 it holds its tummy, 40 to 69 it keeps a straight face, 70 and up it hops for joy."
+                                    width="600"
+                                    style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;color:#1C1C1A;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Image 4: Share your scans — slices/new_look_4.jpg (1200 × 1500) -->
+                    <tr>
+                        <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
+                            <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
+                                <!-- TODO: upload slices/new_look_4.jpg → public/email/new_look/new_look_4.jpg -->
+                                <img
+                                    src="https://gudforus.com/email/new_look/new_look_4.jpg"
+                                    alt="Share your scans. Send any result to a friend, right from the scan screen. A shared scan with a Health Score of 76 out of 100, and a friend already typing back."
+                                    width="600"
+                                    style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;color:#1C1C1A;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Image 5: Everything else, still here — slices/new_look_5.jpg (1200 × 800) -->
+                    <tr>
+                        <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
+                            <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
+                                <!-- TODO: upload slices/new_look_5.jpg → public/email/new_look/new_look_5.jpg -->
+                                <img
+                                    src="https://gudforus.com/email/new_look/new_look_5.jpg"
+                                    alt="Everything else? Still here. Scan it, check it against your health profile, and swap it for something better."
+                                    width="600"
+                                    style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;color:#1C1C1A;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Image 6: Sign-off — slices/new_look_6.jpg (1200 × 960) -->
+                    <tr>
+                        <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
+                            <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
+                                <!-- TODO: upload slices/new_look_6.jpg → public/email/new_look/new_look_6.jpg -->
+                                <img
+                                    src="https://gudforus.com/email/new_look/new_look_6.jpg"
+                                    alt="Your blueberry missed you. It's waving hello."
+                                    width="600"
+                                    style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.3;color:#1C1C1A;"
+                                />
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- HTML 2: Closing CTA -->
+                    <tr>
+                        <td align="center" class="text-cell" style="padding:0 56px 48px 56px;background-color:#F0EFEA;">
+                            <p class="cta-heading" style="margin:0;padding:0;font-family:'DM Serif Display',Georgia,'Times New Roman',Times,serif;font-size:32px;font-weight:400;color:#1C1C1A;letter-spacing:-0.4px;line-height:1.2;">
+                                Come say hi.
+                            </p>
+                            <p style="margin:10px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#66655C;line-height:1.6;">
+                                Open Gud and see which mood your blueberry&rsquo;s in.
+                            </p>
+
+                            <!-- CTA Buttons (stack on mobile). Store pages show Open / Update / Get as needed. -->
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate !important;margin-top:24px;">
+                                <tr>
+                                    <td class="cta-btn-cell" align="center" style="padding:0 6px 0 0;">
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate !important;">
+                                            <tr>
+                                                <td align="center" bgcolor="#4A6C48" style="border-radius:12px;background-color:#4A6C48;">
+                                                    <a href="https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992" target="_blank" class="cta-btn" style="display:inline-block;padding:15px 30px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:15px;font-weight:500;color:#ffffff;text-decoration:none;border-radius:12px;line-height:1.2;">
+                                                        <span style="color:#ffffff;">Open on iPhone &rarr;</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="cta-btn-cell" align="center" style="padding:0 0 0 6px;">
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate !important;">
+                                            <tr>
+                                                <td align="center" bgcolor="#4A6C48" style="border-radius:12px;background-color:#4A6C48;">
+                                                    <a href="https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN" target="_blank" class="cta-btn" style="display:inline-block;padding:15px 30px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:15px;font-weight:500;color:#ffffff;text-decoration:none;border-radius:12px;line-height:1.2;">
+                                                        <span style="color:#ffffff;">Open on Android &rarr;</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin:16px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#66655C;line-height:1.5;">
+                                Still have Gud? Tap Open or Update. Deleted it? Tap Get. No hard feelings.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer (identical to the other campaigns) -->
+                    <tr>
+                        <td align="left" bgcolor="#1c2b14" class="footer-cell" style="padding:40px 40px 40px 40px;">
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse !important;">
+
+                                <!-- App Badges -->
+                                <tr>
+                                    <td align="left" style="padding-bottom:20px;">
+                                        <p style="margin:0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;font-weight:500;color:#6b8f52;text-transform:uppercase;letter-spacing:2px;line-height:1.2;">
+                                            DOWNLOAD THE APP
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse !important;">
+                                            <tr>
+                                                <td class="store-badge-cell" align="left" style="padding-right:6px;">
+                                                    <a href="https://apps.apple.com/in/app/gud-for-us-clean-food-ai/id6755870992" target="_blank" class="store-badge" style="display:inline-block;text-decoration:none;line-height:0;font-size:0;">
+                                                        <img src="https://gudforus.com/email/appstore.svg" alt="Download on the App Store" width="120" height="40" style="display:block;border:0;width:120px;height:40px;-ms-interpolation-mode:bicubic;" />
+                                                    </a>
+                                                </td>
+                                                <td class="store-badge-cell" align="left">
+                                                    <a href="https://play.google.com/store/apps/details?id=com.app.gudforus&hl=en_IN" target="_blank" class="store-badge" style="display:inline-block;text-decoration:none;line-height:0;font-size:0;">
+                                                        <img src="https://gudforus.com/email/playstore.svg" alt="Get it on Google Play" width="120" height="40" style="display:block;border:0;width:120px;height:40px;-ms-interpolation-mode:bicubic;" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- Divider -->
+                                <tr>
+                                    <td style="padding:28px 0;">
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse !important;">
+                                            <tr>
+                                                <td style="border-top:1px solid #2e4421;"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- Blog Links -->
+                                <tr>
+                                    <td align="left" style="padding-bottom:14px;">
+                                        <p style="margin:0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;font-weight:500;color:#6b8f52;text-transform:uppercase;letter-spacing:2px;line-height:1.2;">
+                                            FROM OUR BLOG
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding-bottom:8px;">
+                                        <a href="https://gudforus.com/blog/why-ingredient-lists-are-hard-to-understand" target="_blank" style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#f5f0e8;text-decoration:underline;text-underline-offset:3px;line-height:1.5;">
+                                            <span style="color:#f5f0e8;">Why Ingredient Lists Are Hard to Understand &rarr;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding-bottom:8px;">
+                                        <a href="https://gudforus.com/blog/allergy-ingredient-checker" target="_blank" style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#f5f0e8;text-decoration:underline;text-underline-offset:3px;line-height:1.5;">
+                                            <span style="color:#f5f0e8;">How to Check if a Product Is Safe for Your Allergy &rarr;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <a href="https://gudforus.com/blog/blueberries-superfood" target="_blank" style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#f5f0e8;text-decoration:underline;text-underline-offset:3px;line-height:1.5;">
+                                            <span style="color:#f5f0e8;">Blueberries: The Superfood You Don't Have to Try Hard to Eat &rarr;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Divider -->
+                                <tr>
+                                    <td style="padding:28px 0;">
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse !important;">
+                                            <tr>
+                                                <td style="border-top:1px solid #2e4421;"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- Wordmark, Tagline, Unsubscribe -->
+                                <tr>
+                                    <td align="left">
+                                        <a href="https://gudforus.com" target="_blank" style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:22px;font-weight:700;color:#f5f0e8;text-decoration:none;letter-spacing:-0.3px;line-height:1.2;">
+                                            gudforus.com
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding-top:12px;padding-bottom:24px;">
+                                        <p style="margin:0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:12px;font-weight:400;color:#4a6e35;line-height:1.5;">
+                                            Shop smarter. Eat better. Feel good.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <a href="{{unsubscribe_url}}" target="_blank" style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;font-weight:400;color:#f5f0e8;text-decoration:underline;text-underline-offset:2px;letter-spacing:0.3px;">
+                                            <span style="color:#f5f0e8;">Unsubscribe from these emails</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+                <!-- End Inner Container -->
+
+            </td>
+        </tr>
+    </table>
+    <!-- End Outer Wrapper -->
+
+</body>
+</html>`;
+
+export function renderNewLookEmail(
+  firstName: string,
+  unsubscribeUrl: string,
+): { subject: string; html: string } {
+  return {
+    // No {{name}} in the subject: without a display name it falls back to the
+    // email's local part (e.g. "john.smith87"), which reads badly in an inbox.
+    subject: "Gud has a new look (and a blueberry with feelings)",
+    html: NEW_LOOK_TEMPLATE
+      .replace(/\{\{name\}\}/g, firstName)
+      .replace(/\{\{unsubscribe_url\}\}/g, unsubscribeUrl),
+  };
+}

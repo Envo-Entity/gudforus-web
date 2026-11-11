@@ -33,6 +33,7 @@ import {
   renderNewsletterEmail,
   renderOthersInHealthProfileEmail,
   renderPro50OffEmail,
+  renderNewLookEmail,
 } from "../shared/email-templates.ts";
 import { buildUnsubscribeUrl } from "../shared/email-utils.ts";
 
@@ -145,6 +146,7 @@ function isEligibleAppUser(emailType: string, prefs: EmailPrefs | undefined): bo
   if (emailType === "product_updates" && !prefs.product_updates_enabled) return false;
   if (emailType === "others_in_health_profile" && !prefs.product_updates_enabled) return false;
   if (emailType === "pro_50_off" && !prefs.newsletter_enabled) return false;
+  if (emailType === "new_look" && !prefs.product_updates_enabled) return false;
   return true;
 }
 
@@ -156,6 +158,20 @@ const BLOCK_APPLE_PRIVATE_RELAY = true;
 
 function isApplePrivateRelay(recipient: string): boolean {
   return /@privaterelay\.appleid\.com$/i.test(recipient.trim());
+}
+
+// "new_look" is a come-back email for people who haven't opened the app in 7 days.
+// The audience is picked when the campaign is queued, but sends are spread over days,
+// so re-check at send time: anyone who has opened the app since is skipped
+// (status 'skipped', last_error 'active_recently'). profiles.last_seen_at is updated by
+// the app on launch, sign-in and every return to the foreground.
+const INACTIVE_ONLY_TYPES = new Set(["new_look"]);
+const INACTIVE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+
+function isRecentlyActive(lastSeenAt: string | null | undefined): boolean {
+  if (!lastSeenAt) return false;
+  const t = Date.parse(lastSeenAt);
+  return Number.isFinite(t) && Date.now() - t < INACTIVE_WINDOW_MS;
 }
 
 function isEligibleSubscriber(subscriber: NewsletterSubscriber | undefined): boolean {
@@ -227,6 +243,20 @@ async function buildEmail(
 
     case "pro_50_off": {
       const { subject, html } = renderPro50OffEmail(firstName, unsubscribeUrl);
+      return {
+        from: FROM_ADDRESS,
+        to: [row.recipient],
+        subject,
+        html,
+        headers: {
+          "List-Unsubscribe": `<${unsubscribeUrl}>, <mailto:unsubscribe@gudforus.com?subject=unsubscribe>`,
+          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        },
+      };
+    }
+
+    case "new_look": {
+      const { subject, html } = renderNewLookEmail(firstName, unsubscribeUrl);
       return {
         from: FROM_ADDRESS,
         to: [row.recipient],
@@ -436,7 +466,7 @@ serve(async (req) => {
             .in("user_id", userIds)
         : Promise.resolve({ data: [], error: null }),
       userIds.length > 0
-        ? supabase.from("profiles").select("id, display_name").in("id", userIds)
+        ? supabase.from("profiles").select("id, display_name, last_seen_at").in("id", userIds)
         : Promise.resolve({ data: [], error: null }),
       subscriberIds.length > 0
         ? supabase
@@ -450,7 +480,11 @@ serve(async (req) => {
     for (const p of prefsResult.data ?? []) prefsByUser.set(p.user_id, p as EmailPrefs);
 
     const nameByUser = new Map<string, string | null>();
-    for (const p of profilesResult.data ?? []) nameByUser.set(p.id, p.display_name ?? null);
+    const lastSeenByUser = new Map<string, string | null>();
+    for (const p of profilesResult.data ?? []) {
+      nameByUser.set(p.id, p.display_name ?? null);
+      lastSeenByUser.set(p.id, (p as { last_seen_at?: string | null }).last_seen_at ?? null);
+    }
 
     const subscribersById = new Map<string, NewsletterSubscriber>();
     for (const s of subscribersResult.data ?? []) subscribersById.set(s.id, s as NewsletterSubscriber);
@@ -459,10 +493,19 @@ serve(async (req) => {
     const eligible: PendingEmail[] = [];
     const suppressed: PendingEmail[] = [];
     const relayBlocked: PendingEmail[] = [];
+    const activeSkipped: PendingEmail[] = [];
 
     for (const row of pendingRows as PendingEmail[]) {
       if (BLOCK_APPLE_PRIVATE_RELAY && isApplePrivateRelay(row.recipient)) {
         relayBlocked.push(row);
+        continue;
+      }
+      if (
+        INACTIVE_ONLY_TYPES.has(row.email_type) &&
+        row.user_id &&
+        isRecentlyActive(lastSeenByUser.get(row.user_id))
+      ) {
+        activeSkipped.push(row);
         continue;
       }
       let ok: boolean;
@@ -490,7 +533,15 @@ serve(async (req) => {
       console.log(`[SendEmails] Skipped ${relayBlocked.length} Apple private relay email(s)`);
     }
 
-    const skippedBeforeSend = suppressed.length + relayBlocked.length;
+    if (activeSkipped.length > 0) {
+      await supabase
+        .from("email_events")
+        .update({ status: "skipped", last_error: "active_recently" })
+        .in("id", activeSkipped.map((r) => r.id));
+      console.log(`[SendEmails] Skipped ${activeSkipped.length} email(s) to recently active users`);
+    }
+
+    const skippedBeforeSend = suppressed.length + relayBlocked.length + activeSkipped.length;
 
     if (eligible.length === 0) {
       return new Response(
