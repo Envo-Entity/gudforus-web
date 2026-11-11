@@ -148,6 +148,16 @@ function isEligibleAppUser(emailType: string, prefs: EmailPrefs | undefined): bo
   return true;
 }
 
+// Apple "Hide My Email" relay addresses bounce unless hi@gudforus.com is registered in
+// Apple Developer (Sign in with Apple for Email Communication). Until it is, never send
+// to them: the row is marked 'skipped' with last_error 'apple_private_relay'.
+// Set to false once registered, then redeploy.
+const BLOCK_APPLE_PRIVATE_RELAY = true;
+
+function isApplePrivateRelay(recipient: string): boolean {
+  return /@privaterelay\.appleid\.com$/i.test(recipient.trim());
+}
+
 function isEligibleSubscriber(subscriber: NewsletterSubscriber | undefined): boolean {
   if (!subscriber) return false; // Row must exist
   return subscriber.subscribed;
@@ -448,8 +458,13 @@ serve(async (req) => {
     // ── 4. Separate eligible from suppressed ──
     const eligible: PendingEmail[] = [];
     const suppressed: PendingEmail[] = [];
+    const relayBlocked: PendingEmail[] = [];
 
     for (const row of pendingRows as PendingEmail[]) {
+      if (BLOCK_APPLE_PRIVATE_RELAY && isApplePrivateRelay(row.recipient)) {
+        relayBlocked.push(row);
+        continue;
+      }
       let ok: boolean;
       if (row.user_id) {
         ok = isEligibleAppUser(row.email_type, prefsByUser.get(row.user_id));
@@ -467,9 +482,19 @@ serve(async (req) => {
       console.log(`[SendEmails] Skipped ${suppressed.length} suppressed email(s)`);
     }
 
+    if (relayBlocked.length > 0) {
+      await supabase
+        .from("email_events")
+        .update({ status: "skipped", last_error: "apple_private_relay" })
+        .in("id", relayBlocked.map((r) => r.id));
+      console.log(`[SendEmails] Skipped ${relayBlocked.length} Apple private relay email(s)`);
+    }
+
+    const skippedBeforeSend = suppressed.length + relayBlocked.length;
+
     if (eligible.length === 0) {
       return new Response(
-        JSON.stringify({ success: true, processed: 0, skipped: suppressed.length, sent_last_24h: sentLast24h }),
+        JSON.stringify({ success: true, processed: 0, skipped: skippedBeforeSend, sent_last_24h: sentLast24h }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
@@ -506,7 +531,7 @@ serve(async (req) => {
       total: pendingRows.length,
       sent,
       failed,
-      skipped: skipped + suppressed.length,
+      skipped: skipped + skippedBeforeSend,
       deferred,
       sent_last_24h: sentLast24h,
     };
