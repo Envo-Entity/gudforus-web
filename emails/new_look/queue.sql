@@ -6,8 +6,8 @@
 --      (`supabase functions deploy send-pending-emails`) — older versions
 --      log "Unknown email_type: new_look" and leave the rows pending.
 --   3. The preview query at the bottom has been run and the numbers look right.
---   4. day0_at / day1_at below are set to real dates (pro_50_off has finished:
---      the preview's "pending other campaigns" check returns 0).
+--   4. day0_at / day1_at below are set to real dates, and the preview's
+--      "pending other campaigns" check returns 0 (the 95/day cap is shared).
 --
 -- Run ONCE in the Supabase SQL editor (or `supabase db query --linked -f queue.sql`).
 -- send-pending-emails only sends rows once scheduled_for <= now(), so the stagger
@@ -26,7 +26,6 @@
 --     The sender re-checks at send time and skips anyone who opened the app since
 --     (last_error 'active_recently')
 --   • are subscribed and have product_updates_enabled (no email_preferences row = yes)
---   • didn't get any other Gud email in the last 3 days (avoids back-to-back emails)
 --   • have no existing new_look event (so test recipients and re-runs are skipped)
 -- Order: most recently lapsed first (they're likeliest to come back), then never-seen.
 
@@ -56,13 +55,6 @@ audience as (
     and not exists (
       select 1 from public.email_events e
       where e.user_id = u.id and e.email_type = 'new_look'
-    )
-    and not exists (
-      select 1 from public.email_events e
-      where e.user_id = u.id
-        and e.status = 'sent'
-        and e.email_type <> 'welcome'
-        and e.sent_at > now() - interval '3 days'
     )
 ),
 batched as (
@@ -110,7 +102,7 @@ cross join params;
 --                      and email not like '%@example.com'
 --                      and subscribed and product_updates
 --                      and (last_seen_at is null or last_seen_at < now() - interval '7 days'))
---                                                                      as audience_before_3day_rule
+--                                                                      as audience
 -- from base;
 --
 -- 2) Other campaigns still waiting to send (must be 0 before day0_at, since the

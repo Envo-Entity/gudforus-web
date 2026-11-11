@@ -49,7 +49,6 @@ addresses. Full rules in `queue.sql`:
   sign-in and every foreground)
 - not `@privaterelay.appleid.com`, not `@example.com`
 - `subscribed` and `product_updates_enabled` (no preferences row = yes)
-- no other Gud email sent to them in the last 3 days (welcome excluded)
 - no existing `new_look` event
 
 ### Two safety nets in the sender (`send-pending-emails`)
@@ -72,5 +71,6 @@ addresses. Full rules in `queue.sql`:
 4. Set `day0_at` / `day1_at` in `queue.sql`, then run it once.
 5. Watch with the monitoring query. To pause, run the `update … 'paused'` statement.
 
-Stagger: 40 on day 0, then 80/day at 10:00 IST. With the 95/day cap, a ~700-person
-audience takes about 9 days.
+Stagger: 40 on day 0, then 80/day at 10:00 IST, under the 95/day cap. Preview on
+11 Nov 2026: 570 people (559 of them also got pro_50_off; that's intended — everyone
+inactive should hear about the new look), sent over 8 days.
