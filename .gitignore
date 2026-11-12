@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# MCP config (contains access token)
+.mcp.json
+# Supabase CLI local cache
+supabase/.temp/
