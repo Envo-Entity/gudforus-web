@@ -5,18 +5,31 @@ allergies and sensitivities that aren't in the preset lists.
 
 ## Status
 
-**Not yet automated.** Only the HTML template exists. There is no scheduler edge
-function deployed — `schedule-others-in-health-profile-emails` returns 404 on the
-Supabase project as of 2026-08-25.
+**Paused (12 Nov 2026).** Ran daily from 20 Aug to 11 Nov 2026 and sent 721 emails
+(681 clean, plus 40 that went out despite a 429 retry error on 27 Aug). 74 failed
+because they were `@example.com` addresses.
+
+The daily scheduler (pg_cron job 31, `others-in-health-profile-emails-daily`) is set to
+`active = false` so it stops using the shared daily email cap while `new_look` sends.
+The function is still deployed. To resume:
+
+```sql
+select cron.alter_job(job_id := 31, active := true);
+```
+
+When running, `schedule-others-in-health-profile-emails` queues up to 50 eligible users
+a day, and stops naturally once everyone eligible has been sent the campaign.
 
 ## Template
 
 - **Source**: `email.html`
-- **Subject**: TBD — not yet decided
-- **Template variables**: `{{unsubscribe_url}}` only
+- **Subject**: `Hi {{name}}, Any Health Condition, we got you!`
+- **Template variables**: `{{name}}` for the personalized subject and `{{unsubscribe_url}}`
 
-This is an untargeted broadcast, not a personalized automation. It has no `{{name}}`
-and no `<!-- SECTION: -->` conditional blocks, unlike `incomplete_profile`.
+The scheduler targets all app users who have an email and have not already been
+queued or sent this campaign, while honoring `subscribed` and
+`product_updates_enabled`. It has no `<!-- SECTION: -->` conditional blocks,
+unlike `incomplete_profile`.
 
 ## Assets
 
@@ -35,22 +48,15 @@ also sits in the mobile repo at `email-campaigns/others-in-health-profile/origin
 **The web app must be deployed before any send** — the images have to be live at
 `gudforus.com` first.
 
-## Open decisions
-
-1. **`email_type` value** — suggest `others_in_health_profile`.
-2. **Suppression preference** — this is a product announcement, so it should gate on
-   `email_preferences.product_updates_enabled`, *not* `newsletter_enabled` (which is
-   what `incomplete_profile_automation` uses). Needs a case added to `isEligible()`.
-3. **Audience** — all subscribed users, or only those with a filled `allergies`
-   section in `profiles.onboarding_responses`?
-4. **Subject line.**
-
 ## Sending pipeline
 
-Lives in Supabase edge functions, which are **not in this repository** — see the
-project-wide note. Wiring this campaign up requires:
+The scheduler source is in `supabase/functions/schedule-others-in-health-profile-emails/`.
+The sender and shared templates are in `supabase/functions/` too. The production
+wiring is:
 
-- `shared/email-templates.ts` — add the template literal + render function
-- `send-pending-emails/index.ts` — add `isEligible()` case + `buildEmail()` case
-- `schedule-others-in-health-profile-emails/index.ts` — create, then deploy
-- pg_cron entry to trigger the scheduler
+- `schedule-others-in-health-profile-emails` — pg_cron job 31, daily at 10:30 UTC / 4:00 PM IST
+  (currently paused, see Status)
+- `send-pending-emails` — pg_cron job 27, every 5 minutes, 10 sends per run, at most 95 sends
+  in any 24h shared across all email types
+- The scheduler source in this repo is identical to the deployed v4 (checked 12 Nov 2026)
+- `email_events` — queue with `email_type = 'others_in_health_profile'`
