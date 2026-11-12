@@ -6,8 +6,18 @@ friends.
 
 ## Status
 
-**Ready, not queued.** Nothing has been sent to users. Two test sends went out via a
-separate Resend account (inline images) on 10 Nov 2026 to the founders only.
+**Sending (queued 12 Nov 2026).**
+
+- 12 Nov, 12:10 IST: 25 users active in the last 7 days, sent by hand (all `active`).
+- 12 Nov, 12:25 IST: everyone else eligible (569, all lapsed at queue time) queued in one
+  run of `queue.sql`: 40 due at once, then 80/day at 13:00 IST (07:30 UTC) 13–18 Nov, and
+  the last 49 on 19 Nov. Each row carries `metadata.batch_day` (0–7).
+- Earlier tests: founders via a separate Resend account (10 Nov), and four through the
+  real pipeline to the internal test address (both variants).
+- Skipped by hand: one complaint, set to `subscribed = false` before queuing.
+
+Queued rows still pick their variant when they send, so anyone who opens the app before
+their day gets the `active` copy.
 
 ## Template
 
@@ -92,5 +102,7 @@ being queued again by `queue.sql` (it skips anyone with a `new_look` row).
 4. Set `day0_at` / `day1_at` in `queue.sql`, then run it once.
 5. Watch with the monitoring query. To pause, run the `update … 'paused'` statement.
 
-Stagger: 40 on day 0, then 80/day at 10:00 IST, under the 95/day cap. Run the preview
+Stagger: 40 on day 0, then 80/day at a fixed time (13:00 IST for the Nov 2026 run), under
+the 95/day cap. The cap is a rolling 24h count shared with welcome emails, so keep day 0 at
+least 24h before day 1's time, and pause other campaigns while this one runs. Run the preview
 queries for the current size and predicted lapsed/active split.
