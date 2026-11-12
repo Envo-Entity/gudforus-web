@@ -1004,7 +1004,9 @@ export function renderPro50OffEmail(
 // ─── New look (Season 2 redesign announcement) ───────────────────────────────
 // Source: emails/new_look/email.html. Images are served from
 // https://gudforus.com/email/new_look/new_look_{1..6}.jpg (public/email/new_look/).
-// Template variables: {{name}} (intro line), {{unsubscribe_url}} (footer).
+// Template variables: {{name}}, {{unsubscribe_url}}, plus the per-variant slots in
+// NEW_LOOK_COPY ({{intro}}, {{closing_image}}, {{closing_image_alt}}, {{closing_heading}},
+// {{closing_line}}, {{small_print}}).
 
 const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -1126,7 +1128,7 @@ const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transiti
                     <tr>
                         <td align="left" class="text-cell" style="padding:8px 56px 36px 56px;background-color:#F0EFEA;">
                             <p style="margin:0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#1C1C1A;line-height:1.6;">
-                                Hi {{name}}, it&rsquo;s been a while. While you were away, Gud got a glow-up: cleaner screens, clearer scores, and a blueberry that reacts to how you&rsquo;re doing. You can also share your scans with friends now.
+                                {{intro}}
                             </p>
                             <p style="margin:12px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#66655C;line-height:1.6;">
                                 Here&rsquo;s the quick tour.
@@ -1194,14 +1196,13 @@ const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transiti
                         </td>
                     </tr>
 
-                    <!-- Image 6: Sign-off — slices/new_look_6.jpg (1200 × 960) -->
+                    <!-- Image 6: Sign-off — per-variant image from NEW_LOOK_COPY.closing_image -->
                     <tr>
                         <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
                             <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
-                                <!-- TODO: upload slices/new_look_6.jpg → public/email/new_look/new_look_6.jpg -->
                                 <img
-                                    src="https://gudforus.com/email/new_look/new_look_6.jpg"
-                                    alt="Your blueberry missed you. It's waving hello."
+                                    src="{{closing_image}}"
+                                    alt="{{closing_image_alt}}"
                                     width="600"
                                     style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.3;color:#1C1C1A;"
                                 />
@@ -1213,10 +1214,10 @@ const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transiti
                     <tr>
                         <td align="center" class="text-cell" style="padding:0 56px 48px 56px;background-color:#F0EFEA;">
                             <p class="cta-heading" style="margin:0;padding:0;font-family:'DM Serif Display',Georgia,'Times New Roman',Times,serif;font-size:32px;font-weight:400;color:#1C1C1A;letter-spacing:-0.4px;line-height:1.2;">
-                                Come say hi.
+                                {{closing_heading}}
                             </p>
                             <p style="margin:10px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#66655C;line-height:1.6;">
-                                Open Gud and see which mood your blueberry&rsquo;s in.
+                                {{closing_line}}
                             </p>
 
                             <!-- CTA Buttons (stack on mobile). Store pages show Open / Update / Get as needed. -->
@@ -1248,7 +1249,7 @@ const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transiti
                             </table>
 
                             <p style="margin:16px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#66655C;line-height:1.5;">
-                                Still have Gud? Tap Open or Update. Deleted it? Tap Get. No hard feelings.
+                                {{small_print}}
                             </p>
                         </td>
                     </tr>
@@ -1374,15 +1375,46 @@ const NEW_LOOK_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transiti
 </body>
 </html>`;
 
+// The two versions differ only in these slots; the layout lives once in NEW_LOOK_TEMPLATE.
+//   lapsed: hasn't opened the app in 7+ days ("it's been a while", "missed you")
+//   active: opened the app in the last 7 days
+// send-pending-emails picks the variant at send time from profiles.last_seen_at.
+export type NewLookVariant = "lapsed" | "active";
+
+const NEW_LOOK_COPY: Record<NewLookVariant, Record<string, string>> = {
+  lapsed: {
+    intro: "Hi {{name}}, it&rsquo;s been a while. While you were away, Gud got a glow-up: cleaner screens, clearer scores, and a blueberry that reacts to how you&rsquo;re doing. You can also share your scans with friends now.",
+    closing_image: "https://gudforus.com/email/new_look/new_look_6.jpg",
+    closing_image_alt: "Your blueberry missed you. It's waving hello.",
+    closing_heading: "Come say hi.",
+    closing_line: "Open Gud and see which mood your blueberry&rsquo;s in.",
+    small_print: "Still have Gud? Tap Open or Update. Deleted it? Tap Get. No hard feelings.",
+  },
+  active: {
+    intro: "Hi {{name}}, thanks for scanning with Gud lately. The app just got a glow-up: cleaner screens, clearer scores, and a blueberry that reacts to how you&rsquo;re doing. You can also share your scans with friends now.",
+    closing_image: "https://gudforus.com/email/new_look/new_look_v2_6.jpg",
+    closing_image_alt: "Say hi to your blueberry. It's waving hello.",
+    closing_heading: "See it for yourself.",
+    closing_line: "Open Gud and see which mood your blueberry&rsquo;s in today.",
+    small_print: "Not seeing the new look yet? Tap Update, or close Gud fully and open it again.",
+  },
+};
+
 export function renderNewLookEmail(
   firstName: string,
   unsubscribeUrl: string,
+  variant: NewLookVariant,
 ): { subject: string; html: string } {
+  const copy = NEW_LOOK_COPY[variant];
+  let html = NEW_LOOK_TEMPLATE;
+  for (const [slot, value] of Object.entries(copy)) {
+    html = html.replaceAll(`{{${slot}}}`, value);
+  }
   return {
     // No {{name}} in the subject: without a display name it falls back to the
     // email's local part (e.g. "john.smith87"), which reads badly in an inbox.
     subject: "Gud has a new look (and a blueberry with feelings)",
-    html: NEW_LOOK_TEMPLATE
+    html: html
       .replace(/\{\{name\}\}/g, firstName)
       .replace(/\{\{unsubscribe_url\}\}/g, unsubscribeUrl),
   };

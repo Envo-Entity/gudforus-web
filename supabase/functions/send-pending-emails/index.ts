@@ -34,6 +34,7 @@ import {
   renderOthersInHealthProfileEmail,
   renderPro50OffEmail,
   renderNewLookEmail,
+  type NewLookVariant,
 } from "../shared/email-templates.ts";
 import { buildUnsubscribeUrl } from "../shared/email-utils.ts";
 
@@ -160,20 +161,25 @@ function isApplePrivateRelay(recipient: string): boolean {
   return /@privaterelay\.appleid\.com$/i.test(recipient.trim());
 }
 
-// "new_look" is a come-back email for people who haven't opened the app in 7 days.
-// The audience is picked when the campaign is queued, but sends are spread over days,
-// so re-check at send time: anyone who has opened the app since is skipped
-// (status 'skipped', last_error 'active_recently'). profiles.last_seen_at is updated by
-// the app on launch, sign-in and every return to the foreground.
-// Test sends can set metadata.force_send = true to bypass this check only (Apple relay
-// and unsubscribe/preference rules still apply). queue.sql never sets it.
-const INACTIVE_ONLY_TYPES = new Set(["new_look"]);
-const INACTIVE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+// "new_look" has two versions of its copy (see NEW_LOOK_COPY in shared/email-templates.ts):
+//   lapsed — hasn't opened the app in 7+ days ("it's been a while", "missed you")
+//   active — opened the app in the last 7 days
+// The version is picked when the email is SENT, from profiles.last_seen_at (the app updates
+// it on launch, sign-in and every return to the foreground), so nobody gets "missed you"
+// right after opening the app. metadata.variant ("lapsed" | "active") forces one, for tests.
+// The version sent is recorded in metadata.variant_sent.
+const ACTIVE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
 function isRecentlyActive(lastSeenAt: string | null | undefined): boolean {
   if (!lastSeenAt) return false;
   const t = Date.parse(lastSeenAt);
-  return Number.isFinite(t) && Date.now() - t < INACTIVE_WINDOW_MS;
+  return Number.isFinite(t) && Date.now() - t < ACTIVE_WINDOW_MS;
+}
+
+function pickNewLookVariant(row: PendingEmail, lastSeenAt: string | null): NewLookVariant {
+  const forced = row.metadata?.variant;
+  if (forced === "lapsed" || forced === "active") return forced;
+  return isRecentlyActive(lastSeenAt) ? "active" : "lapsed";
 }
 
 function isEligibleSubscriber(subscriber: NewsletterSubscriber | undefined): boolean {
@@ -186,6 +192,7 @@ function isEligibleSubscriber(subscriber: NewsletterSubscriber | undefined): boo
 async function buildEmail(
   row: PendingEmail,
   displayName: string | null,
+  newLookVariant: NewLookVariant = "lapsed",
 ): Promise<ResendPayload | null> {
   const firstName = (displayName ?? row.recipient.split("@")[0]).split(" ")[0];
 
@@ -258,7 +265,7 @@ async function buildEmail(
     }
 
     case "new_look": {
-      const { subject, html } = renderNewLookEmail(firstName, unsubscribeUrl);
+      const { subject, html } = renderNewLookEmail(firstName, unsubscribeUrl, newLookVariant);
       return {
         from: FROM_ADDRESS,
         to: [row.recipient],
@@ -304,8 +311,13 @@ async function sendViaResend(payload: ResendPayload): Promise<string> {
 
 // ─── Process a single pending email ──────────────────────────────────────────
 
-async function processEmail(row: PendingEmail, displayName: string | null): Promise<SendResult> {
-  const payload = await buildEmail(row, displayName);
+async function processEmail(
+  row: PendingEmail,
+  displayName: string | null,
+  lastSeenAt: string | null,
+): Promise<SendResult> {
+  const variant = row.email_type === "new_look" ? pickNewLookVariant(row, lastSeenAt) : undefined;
+  const payload = await buildEmail(row, displayName, variant);
 
   if (!payload) {
     await supabase
@@ -333,6 +345,7 @@ async function processEmail(row: PendingEmail, displayName: string | null): Prom
         metadata: {
           ...(row.metadata ?? {}),
           resend_id: resendId,
+          ...(variant ? { variant_sent: variant } : {}),
           ...(TEST_EMAIL_OVERRIDE ? { test_override: true } : {}),
         },
       })
@@ -495,20 +508,10 @@ serve(async (req) => {
     const eligible: PendingEmail[] = [];
     const suppressed: PendingEmail[] = [];
     const relayBlocked: PendingEmail[] = [];
-    const activeSkipped: PendingEmail[] = [];
 
     for (const row of pendingRows as PendingEmail[]) {
       if (BLOCK_APPLE_PRIVATE_RELAY && isApplePrivateRelay(row.recipient)) {
         relayBlocked.push(row);
-        continue;
-      }
-      if (
-        INACTIVE_ONLY_TYPES.has(row.email_type) &&
-        row.user_id &&
-        row.metadata?.force_send !== true &&
-        isRecentlyActive(lastSeenByUser.get(row.user_id))
-      ) {
-        activeSkipped.push(row);
         continue;
       }
       let ok: boolean;
@@ -536,15 +539,7 @@ serve(async (req) => {
       console.log(`[SendEmails] Skipped ${relayBlocked.length} Apple private relay email(s)`);
     }
 
-    if (activeSkipped.length > 0) {
-      await supabase
-        .from("email_events")
-        .update({ status: "skipped", last_error: "active_recently" })
-        .in("id", activeSkipped.map((r) => r.id));
-      console.log(`[SendEmails] Skipped ${activeSkipped.length} email(s) to recently active users`);
-    }
-
-    const skippedBeforeSend = suppressed.length + relayBlocked.length + activeSkipped.length;
+    const skippedBeforeSend = suppressed.length + relayBlocked.length;
 
     if (eligible.length === 0) {
       return new Response(
@@ -562,7 +557,13 @@ serve(async (req) => {
     // ── 6. Send eligible emails in parallel, starts spaced out for Resend's rate limit ──
     const tasks = eligible.map((row, i) =>
       new Promise((resolve) => setTimeout(resolve, i * SEND_SPACING_MS))
-        .then(() => processEmail(row, getDisplayName(row)))
+        .then(() =>
+          processEmail(
+            row,
+            getDisplayName(row),
+            row.user_id ? (lastSeenByUser.get(row.user_id) ?? null) : null,
+          )
+        )
     );
     const results = await Promise.allSettled(tasks);
 

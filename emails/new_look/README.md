@@ -40,35 +40,43 @@ Served from `gudforus.com`, backed by `public/email/new_look/` (deployed with
 
 All slices sit on `#F0EFEA` (corners colour-corrected to ±1) so they stack seamlessly.
 
+## Two versions, one email type
+
+`new_look` has two copies of the same layout, chosen **at send time** by
+`send-pending-emails` from `profiles.last_seen_at`:
+
+| Variant | Who | Differs in |
+|---|---|---|
+| `lapsed` | hasn't opened the app in 7+ days | "it's been a while…" intro, `new_look_6.jpg` ("Your blueberry missed you."), "Come say hi.", "No hard feelings" small print |
+| `active` | opened the app in the last 7 days | "thanks for scanning with Gud lately…" intro, `new_look_v2_6.jpg` ("Say hi to your blueberry."), "See it for yourself.", "Tap Update" small print |
+
+The layout lives once in `email.html`; only six slots differ (`{{intro}}`,
+`{{closing_image}}`, `{{closing_image_alt}}`, `{{closing_heading}}`, `{{closing_line}}`,
+`{{small_print}}`), filled from `NEW_LOOK_COPY` in `shared/email-templates.ts`. The
+variant sent is stored in `metadata.variant_sent`; `metadata.variant` forces one (tests).
+
 ## Audience
 
-People who **haven't opened the app in the last 7 days**, excluding Apple private relay
-addresses. Full rules in `queue.sql`:
+Everyone eligible, active or lapsed, excluding Apple private relay addresses. Full rules
+in `queue.sql`:
 
-- `profiles.last_seen_at` is null or older than 7 days (the app updates it on launch,
-  sign-in and every foreground)
-- not `@privaterelay.appleid.com`, not `@example.com`
+- not `@privaterelay.appleid.com`, not `@example.com`, not internal test accounts
+- signed up before 10 Nov 2026 (people who only ever saw the new look are skipped)
 - `subscribed` and `product_updates_enabled` (no preferences row = yes)
 - no existing `new_look` event
 
-### Two safety nets in the sender (`send-pending-emails`)
-
-1. **Apple private relay** — `BLOCK_APPLE_PRIVATE_RELAY = true` marks any relay recipient
-   `skipped` / `apple_private_relay`. This was live in v25 but uncommitted; it's now
-   committed byte-for-byte from the deployed source.
-2. **Opened the app since being queued** — for `new_look` only, the sender re-reads
-   `profiles.last_seen_at` and skips anyone active in the last 7 days
-   (`skipped` / `active_recently`), because sends are spread over several days.
+The sender also skips Apple private relay recipients at send time
+(`BLOCK_APPLE_PRIVATE_RELAY`, `skipped` / `apple_private_relay`).
 
 ## How to send
 
-**Test first** (one email through the real pipeline). `force_send` skips only the
-"opened the app in 7 days" check, so active accounts can receive the test:
+**Test first** (one email per variant through the real pipeline). `variant` forces the
+copy; run it twice, once with `'lapsed'` and once with `'active'`:
 
 ```sql
 insert into public.email_events (user_id, email_type, recipient, status, scheduled_for, metadata)
 select u.id, 'new_look', u.email, 'pending', now(),
-       jsonb_build_object('campaign', 'new_look', 'test', true, 'force_send', true)
+       jsonb_build_object('campaign', 'new_look', 'test', true, 'variant', 'lapsed')
 from auth.users u where lower(u.email) = 'you@example.com';  -- your address
 ```
 
@@ -84,6 +92,5 @@ being queued again by `queue.sql` (it skips anyone with a `new_look` row).
 4. Set `day0_at` / `day1_at` in `queue.sql`, then run it once.
 5. Watch with the monitoring query. To pause, run the `update … 'paused'` statement.
 
-Stagger: 40 on day 0, then 80/day at 10:00 IST, under the 95/day cap. Preview on
-11 Nov 2026: 570 people (559 of them also got pro_50_off; that's intended — everyone
-inactive should hear about the new look), sent over 8 days.
+Stagger: 40 on day 0, then 80/day at 10:00 IST, under the 95/day cap. Run the preview
+queries for the current size and predicted lapsed/active split.

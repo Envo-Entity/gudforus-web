@@ -21,13 +21,14 @@
 --   • are NOT Apple "Hide My Email" relays (@privaterelay.appleid.com) — those bounce
 --     until hi@gudforus.com is registered with Apple. The sender also skips them
 --     (BLOCK_APPLE_PRIVATE_RELAY), this just keeps them out of the queue entirely
---   • haven't opened the app in 7 days: profiles.last_seen_at is null or older than
---     7 days (the app updates it on launch, sign-in and every return to foreground).
---     The sender re-checks at send time and skips anyone who opened the app since
---     (last_error 'active_recently')
+--   • EVERYONE who passes the rules below, active or not. The sender picks the copy
+--     at send time from profiles.last_seen_at: "lapsed" ("missed you") if they haven't
+--     opened the app in 7 days, "active" otherwise (recorded in metadata.variant_sent)
+--   • not internal test accounts, and didn't sign up on/after 2026-11-10 (they've only
+--     ever seen the new look) — remove those two lines to include them
 --   • are subscribed and have product_updates_enabled (no email_preferences row = yes)
 --   • have no existing new_look event (so test recipients and re-runs are skipped)
--- Order: most recently lapsed first (they're likeliest to come back), then never-seen.
+-- Order: most recently active first, then never-seen.
 
 with params as (
   select timestamptz '2026-11-13 04:30:00+00' as day0_at,  -- TODO: set before running
@@ -51,7 +52,8 @@ audience as (
     and lower(trim(u.email)) not like '%@privaterelay.appleid.com'
     and coalesce(ep.subscribed, true)
     and coalesce(ep.product_updates_enabled, true)
-    and (p.last_seen_at is null or p.last_seen_at < now() - interval '7 days')
+    and lower(u.email) not in ('8mayday8@googlemail.com', 'testaddress198@gmail.com', 'test@123.com')  -- internal test accounts
+    and u.created_at < timestamptz '2026-11-10 00:00:00+00'  -- skip people who only ever saw the new look
     and not exists (
       select 1 from public.email_events e
       where e.user_id = u.id and e.email_type = 'new_look'
@@ -80,30 +82,14 @@ cross join params;
 
 -- ─── Preview (read-only): run this FIRST ──────────────────────────────────────
 --
--- 1) Audience breakdown — how many people each rule removes:
+-- 1) Audience and predicted split (the real split is decided at send time):
 --
--- with base as (
---   select u.id, lower(trim(u.email)) as email, p.last_seen_at,
---          coalesce(ep.subscribed, true) as subscribed,
---          coalesce(ep.product_updates_enabled, true) as product_updates
---   from auth.users u
---   join public.profiles p on p.id = u.id and p.deleted_at is null
---   left join public.email_preferences ep on ep.user_id = u.id
---   where coalesce(trim(u.email), '') <> '' and u.deleted_at is null
--- )
--- select
---   count(*)                                                           as users_with_email,
---   count(*) filter (where email like '%@privaterelay.appleid.com')   as apple_relay_excluded,
---   count(*) filter (where email like '%@example.com')                as test_accounts_excluded,
---   count(*) filter (where last_seen_at >= now() - interval '7 days') as opened_app_last_7d_excluded,
---   count(*) filter (where last_seen_at is null)                      as never_seen,
---   count(*) filter (where not subscribed or not product_updates)     as opted_out_excluded,
---   count(*) filter (where email not like '%@privaterelay.appleid.com'
---                      and email not like '%@example.com'
---                      and subscribed and product_updates
---                      and (last_seen_at is null or last_seen_at < now() - interval '7 days'))
---                                                                      as audience
--- from base;
+-- with params as (select 1)  -- reuse the audience CTE from the insert above, then:
+-- select count(*) as total,
+--        count(*) filter (where p.last_seen_at >= now() - interval '7 days') as active_copy,
+--        count(*) filter (where p.last_seen_at is null
+--                            or p.last_seen_at < now() - interval '7 days') as lapsed_copy
+-- from audience a join public.profiles p on p.id = a.user_id;
 --
 -- 2) Other campaigns still waiting to send (must be 0 before day0_at, since the
 --    95/day cap is shared):
@@ -122,9 +108,10 @@ cross join params;
 
 -- ─── Monitoring (read-only) ───────────────────────────────────────────────────
 --
--- select metadata->>'batch_day' as day, status, last_error, count(*)
+-- select metadata->>'batch_day' as day, status, metadata->>'variant_sent' as variant,
+--        last_error, count(*)
 -- from public.email_events where email_type = 'new_look'
--- group by 1, 2, 3 order by (metadata->>'batch_day')::int nulls first, 2, 3;
+-- group by 1, 2, 3, 4 order by (metadata->>'batch_day')::int nulls first, 2, 3, 4;
 --
 -- To pause the rest of the campaign (rows not yet sent):
 -- update public.email_events set status = 'skipped', last_error = 'paused'

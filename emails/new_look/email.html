@@ -118,7 +118,7 @@
                     <tr>
                         <td align="left" class="text-cell" style="padding:8px 56px 36px 56px;background-color:#F0EFEA;">
                             <p style="margin:0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#1C1C1A;line-height:1.6;">
-                                Hi {{name}}, it&rsquo;s been a while. While you were away, Gud got a glow-up: cleaner screens, clearer scores, and a blueberry that reacts to how you&rsquo;re doing. You can also share your scans with friends now.
+                                {{intro}}
                             </p>
                             <p style="margin:12px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#66655C;line-height:1.6;">
                                 Here&rsquo;s the quick tour.
@@ -186,14 +186,13 @@
                         </td>
                     </tr>
 
-                    <!-- Image 6: Sign-off — slices/new_look_6.jpg (1200 × 960) -->
+                    <!-- Image 6: Sign-off — per-variant image from NEW_LOOK_COPY.closing_image -->
                     <tr>
                         <td align="center" style="padding:0;background-color:#F0EFEA;font-size:0;line-height:0;">
                             <a href="https://gudforus.com" target="_blank" style="display:block;width:100%;text-decoration:none;line-height:0;font-size:0;">
-                                <!-- TODO: upload slices/new_look_6.jpg → public/email/new_look/new_look_6.jpg -->
                                 <img
-                                    src="https://gudforus.com/email/new_look/new_look_6.jpg"
-                                    alt="Your blueberry missed you. It's waving hello."
+                                    src="{{closing_image}}"
+                                    alt="{{closing_image_alt}}"
                                     width="600"
                                     style="display:block;border:0;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.3;color:#1C1C1A;"
                                 />
@@ -205,10 +204,10 @@
                     <tr>
                         <td align="center" class="text-cell" style="padding:0 56px 48px 56px;background-color:#F0EFEA;">
                             <p class="cta-heading" style="margin:0;padding:0;font-family:'DM Serif Display',Georgia,'Times New Roman',Times,serif;font-size:32px;font-weight:400;color:#1C1C1A;letter-spacing:-0.4px;line-height:1.2;">
-                                Come say hi.
+                                {{closing_heading}}
                             </p>
                             <p style="margin:10px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;color:#66655C;line-height:1.6;">
-                                Open Gud and see which mood your blueberry&rsquo;s in.
+                                {{closing_line}}
                             </p>
 
                             <!-- CTA Buttons (stack on mobile). Store pages show Open / Update / Get as needed. -->
@@ -240,7 +239,7 @@
                             </table>
 
                             <p style="margin:16px 0 0 0;padding:0;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#66655C;line-height:1.5;">
-                                Still have Gud? Tap Open or Update. Deleted it? Tap Get. No hard feelings.
+                                {{small_print}}
                             </p>
                         </td>
                     </tr>

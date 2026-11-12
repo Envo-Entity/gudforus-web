@@ -153,8 +153,13 @@ Three small edits:
 3. Add a `case "<type>":` in `buildEmail` (copy an existing case; keep the
    `List-Unsubscribe` headers).
 
-Optional: add the type to `INACTIVE_ONLY_TYPES` if it must only reach people who haven't
-opened the app in 7 days (re-checked at send time).
+**Need two versions of the same email** (e.g. different copy for active vs lapsed
+users)? Don't add a second type or copy the template. Use **variants** — see
+`new_look`: one `<NAME>_TEMPLATE` with `{{slot}}` placeholders for the parts that differ,
+a `<NAME>_COPY: Record<Variant, Record<string, string>>` table, a `variant` parameter on
+the render function, and a small `pick<Name>Variant(row, …)` in the sender that chooses
+at **send time** (honouring `metadata.variant` for tests) and records
+`metadata.variant_sent` on success.
 
 Check syntax (no Deno locally):
 ```bash
@@ -183,13 +188,12 @@ cd ../gud-for-us-app && node -e "const ts=require('typescript'),fs=require('fs')
 ```sql
 insert into public.email_events (user_id, email_type, recipient, status, scheduled_for, metadata)
 select u.id, '<type>', u.email, 'pending', now(),
-       jsonb_build_object('campaign', '<type>', 'test', true, 'force_send', true)
+       jsonb_build_object('campaign', '<type>', 'test', true)  -- + 'variant', '<name>' to force one
 from auth.users u where lower(u.email) = '<your address>';
 ```
 - Sent within ~5 min. Watch it:
   `select status, last_error, sent_at, metadata->>'resend_id' from public.email_events where email_type='<type>' and metadata->>'test'='true';`
-- `force_send` only bypasses the "opened the app in 7 days" check. Relay and preference
-  rules still apply.
+- For a campaign with variants, send one test per variant with `'variant', '<name>'`.
 - A test row also excludes that address when the campaign is queued (queue scripts skip
   anyone who already has a row of that type).
 
@@ -217,7 +221,6 @@ Every row is checked by the sender at send time:
 | App user: `email_preferences.subscribed` is false (no row = subscribed) | `skipped` / `unsubscribed` |
 | App user: the type's preference is off (below) | `skipped` / `unsubscribed` |
 | Web visitor: `newsletter_subscribers.subscribed` is false | `skipped` / `unsubscribed` |
-| Type is in `INACTIVE_ONLY_TYPES` and the user opened the app in the last 7 days (`profiles.last_seen_at`), unless `metadata.force_send` | `skipped` / `active_recently` |
 
 Preference per email type (`isEligibleAppUser`):
 
@@ -283,4 +286,4 @@ Recurring/automated emails (e.g. a profile-incomplete nudge) use a separate
 | `emails/welcome.html` | `welcome` | `welcome_email_enabled` | On sign-up; never held by the cap |
 | `emails/others_in_health_profile/` | `others_in_health_profile` | `product_updates_enabled` | Scheduled by its own function |
 | `emails/pro_50_off/` | `pro_50_off` | `newsletter_enabled` | One-off, sent 2–10 Nov 2026 (670) |
-| `emails/new_look/` | `new_look` | `product_updates_enabled` | Season 2 redesign; inactive-only (7 days) |
+| `emails/new_look/` | `new_look` | `product_updates_enabled` | Season 2 redesign; variants `lapsed` / `active` picked at send time |
